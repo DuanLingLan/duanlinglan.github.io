@@ -60,5 +60,22 @@
 
         // 初始化按钮状态
         updatePlayPauseButton();
+		
+		    // 获取对话框元素
+    const blogDialog = document.getElementById('blogDialog');
+
+    // 添加事件监听，当点击对话框外部时关闭对话框
+    blogDialog.addEventListener('click', function(event) {
+        if (event.target === blogDialog) {
+            blogDialog.close();
+        }
+    });
+
+    // 示例的打开对话框函数（你可以根据需要调用这个函数）
+    function openBlogDialog() {
+        blogDialog.showModal();
+    }
+		
+		
     });
 	

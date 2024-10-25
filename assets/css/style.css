@@ -147,6 +147,19 @@ body {
     border: 3px dashed pink;
 }
 
+/* blog对话框 */
+    #blogDialog {
+        border: none; /* 去除默认边框 */
+        border-radius: 15px; /* 添加圆角 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影 */
+        background: rgba(255, 255, 255, 0.95); /* 半透明背景，显得更加柔和 */
+ /*        padding: 20px; 内边距增加一些，让内容不会紧贴边缘 */
+    }
+
+    #blogDialog::backdrop {
+        background: rgba(0, 0, 0, 0.5); /* 设置对话框背景遮罩的颜色 */
+    }
+
 /* 音频播放器样式 */
         #audioPlayerContainer {
             position: fixed;

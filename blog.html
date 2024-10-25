@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: 'Segoe Print', '等线', 'Comic Sans MS', 'Courier', Arial, sans-serif;
-            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background: url("assets/pic/R0007660.JPG") no-repeat center center fixed;
             background-size: cover;
             background-color: #f0f0f0;
             margin: 0;
@@ -21,7 +21,7 @@
         .blog-header {
             text-align: center;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.5);
             border-bottom: 5px solid #D6659F;
         }
 
@@ -58,6 +58,12 @@
             color: #FF0066;
         }
 
+        .month-title {
+            font-size: 1.5em;
+            margin: 15px 0;
+            color: #D6659F;
+        }
+
         #content {
             width: 70%;
             padding-left: 20px;
@@ -71,7 +77,7 @@
 </head>
 <body>
     <div class="blog-header">
-        <h1>My Blog</h1>
+        <h1 id="blogTitle">My Blog</h1> <!-- 给标题添加一个 ID -->
     </div>
 
     <div class="blog-container">
@@ -94,13 +100,36 @@
                 const postListDiv = document.getElementById('post-list');
                 postListDiv.innerHTML = "";  // 清空列表
 
+                // 按年份和月份对文章进行分组
+                const groupedPosts = {};
                 posts.forEach(post => {
-                    const postLink = document.createElement('a');
-                    postLink.href = "javascript:void(0)";
-                    postLink.textContent = post.title;
-                    postLink.onclick = () => loadMarkdown(post.file);
-                    postListDiv.appendChild(postLink);
+                    const [year, month] = post.date.split("-");
+                    if (!groupedPosts[year]) {
+                        groupedPosts[year] = {};
+                    }
+                    if (!groupedPosts[year][month]) {
+                        groupedPosts[year][month] = [];
+                    }
+                    groupedPosts[year][month].push(post);
                 });
+
+                // 按年份和月份生成文章列表
+                for (const year in groupedPosts) {
+                    for (const month in groupedPosts[year]) {
+                        const monthTitle = document.createElement('div');
+                        monthTitle.className = 'month-title';
+                        monthTitle.textContent = `${year}-${month}`;
+                        postListDiv.appendChild(monthTitle);
+
+                        groupedPosts[year][month].forEach(post => {
+                            const postLink = document.createElement('a');
+                            postLink.href = "javascript:void(0)";
+                            postLink.textContent = post.title;
+                            postLink.onclick = () => loadMarkdown(post.file, post.title); // 传递标题和文件名
+                            postListDiv.appendChild(postLink);
+                        });
+                    }
+                }
             } catch (error) {
                 console.error(error);
                 document.getElementById('post-list').innerHTML = "Error loading posts.";
@@ -108,7 +137,7 @@
         }
 
         // 加载并渲染 Markdown 文件内容
-        async function loadMarkdown(file) {
+        async function loadMarkdown(file, title) {
             try {
                 console.log("Loading file:", file); // 确认文件路径
                 const response = await fetch(file);
@@ -122,6 +151,9 @@
                 console.log("Converted HTML content:", htmlContent); // 检查是否成功转换为 HTML
                 
                 document.getElementById('content').innerHTML = htmlContent;
+                
+                // 更新标题
+                document.getElementById('blogTitle').textContent = title;
             } catch (error) {
                 console.error(error);
                 document.getElementById('content').innerHTML = "Error loading content.";
