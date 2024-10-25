@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Markdown Blog</title>
+    <!-- 引入 marked.js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <h1>My Blog</h1>
+    <div id="post-list"></div>
+    <hr>
+    <div id="content">Select a post to read.</div>
+
+    <script>
+        // 加载 posts.json 并生成文章列表
+        async function loadPosts() {
+            try {
+                const response = await fetch('posts.json');
+                if (!response.ok) throw new Error('Failed to load post list');
+                const posts = await response.json();
+                
+                const postListDiv = document.getElementById('post-list');
+                postListDiv.innerHTML = "";  // 清空列表
+
+                posts.forEach(post => {
+                    const postLink = document.createElement('a');
+                    postLink.href = "javascript:void(0)";
+                    postLink.textContent = post.title;
+                    postLink.onclick = () => loadMarkdown(post.file);
+                    postListDiv.appendChild(postLink);
+                    postListDiv.appendChild(document.createElement('br'));
+                });
+            } catch (error) {
+                console.error(error);
+                document.getElementById('post-list').innerHTML = "Error loading posts.";
+            }
+        }
+
+        // 加载并渲染 Markdown 文件内容
+		async function loadMarkdown(file) {
+			try {
+				console.log("Loading file:", file); // 确认文件路径
+				const response = await fetch(file);
+				if (!response.ok) throw new Error('Failed to load markdown file');
+				
+				const markdown = await response.text();
+				console.log("Markdown content:", markdown); // 检查 Markdown 文件内容是否正确加载
+				
+				// 使用 marked.parse 来解析 Markdown 内容
+				const htmlContent = marked.parse(markdown);
+				console.log("Converted HTML content:", htmlContent); // 检查是否成功转换为 HTML
+				
+				document.getElementById('content').innerHTML = htmlContent;
+			} catch (error) {
+				console.error(error);
+				document.getElementById('content').innerHTML = "Error loading content.";
+			}
+		}
+
+
+        // 页面加载时调用
+        loadPosts();
+    </script>
+</body>
+</html>

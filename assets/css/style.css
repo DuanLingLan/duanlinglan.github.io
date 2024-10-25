@@ -1,0 +1,203 @@
+/* 链接样式 */
+a:link {
+    color: deepblue;
+}
+
+a:visited {
+    color: #D6659F;
+}
+
+a:hover {
+    color: deeppink;
+}
+
+/* 通用文本样式 */
+.colorHead {
+    color: #64002B;
+}
+
+.colorText {
+    color: #FF0066;
+    text-align: center;
+}
+
+/* 全局样式 */
+body {
+    font-family: 'Segoe Print', '等线', 'Comic Sans MS', 'Courier', Arial, sans-serif;
+    background: url("../pic/bg.png") no-repeat center center fixed;
+    background-size: cover;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+		
+/* 容器样式 */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+}
+			
+/* 滑动图片容器样式 */
+.slider-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.slider {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin; /* Firefox 支持的属性 */
+    scrollbar-color: pink lightblue;
+}
+
+/* Webkit 浏览器滚动条样式 */
+.slider::-webkit-scrollbar {
+    width: 5px;
+}
+
+.slider::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.slider::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.slide {
+    display: inline-block;
+    width: 100%;
+    max-width: 300px;
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+}
+
+.slide-name {
+    font-size: 1em;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .slide {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+			
+			
+/* 个人资料样式 */
+.imageProfile {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 200px;
+    height: auto;
+}
+
+.profile {
+    display: inline-block;
+    margin-left: 250px;
+    vertical-align: top;
+}
+
+/* 视频缩略图样式 */
+.video-thumbnail {
+    width: 25%;
+    margin-bottom: 20px;
+    float: left;
+}
+
+.videoscale {
+    width: 300px;
+    height: auto;
+}
+
+.video-title {
+    font-size: 1.5em;
+    margin-top: 0;
+    text-align: center;
+}
+		
+/* 横幅和页脚样式 */
+.banner {
+    opacity: 0.8;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    width: 80%;
+    margin: 20px auto;
+    border: 5px inset pink;
+}
+
+.footer {
+    text-align: center;
+    margin: 20px auto;
+    width: 82%;
+    border: 3px dashed pink;
+}
+
+/* 音频播放器样式 */
+        #audioPlayerContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            background-image: url('../pic/bg.png');
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .play-button,
+        .pause-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            outline: none;
+            margin-right: 10px;
+        }
+
+        .play-button::before,
+        .pause-button::before {
+            font-family: FontAwesome;
+            font-size: 24px;
+        }
+
+        .play-button::before {
+            content: '\f04b'; /* FontAwesome play icon */
+        }
+
+        .pause-button::before {
+            content: '\f04c'; /* FontAwesome pause icon */
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 5px;
+            background-color: #ccc;
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #f00;
+            border-radius: 3px;
+            width: 0;
+        }
