@@ -23,8 +23,9 @@ function generatePostsJson() {
         const posts = files
             .filter(file => file.endsWith('.md'))
             .map(file => {
-                const title = file.replace(/\.md$/, '').replace(/-/g, ' '); // 使用文件名作为标题
-                return { title, file: `blog/${file}` };
+                const [year, month, day, ...rest] = file.replace(/\.md$/, '').split('-');
+                const title = `${year}-${month}-${day} ${rest.join(' ').replace(/_/g, ' ')}`; // 使用文件名作为标题并替换下划线为空格
+                return { title, date: `${year}-${month}-${day}`, file: `blog/${file}` };
             });
 
         if (posts.length === 0) {

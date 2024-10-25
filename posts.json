@@ -1,38 +1,12 @@
 [
   {
-    "title": "2",
-    "file": "blog/2.md"
-  },
-  {
-    "title": "2023 08 15 my first blog post",
+    "title": "2023-08-15 my first blog post",
+    "date": "2023-08-15",
     "file": "blog/2023-08-15-my first blog post.md"
   },
   {
-    "title": "2024 04 15 a",
+    "title": "2024-04-15 a",
+    "date": "2024-04-15",
     "file": "blog/2024-04-15-a.md"
-  },
-  {
-    "title": "333   副本",
-    "file": "blog/333 - 副本.md"
-  },
-  {
-    "title": "333",
-    "file": "blog/333.md"
-  },
-  {
-    "title": "new   副本",
-    "file": "blog/new - 副本.md"
-  },
-  {
-    "title": "未命名 3",
-    "file": "blog/未命名 3.md"
-  },
-  {
-    "title": "未命名 4",
-    "file": "blog/未命名 4.md"
-  },
-  {
-    "title": "未命名",
-    "file": "blog/未命名.md"
   }
 ]
