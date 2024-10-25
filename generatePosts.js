@@ -5,6 +5,12 @@ const path = require('path');
 const blogDir = path.join(__dirname, 'blog');
 const jsonFilePath = path.join(__dirname, 'posts.json');
 
+// 检查博客目录是否存在
+if (!fs.existsSync(blogDir)) {
+    console.error("Blog directory does not exist:", blogDir);
+    return;
+}
+
 // 生成 JSON 文件
 function generatePostsJson() {
     fs.readdir(blogDir, (err, files) => {
@@ -20,6 +26,10 @@ function generatePostsJson() {
                 const title = file.replace(/\.md$/, '').replace(/-/g, ' '); // 使用文件名作为标题
                 return { title, file: `blog/${file}` };
             });
+
+        if (posts.length === 0) {
+            console.log("No Markdown files found in the blog directory.");
+        }
 
         // 将数据写入 posts.json 文件
         fs.writeFile(jsonFilePath, JSON.stringify(posts, null, 2), (err) => {
