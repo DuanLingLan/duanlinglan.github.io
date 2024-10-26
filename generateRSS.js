@@ -22,7 +22,7 @@ const items = posts.map(post => `
     <item>
         <title>${post.title}</title>
         <link>https://duanlinglan.github.io/${post.file}</link>
-        <description>${post.summary || 'New post on my blog!'}</description>
+        <description><![CDATA[${post.content || 'New post on my blog!'}]]></description>
         <pubDate>${new Date(post.date).toUTCString()}</pubDate>
     </item>
 `).join('');

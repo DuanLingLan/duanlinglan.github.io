@@ -25,30 +25,14 @@ function generatePostsJson() {
             .map(file => {
                 const [year, month, day, ...rest] = file.replace(/\.md$/, '').split('-');
                 const title = `${year}-${month}-${day} ${rest.join(' ').replace(/_/g, ' ')}`; // 使用文件名作为标题并替换下划线为空格
-                return { title, date: `${year}-${month}-${day}`, file: `blog/${file}` };
-            });
-
-        if (posts.length === 0) {
-            console.log("No Markdown files found in the blog directory.");
-        }
-
-        // 处理每个 Markdown 文件，替换图片引用
-        posts.forEach(post => {
-            const filePath = path.join(__dirname, post.file);
-            fs.readFile(filePath, 'utf8', (err, data) => {
-                if (err) {
-                    console.error(`Error reading file ${post.file}:`, err);
-                    return;
-                }
-
-                // 查找 Obsidian 的图片引用，并将其转换为标准 Markdown 格式
-                const updatedContent = data.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
-                    // 构造相对路径，确保指向 blog 目录下的图片
+                const filePath = path.join(blogDir, file);
+                let content = fs.readFileSync(filePath, 'utf8'); // 读取 Markdown 文件内容
+                
+                // 处理 Obsidian 图片引用，将其转换为标准 Markdown 格式
+                content = content.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
                     let imageName = p1.trim();
-
-                    // 检查是否符合 image<日期>.png 的格式
+                    
                     if (imageName.startsWith('Pasted image')) {
-                        // 替换为符合 image<日期>.png 的格式
                         imageName = imageName.replace('Pasted image', 'image').trim();
                     }
 
@@ -56,16 +40,17 @@ function generatePostsJson() {
                     return `![Image](${imagePath})`;
                 });
 
-                // 写回更新后的 Markdown 文件
-                fs.writeFile(filePath, updatedContent, (err) => {
-                    if (err) {
-                        console.error(`Error writing file ${post.file}:`, err);
-                    } else {
-                        console.log(`Updated Markdown file: ${post.file}`);
-                    }
-                });
+                return { 
+                    title, 
+                    date: `${year}-${month}-${day}`, 
+                    file: `blog/${file}`, 
+                    content 
+                };
             });
-        });
+
+        if (posts.length === 0) {
+            console.log("No Markdown files found in the blog directory.");
+        }
 
         // 将数据写入 posts.json 文件
         fs.writeFile(jsonFilePath, JSON.stringify(posts, null, 2), (err) => {
