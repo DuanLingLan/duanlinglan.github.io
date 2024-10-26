@@ -4,6 +4,33 @@
         var progressBar = document.getElementById('progressBar');
         var progress = document.getElementById('progress');
 
+loadContent('library.html', 'library-content');
+loadContent('gallery.html', 'gallery-content');
+loadContent('video.html', 'video-content');
+loadContent('achive.html', 'achive-content');
+
+	
+	function loadContent(file, containerId) {
+    fetch(file)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            document.getElementById(containerId).innerHTML = data;
+            // 隐藏 "See More" 按钮
+            document.querySelector(`#${containerId}`).nextElementSibling.style.display = 'none';
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+            document.getElementById(containerId).innerHTML = "Error loading content.";
+        });
+}
+
+
+
         // 尝试自动播放
         var playPromise = audioPlayer.play();
 
@@ -76,6 +103,20 @@
         blogDialog.showModal();
     }
 		
-		
+
+
+// 添加放大功能函数
+function openFullBlog() {
+    window.open('blog.html', '_blank');
+	    // 关闭 homepage 中的对话框
+    const blogDialog = document.getElementById('blogDialog');
+    if (blogDialog) {
+        blogDialog.close();
+    }
+}
+
+
+	
+	
     });
 	

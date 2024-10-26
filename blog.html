@@ -11,9 +11,9 @@
         body {
             font-family: 'Comic Sans MS','Segoe Print', 'Courier', Arial, sans-serif;
 			font-size:1.1em;
-            background: url("assets/pic/R0007660.JPG") no-repeat center center fixed;
+<!--            background: url("assets/pic/R0007660.JPG") no-repeat center center fixed;-->
             background-size: cover;
-            background-color: #f0f0f0;
+            background-color: lightpink;
             margin: 0;
             padding: 0;
             color: #333;
@@ -31,6 +31,14 @@
             background: rgba(255, 255, 255, 0.3);
             border-bottom: 5px solid #D6659F;
         }
+		.expand-icon {
+			position: absolute;
+			right: 20px;
+			top: 20px;
+			cursor: pointer;
+			font-size: 1.5em;
+			color: #64002B;
+		}
 
         .blog-container {
             display: flex;
@@ -100,6 +108,8 @@
 <body>
     <div class="blog-header">
         <h1 id="blogTitle">My Blog</h1> <!-- 给标题添加一个 ID -->
+		    <!-- 放大图标 -->
+    <span class="expand-icon" onclick="openFullBlog()">⛶</span>
     </div>
 
     <div class="blog-container">
@@ -112,6 +122,17 @@
     </div>
 
 <script>
+
+// 添加放大功能函数
+function openFullBlog() {
+    window.open('blog.html', '_blank');
+	    // 关闭 homepage 中的对话框
+    const blogDialog = document.getElementById('blogDialog');
+    if (blogDialog) {
+        blogDialog.close();
+    }
+}
+
     // 加载 posts.json 并生成文章列表
     async function loadPosts() {
         try {
@@ -199,11 +220,11 @@
         }
     }
 
+
     // 页面加载时调用
     loadPosts();
 </script>
-s
-
+	<script src="assets/js/script.js"></script>
 
 
 </body>

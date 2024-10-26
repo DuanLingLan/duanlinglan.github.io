@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+body {
+
+    background: url("assets/pic/bg.png") no-repeat center center fixed;
+}
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,38 +18,10 @@
 <body>
     <div class="profile">
         <img class="imageProfile" src="assets/pic/profile.png" alt="Profile Picture">
-        <h1 class="colorHead">Ashe (Linglan Duan):</h1>
+        <h1 class="colorHead">Ashe (Linglan Duan):</h1><br>
     </div>
 	
-    <div class="container">
-        <h2 class="colorText">Check out my videos here!</h2>
-        <div class="video-thumbnail">
-		    <a href="https://youtu.be/zxr0hCp6GBo"target=”_blank”>
-            <img class="videoscale" src="assets/pic/reel.png" alt="Personal Reel">
-            <h2 class="video-title">Personal Reel</h2>
-			</a>
-        </div>
-        <div class="video-thumbnail">
-		    <a href="https://youtu.be/JV_74M31snA"target=”_blank”>
-            <img class="videoscale" src="assets/pic/sunset.png" alt="Sunset">
-            <h2 class="video-title">Sunset</h2>
-			</a>
-        </div>
-        <div class="video-thumbnail">
-		    <a href="https://youtu.be/0IGCJ-64Z0Q"target=”_blank”>
-            <img class="videoscale" src="assets/pic/mv.png" alt="Nine Head Hinano MV">
-            <h2 class="video-title">Nine Head Hinano MV</h2>
-			</a>
-        </div>	
-        <div class="video-thumbnail">
-		    <a href="https://youtu.be/nPEBS5H6Mi4"target=”_blank”>
-            <img class="videoscale"  src="assets/pic/winter.png" alt="winter">
-            <h2 class="video-title">L'hiver</h2>
-			</a>
-        </div>			
-	</div>
-	
-	
+ <!--  
 	<div class="slider-container">
 	
 	    <h2 class="colorText">Kiwi Canvas</h2>
@@ -123,8 +101,8 @@
 		
         </div>
     </div>
-	
-	
+	-->	
+
 	<div class="banner">
 		<a href="#" onclick="document.getElementById('blogDialog').showModal()">Blog</a><h4 class="colorText">（导航栏还没做好，先在这放下。顺便提醒自己要做个RSS功能）</h4>
 	</div>
@@ -132,6 +110,37 @@
 	<dialog id="blogDialog" style="width: 85%; height: 85%;">
 		<iframe src="blog.html" style="width: 100%; height: 100%; border: none; border-radius: 10px;"></iframe>
 	</dialog>
+
+<h2 class="colorText">Check out my videos here!</h2>
+<div class="container-row">
+
+    <div class="container-video">
+        <!-- video内容 -->
+		<div id="video-content">Loading...</div> <!-- 动态加载内容的容器 -->
+		<button onclick="loadContent('video.html', 'video-content')">See More</button>
+    </div>
+</div>
+	
+<div class="container-row">
+    <div class="container-library">
+        <!-- 左侧长条形内容，放 library 内容 -->
+		<div id="library-content">Loading...</div> <!-- 动态加载内容的容器 -->
+		<button onclick="loadContent('library.html', 'library-content')">See More</button>
+    </div>
+    <div class="container-gallery">
+        <!-- 右侧方块形内容，放 gallery 内容 -->
+		<div id="gallery-content">Loading...</div> <!-- 动态加载内容的容器 -->
+		<button onclick="loadContent('gallery.html', 'gallery-content')">See More</button>
+    </div>
+</div>
+
+<div class="container-row">
+    <div class="container-achive">
+        <!-- video内容 -->
+		<div id="achive-content">Loading...</div> <!-- 动态加载内容的容器 -->
+		<button onclick="loadContent('achive.html', 'achive-content')">See More</button>
+    </div>
+</div> 
 
 	
     <div class="footer">

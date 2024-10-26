@@ -24,66 +24,65 @@ a:hover {
 /* 全局样式 */
 body {
     font-family: 'Segoe Print', '等线', 'Comic Sans MS', 'Courier', Arial, sans-serif;
-    background: url("../pic/bg.png") no-repeat center center fixed;
     background-size: cover;
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
 }
 		
-/* 容器样式 */
-.container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-}
-			
-/* 滑动图片容器样式 */
-.slider-container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
+
+.horizontal-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; /* 使容器可以水平滚动 */
+    padding: 15px;
+    scroll-snap-type: x mandatory; /* 添加滚动吸附效果 */
 }
 
-.slider {
-    width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: thin; /* Firefox 支持的属性 */
-    scrollbar-color: pink lightblue;
+.horizontal-scroll::-webkit-scrollbar {
+    height: 8px;
 }
 
-/* Webkit 浏览器滚动条样式 */
-.slider::-webkit-scrollbar {
-    width: 5px;
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: #e0e0e0;
 }
 
-.slider::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.slider::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background-color: #64002B;
+    border-radius: 4px;
 }
 
 .slide {
-    display: inline-block;
-    width: 100%;
-    max-width: 300px;
-    margin-right: 10px;
-    vertical-align: top;
+    flex: 0 0 auto;
+    width: 200px; /* 调整每个图片容器的宽度 */
+    text-align: center;
+	margin-right: 100px;
+}
+.slide-achive {
+    flex: 0 0 auto;
+    width: 130px; /* 调整每个图片容器的宽度 */
+    text-align: center;
+	margin-right: 100px;
 }
 
 .slide img {
-    width: 100%;
+    width: 150%;
     height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.slide-achive img {
+    width: 150%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .slide-name {
-    font-size: 1em;
+	width: 150%;
     margin-top: 5px;
-    text-align: center;
+    font-size: 0.9em;
+    color: #64002B;
 }
 
 /* 响应式布局 */
@@ -111,21 +110,29 @@ body {
     vertical-align: top;
 }
 
-/* 视频缩略图样式 */
+/* 视频缩略图容器样式 */
 .video-thumbnail {
-    width: 25%;
-    margin-bottom: 20px;
-    float: left;
+    flex: 1 1 calc(25% - 20px); /* 保持原有设置 */
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px; /* 添加内部边距，使内容和边框之间有空隙 */
+    background-color: #ffffff; /* 你可以选择一个背景色，以突出缩略图 */
+    border-radius: 8px; /* 圆角，可以更柔和的视觉效果 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 可选，增加阴影效果 */
 }
 
+/* 缩略图图片的样式 */
 .videoscale {
-    width: 300px;
+    width: 100%; /* 确保图片自适应容器 */
     height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
+/* 视频标题样式 */
 .video-title {
-    font-size: 1.5em;
-    margin-top: 0;
+    font-size: 1em; /* 根据容器大小调整字体 */
+    margin-top: 10px;
     text-align: center;
 }
 		
@@ -133,11 +140,9 @@ body {
 .banner {
     opacity: 0.8;
     text-align: center;
-    padding: 20px;
-    margin-top: 20px;
+    margin-left: 400px;
     width: 80%;
-    margin: 20px auto;
-    border: 5px inset pink;
+    border: 5px pink;
 }
 
 .footer {
@@ -159,6 +164,65 @@ body {
     #blogDialog::backdrop {
         background: rgba(0, 0, 0, 0.5); /* 设置对话框背景遮罩的颜色 */
     }
+/* Flexbox 布局 */
+.container-row {
+    display: flex;
+    width: 80%;
+    gap: 20px; /* 容器之间的间距 */
+    margin: 20px auto;
+}
+
+/* library容器 */
+.container-library {
+    flex: 3; /* 左侧占 70% 宽度 */
+    padding: 30px;
+	padding-top: 5px;
+	height: 500px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	overflow-y: auto
+}
+
+/* gallery容器 */
+.container-gallery {
+	width: 100%;
+    text-align: center;
+    flex: 7; /* 右侧占 30% 宽度 */
+    padding: 2px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	overflow-y: auto
+	
+}
+
+/* Video容器 */
+.container-video {
+    display: flex;
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 20px; /* 缩略图之间的间距 */
+    justify-content: space-around; /* 居中对齐，均匀分布 */
+    width: 100%; /* 占满父容器宽度 */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container-achive {
+    flex: 10;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+	
+	
 
 /* 音频播放器样式 */
         #audioPlayerContainer {
