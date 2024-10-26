@@ -1,13 +1,13 @@
 const fs = require('fs');
 const posts = require('./posts.json');
 
-const rssHeader = `<?xml version="1.0" encoding="UTF-8" ?>
+const rssHeader = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
     <channel>
         <title>Arashi's Blog</title>
         <link>https://duanlinglan.github.io/blog.html</link>
         <description>Latest updates from my blog</description>
-        <language>cn-zh</language>
+        <language>zh-cn</language>
         <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`;
 
 const rssFooter = `
@@ -25,5 +25,6 @@ const items = posts.map(post => `
 
 const rssContent = `${rssHeader}${items}${rssFooter}`;
 
-fs.writeFileSync('rss.xml', rssContent);
+// 将 RSS 保存到项目根目录的 rss.xml
+fs.writeFileSync('rss.xml', rssContent, { encoding: 'utf8' });
 console.log('RSS feed updated.');
