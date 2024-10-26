@@ -11,7 +11,8 @@ git add .
 
 git commit -m "Update posts and posts.json"  
 
-git push origin main  
+git push origin main --force
+
 
 echo Update and push completed!
 pause
