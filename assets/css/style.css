@@ -305,6 +305,7 @@ hr {
     text-align: center;
     flex: 7; /* 右侧占 30% 宽度 */
     padding: 2px;
+	height: 550px;
     background-color:rgba(255, 255, 255, 0.5);
     border: 1px solid #ccc;
     border-radius: 10px;

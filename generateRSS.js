@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-
 const posts = require('./posts.json');  // 确保 `posts.json` 在当前目录中
 const rssFilePath = path.join(__dirname, 'rss.xml');
 
@@ -19,9 +18,10 @@ const rssFooter = `
 </rss>`;
 
 const items = posts.map(post => {
-    // 使用正则表达式去掉标题中的日期前缀（如 "2020-03-20 "）
+    // 去除标题中的日期前缀
     const titleWithoutDate = post.title.replace(/^\d{4}-\d{2}-\d{2} /, '');
-
+    
+    // 使用 CDATA 包裹内容，确保格式显示
     return `
     <item>
         <title>${titleWithoutDate}</title>
