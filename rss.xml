@@ -4,7 +4,7 @@ const posts = require('./posts.json');
 const rssHeader = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
     <channel>
-        <title>My Blog</title>
+        <title>Arashi's Blog</title>
         <link>https://duanlinglan.github.io/blog.html</link>
         <description>Latest updates from my blog</description>
         <language>cn-zh</language>
