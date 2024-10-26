@@ -1,6 +1,6 @@
 /* 链接样式 */
 a:link {
-    color: deepblue;
+    color: MediumVioletRed;
 }
 a:visited {
     color: #D6659F;
@@ -15,9 +15,16 @@ a:hover {
 }
 
 .colorText {
-    color: #FF0066;
+    color: MediumVioletRed;
     text-align: center;
 }
+
+.library-title{
+    background-color: rgba(255, 182, 193, 0.3); /* 背景 */
+    border-radius: 3px; /* 可选，圆角效果 */
+    display: inline-block; /* 保持背景仅包裹文字 */
+}	
+	
 
 /* 全局样式 */
 body {
@@ -98,7 +105,7 @@ body {
 /* 个人资料样式 */
 .imageProfile {
     position: absolute;
-    top: 0;
+    top: 10px;
     left: 50px;
     width: 200px;
     height: auto;
@@ -106,7 +113,7 @@ body {
 
 .profile {
     display: inline-block;
-    margin-left: 250px;
+    margin-left: 180px;
     vertical-align: top;
 }
 
@@ -136,13 +143,30 @@ body {
     text-align: center;
 }
 		
-/* 横幅和页脚样式 */
+/* 横幅、导航和页脚样式 */
 .banner {
-    opacity: 0.8;
     text-align: center;
-    margin-left: 400px;
+	margin-top: -100px;
+    margin-left: 600px;
     width: 80%;
     border: 5px pink;
+}
+
+.nav {
+    text-align: center;
+	margin-top: -20px;
+    margin-left: 250px;
+    width: 80%;
+    border: 5px pink;
+	scale:1.2;
+}
+
+
+.line {
+	scale:0.5;
+    text-align: center;
+    margin-left: 100px;
+    width: 80%;
 }
 
 .footer {
@@ -263,10 +287,11 @@ hr {
 
 /* library容器 */
 .container-library {
-    flex: 3; /* 左侧占 70% 宽度 */
+    flex: 2.5; /* 左侧占 70% 宽度 */
     padding: 30px;
 	padding-top: 5px;
-	height: 500px;
+	padding-left: 30px;	
+	height: 520px;
     background-color:rgba(255, 255, 255, 0.5);
     border: 1px solid #ccc;
     border-radius: 10px;

@@ -32,6 +32,41 @@ function generatePostsJson() {
             console.log("No Markdown files found in the blog directory.");
         }
 
+        // 处理每个 Markdown 文件，替换图片引用
+        posts.forEach(post => {
+            const filePath = path.join(__dirname, post.file);
+            fs.readFile(filePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.error(`Error reading file ${post.file}:`, err);
+                    return;
+                }
+
+                // 查找 Obsidian 的图片引用，并将其转换为标准 Markdown 格式
+                const updatedContent = data.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
+                    // 构造相对路径，确保指向 blog 目录下的图片
+                    let imageName = p1.trim();
+
+                    // 检查是否符合 image<日期>.png 的格式
+                    if (imageName.startsWith('Pasted image')) {
+                        // 替换为符合 image<日期>.png 的格式
+                        imageName = imageName.replace('Pasted image', 'image').trim();
+                    }
+
+                    const imagePath = `${imageName}`;
+                    return `![Image](${imagePath})`;
+                });
+
+                // 写回更新后的 Markdown 文件
+                fs.writeFile(filePath, updatedContent, (err) => {
+                    if (err) {
+                        console.error(`Error writing file ${post.file}:`, err);
+                    } else {
+                        console.log(`Updated Markdown file: ${post.file}`);
+                    }
+                });
+            });
+        });
+
         // 将数据写入 posts.json 文件
         fs.writeFile(jsonFilePath, JSON.stringify(posts, null, 2), (err) => {
             if (err) {

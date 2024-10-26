@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "1a1144e89d5874ab",
+        "id": "7088762e2c56c42e",
         "type": "tabs",
         "children": [
           {
-            "id": "f9985ead2366866d",
+            "id": "0d3f837a2ebcba0e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2020-03-20-记（还算能见人的）梦.md",
+                "file": "2024-10-19-幸好有之前的想法提醒自己，关于心态.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2020-03-20-记（还算能见人的）梦"
-            }
-          },
-          {
-            "id": "85981f2b1dd55189",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2024-05-20-投射.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2024-05-20-投射"
+              "title": "2024-10-19-幸好有之前的想法提醒自己，关于心态"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -55,7 +40,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabeticalReverse"
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -108,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2024-05-24-清醒梦记录.md",
+                "file": "2024-10-19-幸好有之前的想法提醒自己，关于心态.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "2024-05-24-清醒梦记录 的反向链接列表"
+              "title": "2024-10-19-幸好有之前的想法提醒自己，关于心态 的反向链接列表"
             }
           },
           {
@@ -178,35 +163,38 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "85981f2b1dd55189",
+  "active": "0d3f837a2ebcba0e",
   "lastOpenFiles": [
-    "hidden/2024-05-11-只有你的心是你一切力量的源泉.md",
-    "hidden",
+    "2024-10-26-Blog建成！.md",
+    "2024-10-19-幸好有之前的想法提醒自己，关于心态.md",
+    "2024-02-18-冷泳成就.md",
+    "2024-02-28-I know nothing.md",
+    "2024-10-26-也许还没想明白.md",
+    "image20241026042614.png",
+    "2020-03-20-记（还算能见人的）梦.md",
+    "2024-02-16-简单记录一下今天.md",
     "2024-02-01-时间魔法师.md",
-    "2024-03-13-主动选择.md",
-    "2024-05-03-卡斯帕豪泽尔.md",
-    "Pasted image 20241026042614.png",
+    "blog/image20241026042614.png",
+    "2024-04-21-追逐.md",
     "2024-06-18-bonus.md",
+    "2023-12-01-来NZ后我都学到了什么.md",
+    "2024-02-21-Memories of.md",
+    "2024-05-03-卡斯帕豪泽尔.md",
+    "image.md",
+    "2024-03-13-主动选择.md",
+    "2024-04-24-You Have Full Control of Your Own.md",
+    "2024-05-17-你这两年在做什么？.md",
+    "2024-05-20-投射.md",
     "2024-06-05-一个个游戏.md",
     "2024-06-09-现在就做.md",
-    "2023-10-24-普鲁斯特问卷于23岁尾.md",
-    "2020-03-20-记（还算能见人的）梦.md",
-    "2024-06-05-小时候不明白.md",
-    "2024-05-20-投射.md",
     "2024-05-24-清醒梦记录.md",
-    "2024-05-24-清醒梦记录 1.md",
-    "2024-05-17-你这两年在做什么？.md",
-    "2023-12-01-来NZ后我都学到了什么.md",
-    "2024-04-21-追逐.md",
+    "Pasted.md",
+    "blog/Pasted.md",
+    "2024-06-05-小时候不明白.md",
+    "blog",
+    "2023-10-24-普鲁斯特问卷于23岁尾.md",
     "2024-04-18-我们是进化的最好结果吗？.md",
-    "2024-02-16-简单记录一下今天.md",
-    "2024-02-18-冷泳成就.md",
-    "2024-10-26-Blog建成！.md",
-    "2024-10-26-也许还没想明白.md",
-    "2024-02-21-Memories of.md",
-    "2024-04-24-You Have Full Control of Your Own.md",
-    "templates/Clean Empty Lines.md.md",
-    "templates/Blog Post Template.md.md",
+    "hidden",
     "templates",
     "blog.html"
   ]

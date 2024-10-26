@@ -1,6 +1,8 @@
 @echo off
 cd C:\Users\Horiz\Desktop\web pack\asheweb
 
+node copyImagesAndUpdate.js
+
 node generatePosts.js
 
 git add .  

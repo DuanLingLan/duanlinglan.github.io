@@ -20,29 +20,30 @@ body {
 
 <body>
     <div class="profile">
-        <img class="imageProfile" src="assets/pic/profile.png" alt="Profile Picture">
+       <!--  <img class="imageProfile" src="assets/pic/profile.png" alt="Profile Picture">-->
         <h1 class="colorHead">Ashe (Linglan Duan):</h1><br>
     </div>
-	<h4 class="colorText">a bunny.png: please browse me on PC only ^-^（应该会有导航栏，先在这放下。顺便提醒自己要做个RSS功能）</h4>
+	
 	<div class="banner">
+	<h4 class="colorText">	🌸 please browse me on PC 🌸 <img src="assets\img\pixel-bunny.gif" alt="bunny" width="60" height="60" /> </h4>
 	<!--	<a href="#" onclick="document.getElementById('blogDialog').showModal()">Blog</a><h4 class="colorText">-->
-	<a href="blog.html"target="_blank" style="font-size: 24px;">blog</a> 
+	</div>	
+	
+	<div class="nav">
+		<a href="blog.html"target="_blank" style="font-size: 24px;"><img src="assets\img\kawaii.gif" alt="blog" />blog</a> 
+		<a href="notebook.html"target="_blank" style="font-size: 24px;"><img src="assets\img\lolipop.gif" alt="blog" width="65" height="65"/>notebook</a> 		
+		<a href="notebook.html"target="_blank" style="font-size: 24px;"><img src="assets\img\besos.gif" alt="blog" width="65" height="65" />collections</a> 		
+		<a href="notebook.html"target="_blank" style="font-size: 24px;"><img src="assets\img\cake1.gif" alt="blog" width="65" height="65"/>RSS</a> 		
+		
 	</div>
+	
+
 	<!--	<dialog id="blogDialog" style="width: 85%; height: 85%;">
 			<iframe src="blog.html" style="width: 100%; height: 100%; border: none; border-radius: 10px;"></iframe>
 		</dialog>
 	-->
 
-	<h2 class="colorText">Check out my videos here!</h2>
 
-	<div class="container-row">
-		<div class="container-video">
-			<!-- video内容 -->
-			<div id="video-content">Loading...</div> <!-- 动态加载内容的容器 -->
-			<button onclick="loadContent('video.html', 'video-content')">See More</button>
-		</div>
-	</div>
-		
 	<div class="container-row">
 		<div class="container-library">
 			<!-- 左侧长条形内容，放 library 内容 -->
@@ -56,6 +57,17 @@ body {
 		</div>
 	</div>
 
+
+	<h2 class="colorText"><img src="assets\img\hearts-pink-hearts.gif" alt="line" /><br>Check out my videos here!</h2>
+
+	<div class="container-row">
+		<div class="container-video">
+			<!-- video内容 -->
+			<div id="video-content">Loading...</div> <!-- 动态加载内容的容器 -->
+			<button onclick="loadContent('video.html', 'video-content')">See More</button>
+		</div>
+	</div>
+		
 	<div class="container-row">
 		<div class="container-achive">
 			<!-- video内容 -->
