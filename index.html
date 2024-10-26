@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+	<!-- 请欣赏我和chatgpt共同打造的屎山代码 不是 千万不要看-->
 <style>
 body {
 
     background: url("assets/pic/bg.png") no-repeat center center fixed;
-}
+	}
+
 </style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashe Duan</title>
-    <meta name="description" content="Duanlinglan personal website">
+    <title>Linglan Duan</title>
+    <meta name="description" content="Linglan Duan's personal website">
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -20,137 +23,56 @@ body {
         <img class="imageProfile" src="assets/pic/profile.png" alt="Profile Picture">
         <h1 class="colorHead">Ashe (Linglan Duan):</h1><br>
     </div>
-	
- <!--  
-	<div class="slider-container">
-	
-	    <h2 class="colorText">Kiwi Canvas</h2>
-        <div class="slider">
-            <div class="slide">
-                <img src="assets/pic/Auckland.jpg" alt="Auckland">
-                <div class="slide-name">Auckland  25.12.2022</div>
-            </div>
-            <div class="slide">
-                <img src="assets/pic/Tutukaka Walkway.jpg" alt="Tutukaka Walkway">
-                <div class="slide-name">Tutukaka Walkway  04.04.2023</div>
-            </div>
-            <div class="slide">
-                <img src="assets/pic/Whangarei Falls.jpg" alt="Whangarei Falls">
-                <div class="slide-name">Whangarei Falls  04.04.2023</div>
-            </div>
-            <div class="slide">
-                <img src="assets/pic/Blue Spring.jpg" alt="Blue Spring">
-                <div class="slide-name">Blue Spring  04.05.2023</div>
-            </div>		
-            <div class="slide">
-                <img src="assets/pic/Rotorua.jpg" alt="Rotorua">
-                <div class="slide-name">Rotorua  05.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Huka Falls.jpg" alt="Huka Falls">
-                <div class="slide-name">Huka Falls  06.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Tongariro Alpine Crossing.jpg" alt="Tongariro Alpine Crossing">
-                <div class="slide-name">Tongariro Alpine Crossing  07.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Waterfront, Wellington.jpg" alt="Waterfront, Wellington">
-                <div class="slide-name">Waterfront, Wellington  09.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Cuba St, Wellington.jpg" alt="Cuba St, Wellington">
-                <div class="slide-name">Cuba St, Wellington  10.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Ferry to the South.jpg" alt="Ferry to the South">
-                <div class="slide-name">Ferry to the South  13.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Tasman Bay.jpg" alt="Tasman Bay">
-                <div class="slide-name">Tasman Bay  15.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Lake Rotoiti.jpg" alt="Lake Rotoiti">
-                <div class="slide-name">Lake Rotoiti  16.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Greymouth.jpg" alt="Greymouth">
-                <div class="slide-name">Greymouth  20.05.2023</div>
-            </div>
-            <div class="slide">
-                <img src="assets/pic/Wanaka.jpg" alt="Wanaka">
-                <div class="slide-name">Wanaka  23.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Queenstown.jpg" alt="Queenstown">
-                <div class="slide-name">Queenstown  23.05.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Alexandra.jpg" alt="Alexandra">
-                <div class="slide-name">Alexandra  04.06.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Lake Tekapo.jpg" alt="Lake Tekapo">
-                <div class="slide-name">Lake Tekapo  05.07.2023</div>
-            </div>	
-            <div class="slide">
-                <img src="assets/pic/Island Bay, Wellington.jpg" alt="Island Bay, Wellington">
-                <div class="slide-name">Island Bay, Wellington 23.10.2023</div>
-            </div>					
-		
-        </div>
-    </div>
-	-->	
-
+	<h4 class="colorText">a bunny.png: please browse me on PC only ^-^（应该会有导航栏，先在这放下。顺便提醒自己要做个RSS功能）</h4>
 	<div class="banner">
-		<a href="#" onclick="document.getElementById('blogDialog').showModal()">Blog</a><h4 class="colorText">（导航栏还没做好，先在这放下。顺便提醒自己要做个RSS功能）</h4>
+	<!--	<a href="#" onclick="document.getElementById('blogDialog').showModal()">Blog</a><h4 class="colorText">-->
+	<a href="blog.html"target="_blank" style="font-size: 24px;">blog</a> 
+	</div>
+	<!--	<dialog id="blogDialog" style="width: 85%; height: 85%;">
+			<iframe src="blog.html" style="width: 100%; height: 100%; border: none; border-radius: 10px;"></iframe>
+		</dialog>
+	-->
+
+	<h2 class="colorText">Check out my videos here!</h2>
+
+	<div class="container-row">
+		<div class="container-video">
+			<!-- video内容 -->
+			<div id="video-content">Loading...</div> <!-- 动态加载内容的容器 -->
+			<button onclick="loadContent('video.html', 'video-content')">See More</button>
+		</div>
+	</div>
+		
+	<div class="container-row">
+		<div class="container-library">
+			<!-- 左侧长条形内容，放 library 内容 -->
+			<div id="library-content">Loading...</div> <!-- 动态加载内容的容器 -->
+			<button onclick="loadContent('library.html', 'library-content')">See More</button>
+		</div>
+		<div class="container-gallery">
+			<!-- 右侧方块形内容，放 gallery 内容 -->
+			<div id="gallery-content">Loading...</div> <!-- 动态加载内容的容器 -->
+			<button onclick="loadContent('gallery.html', 'gallery-content')">See More</button>
+		</div>
 	</div>
 
-	<dialog id="blogDialog" style="width: 85%; height: 85%;">
-		<iframe src="blog.html" style="width: 100%; height: 100%; border: none; border-radius: 10px;"></iframe>
-	</dialog>
+	<div class="container-row">
+		<div class="container-achive">
+			<!-- video内容 -->
+			<div id="achive-content">Loading...</div> <!-- 动态加载内容的容器 -->
+			<button onclick="loadContent('achive.html', 'achive-content')">See More</button>
+		</div>
+	</div> 
 
-<h2 class="colorText">Check out my videos here!</h2>
-<div class="container-row">
-
-    <div class="container-video">
-        <!-- video内容 -->
-		<div id="video-content">Loading...</div> <!-- 动态加载内容的容器 -->
-		<button onclick="loadContent('video.html', 'video-content')">See More</button>
-    </div>
-</div>
-	
-<div class="container-row">
-    <div class="container-library">
-        <!-- 左侧长条形内容，放 library 内容 -->
-		<div id="library-content">Loading...</div> <!-- 动态加载内容的容器 -->
-		<button onclick="loadContent('library.html', 'library-content')">See More</button>
-    </div>
-    <div class="container-gallery">
-        <!-- 右侧方块形内容，放 gallery 内容 -->
-		<div id="gallery-content">Loading...</div> <!-- 动态加载内容的容器 -->
-		<button onclick="loadContent('gallery.html', 'gallery-content')">See More</button>
-    </div>
-</div>
-
-<div class="container-row">
-    <div class="container-achive">
-        <!-- video内容 -->
-		<div id="achive-content">Loading...</div> <!-- 动态加载内容的容器 -->
-		<button onclick="loadContent('achive.html', 'achive-content')">See More</button>
-    </div>
-</div> 
-
-	
-    <div class="footer">
-        <p class="colorText">
+		
+	<div class="footer">
+		<p class="colorText">
 			<a href="https://drive.google.com/file/d/1PYyf7V-OBr94GSa0huSqZFjPRs5B7CAg/view?usp=sharing"target="_blank">CV</a> / 
 			<a href="mailto:ashe.duan@gmail.com">E-Mail</a> / 
 			<a href="https://steamcommunity.com/profiles/76561198205807517/"target="_blank">Steam</a> / 
 			<a href="https://Linkedin.com/in/linglan-duan/"target="_blank">LinkedIn</a> 
 		</p>
-    </div>
+	</div>
 
 	
 	<div id="audioPlayerContainer">

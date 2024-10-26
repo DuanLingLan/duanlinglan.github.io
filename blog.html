@@ -3,113 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Markdown Blog</title>
+    <title>My Blog</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <!-- 引入 marked.js 库 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body {
             font-family: 'Comic Sans MS','Segoe Print', 'Courier', Arial, sans-serif;
-			font-size:1.1em;
-<!--            background: url("assets/pic/R0007660.JPG") no-repeat center center fixed;-->
+            font-size:1.1em;
             background-size: cover;
-            background-color: lightpink;
+            background-color: LavenderBlush;
             margin: 0;
             padding: 0;
             color: #333;
         }
-		    body:lang(zh) {
-        font-family: '等线', 'SimHei', 'Microsoft YaHei', sans-serif; /* 中文字体 */
-    }
-	
-        .blog-header {
-        font-family: 'Segoe Print', 'Comic Sans MS', 'Courier', 'Microsoft YaHei UI', Arial, sans-serif; /* 更改字体 */
-        font-weight: light; /* 更改字体粗细 */
-        color: #64002B; /* 更改字体颜色 */		
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-bottom: 5px solid #D6659F;
+        body:lang(zh) {
+            font-family: '等线', 'SimHei', 'Microsoft YaHei', sans-serif; /* 中文字体 */
         }
-		.expand-icon {
-			position: absolute;
-			right: 20px;
-			top: 20px;
-			cursor: pointer;
-			font-size: 1.5em;
-			color: #64002B;
-		}
-
-        .blog-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            margin: 20px auto;
-            padding: 20px;
-            width: 80%;
-            max-width: 1200px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-        }
-		
-
-        #post-list {
-            width: 25%;
-            margin-right: 20px;
-            border-right: 2px solid #D6659F;
-            padding-right: 20px;
-        }
-
-        #post-list a {
-            display: block;
-            font-size: 1.2em;
-            color: #64002B;
-            text-decoration: none;
-            margin-bottom: 10px;
-            transition: color 0.3s;
-        }
-
-        #post-list a:hover {
-            color: #FF0066;
-        }
-
-        .month-title {
-            font-size: 1.5em;
-            margin: 15px 0;
-            color: #D6659F;
-        }
-
-        #content {
-            width: 70%;
-            padding-left: 20px;
-        }
-
-        hr {
-            border: 1px solid #D6659F;
-            margin: 20px 0;
-        }
-		.year-title {
-    font-size: 1.8em;
-    margin: 20px 0 10px;
-    color: #64002B;
-    text-align: center;
-}
-
-.month-title {
-    font-size: 1.5em;
-    margin: 15px 0 10px;
-    color: #D6659F;
-    text-align: left;
-}
 
     </style>
 </head>
+
 <body>
     <div class="blog-header">
-        <h1 id="blogTitle">My Blog</h1> <!-- 给标题添加一个 ID -->
-		    <!-- 放大图标 -->
-    <span class="expand-icon" onclick="openFullBlog()">⛶</span>
+        <h1 id="blogTitle">小兔的部落格</h1> <!-- 给标题添加一个 ID -->
     </div>
 
     <div class="blog-container">
@@ -122,17 +39,6 @@
     </div>
 
 <script>
-
-// 添加放大功能函数
-function openFullBlog() {
-    window.open('blog.html', '_blank');
-	    // 关闭 homepage 中的对话框
-    const blogDialog = document.getElementById('blogDialog');
-    if (blogDialog) {
-        blogDialog.close();
-    }
-}
-
     // 加载 posts.json 并生成文章列表
     async function loadPosts() {
         try {
@@ -165,28 +71,41 @@ function openFullBlog() {
                 // 创建年份大标题
                 const yearTitle = document.createElement('div');
                 yearTitle.className = 'year-title';
-                yearTitle.textContent = `${year}`;
+                yearTitle.innerHTML = `${year} <span id="year-${year}-symbol" class="toggle-symbol">-</span>`;
+                yearTitle.onclick = () => toggleVisibility(`year-${year}`, `year-${year}-symbol`);
                 postListDiv.appendChild(yearTitle);
+
+                const yearDiv = document.createElement('div');
+                yearDiv.id = `year-${year}`;
+                yearDiv.className = 'article-list';
+                postListDiv.appendChild(yearDiv);
 
                 const sortedMonths = Object.keys(groupedPosts[year]).sort((a, b) => b - a); // 月份倒序排序
                 for (const month of sortedMonths) {
                     // 创建月份小标题
                     const monthTitle = document.createElement('div');
                     monthTitle.className = 'month-title';
-                    monthTitle.textContent = `${month} `;
-                    postListDiv.appendChild(monthTitle);
+                    monthTitle.innerHTML = `${month}  <span id="month-${year}-${month}-symbol" class="toggle-symbol">-</span>`;
+                    monthTitle.onclick = () => toggleVisibility(`month-${year}-${month}`, `month-${year}-${month}-symbol`);
+                    yearDiv.appendChild(monthTitle);
+
+                    const monthDiv = document.createElement('div');
+                    monthDiv.id = `month-${year}-${month}`;
+                    monthDiv.className = 'article-list';
+                    yearDiv.appendChild(monthDiv);
 
                     groupedPosts[year][month].forEach(post => {
                         // 创建文章链接
                         const postLink = document.createElement('a');
                         postLink.href = "javascript:void(0)";
+                        postLink.className = 'post-link';
 
                         // 从文件名中提取标题部分，不显示年份
-                        const titleWithoutDate = post.title.replace(/^\d{4}-\d{2}-\d{2} /, ''); 
+                        const titleWithoutDate = post.title.replace(/^\d{4}-\d{2}-\d{2} /, '');
 
                         postLink.textContent = titleWithoutDate; // 只显示标题，不包含年份
                         postLink.onclick = () => loadMarkdown(post.file, titleWithoutDate); // 传递标题和文件名
-                        postListDiv.appendChild(postLink);
+                        monthDiv.appendChild(postLink);
                     });
                 }
             }
@@ -220,12 +139,26 @@ function openFullBlog() {
         }
     }
 
+    // 切换显示或隐藏的功能
+    function toggleVisibility(id, symbolId) {
+        const element = document.getElementById(id);
+        const symbol = document.getElementById(symbolId);
+        if (element) {
+            const currentDisplay = window.getComputedStyle(element).display;
+            if (currentDisplay === 'none') {
+                element.style.display = 'block';
+                symbol.textContent = '-';  // 切换为减号表示可折叠
+            } else {
+                element.style.display = 'none';
+                symbol.textContent = '+';  // 切换为加号表示可展开
+            }
+        }
+    }
 
     // 页面加载时调用
     loadPosts();
 </script>
-	<script src="assets/js/script.js"></script>
-
+<script src="assets/js/script.js"></script>
 
 </body>
 </html>

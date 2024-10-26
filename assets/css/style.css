@@ -2,11 +2,9 @@
 a:link {
     color: deepblue;
 }
-
 a:visited {
     color: #D6659F;
 }
-
 a:hover {
     color: deeppink;
 }
@@ -30,7 +28,7 @@ body {
     padding: 0;
 }
 		
-
+/* 横向滑动条 */
 .horizontal-scroll {
     display: flex;
     gap: 20px;
@@ -58,12 +56,6 @@ body {
     text-align: center;
 	margin-right: 100px;
 }
-.slide-achive {
-    flex: 0 0 auto;
-    width: 130px; /* 调整每个图片容器的宽度 */
-    text-align: center;
-	margin-right: 100px;
-}
 
 .slide img {
     width: 150%;
@@ -71,6 +63,14 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.slide-achive {
+    flex: 0 0 auto;
+    width: 130px; /* 调整每个图片容器的宽度 */
+    text-align: center;
+	margin-right: 100px;
+}
+
 .slide-achive img {
     width: 150%;
     height: auto;
@@ -110,18 +110,18 @@ body {
     vertical-align: top;
 }
 
-/* 视频缩略图容器样式 */
+/* 视频缩略图容器相关 */
 .video-thumbnail {
     flex: 1 1 calc(25% - 20px); /* 保持原有设置 */
     box-sizing: border-box;
     text-align: center;
     padding: 10px; /* 添加内部边距，使内容和边框之间有空隙 */
-    background-color: #ffffff; /* 你可以选择一个背景色，以突出缩略图 */
+    background-color:rgba(255, 255, 255, 0.5);/* 你可以选择一个背景色，以突出缩略图 */
     border-radius: 8px; /* 圆角，可以更柔和的视觉效果 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 可选，增加阴影效果 */
 }
 
-/* 缩略图图片的样式 */
+
 .videoscale {
     width: 100%; /* 确保图片自适应容器 */
     height: auto;
@@ -129,7 +129,7 @@ body {
     margin: 0 auto;
 }
 
-/* 视频标题样式 */
+
 .video-title {
     font-size: 1em; /* 根据容器大小调整字体 */
     margin-top: 10px;
@@ -149,10 +149,97 @@ body {
     text-align: center;
     margin: 20px auto;
     width: 82%;
-    border: 3px dashed pink;
+    border: 0px dashed pink;
+	
 }
 
-/* blog对话框 */
+/* blog样式 */
+
+.blog-header {
+font-family: 'Segoe Print', 'Comic Sans MS', 'Courier', 'Microsoft YaHei UI', Arial, sans-serif; /* 更改字体 */
+font-weight: light; /* 更改字体粗细 */
+color: #64002B; /* 更改字体颜色 */		
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-bottom: 5px solid #D6659F;
+}
+
+.blog-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+
+#post-list {
+    width: 25%;
+    margin-right: 20px;
+    border-right: 2px solid #D6659F;
+    padding-right: 20px;
+}
+
+#post-list a {
+    display: block;
+    font-size: 1.2em;
+    color: #64002B;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+}
+
+#post-list a:hover {
+    color: #FF0066;
+}
+
+#content {
+    width: 70%;
+    padding-left: 20px;
+}
+
+hr {
+    border: 1px solid #D6659F;
+    margin: 20px 0;
+}
+
+.year-title {
+	cursor: pointer;
+	font-size: 1.8em;
+	margin: 20px 0 10px;
+	color: #64002B;
+	text-align: center;
+}
+
+.month-title {
+	cursor: pointer;
+	font-size: 1.5em;
+	margin: 15px 0 10px;
+	color: #D6659F;
+	text-align: left;
+}
+
+
+.article-list {
+    padding-left: 20px;
+    display: block; /* 默认展开 */
+}
+.post-link {
+    display: block;
+    margin-left: 20px;
+}
+.toggle-symbol {
+    margin-left: 10px;
+}
+
+
+/* blog对话框,以下暂时没用了 */
     #blogDialog {
         border: none; /* 去除默认边框 */
         border-radius: 15px; /* 添加圆角 */
@@ -164,6 +251,8 @@ body {
     #blogDialog::backdrop {
         background: rgba(0, 0, 0, 0.5); /* 设置对话框背景遮罩的颜色 */
     }
+/* 以上暂时没用了 */
+
 /* Flexbox 布局 */
 .container-row {
     display: flex;
@@ -178,7 +267,7 @@ body {
     padding: 30px;
 	padding-top: 5px;
 	height: 500px;
-    background-color: #f9f9f9;
+    background-color:rgba(255, 255, 255, 0.5);
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -191,7 +280,7 @@ body {
     text-align: center;
     flex: 7; /* 右侧占 30% 宽度 */
     padding: 2px;
-    background-color: #f9f9f9;
+    background-color:rgba(255, 255, 255, 0.5);
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -206,75 +295,93 @@ body {
     gap: 20px; /* 缩略图之间的间距 */
     justify-content: space-around; /* 居中对齐，均匀分布 */
     width: 100%; /* 占满父容器宽度 */
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
+    background-color:rgba(255, 255, 255, 0);
+    border: 0px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
 }
 
+/* Achivement容器 */
 .container-achive {
     flex: 10;
-    background-color: #f9f9f9;
+    background-color:rgba(255, 255, 255, 0.5);
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
 }
 
-	
-	
 
 /* 音频播放器样式 */
-        #audioPlayerContainer {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            background-image: url('../pic/bg.png');
-            padding: 10px;
-            display: flex;
-            align-items: center;
-        }
+#audioPlayerContainer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-image: url('../pic/bg.png');
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
 
-        .play-button,
-        .pause-button {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            outline: none;
-            margin-right: 10px;
-        }
+.play-button,
+.pause-button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    margin-right: 10px;
+}
 
-        .play-button::before,
-        .pause-button::before {
-            font-family: FontAwesome;
-            font-size: 24px;
-        }
+.play-button::before,
+.pause-button::before {
+    font-family: FontAwesome;
+    font-size: 24px;
+}
 
-        .play-button::before {
-            content: '\f04b'; /* FontAwesome play icon */
-        }
+.play-button::before {
+    content: '\f04b'; /* FontAwesome play icon */
+}
 
-        .pause-button::before {
-            content: '\f04c'; /* FontAwesome pause icon */
-        }
+.pause-button::before {
+    content: '\f04c'; /* FontAwesome pause icon */
+}
 
-        .progress-bar {
-            flex: 1;
-            height: 5px;
-            background-color: #ccc;
-            border-radius: 3px;
-            position: relative;
-            cursor: pointer;
-        }
+.progress-bar {
+    flex: 1;
+    height: 5px;
+    background-color: #ccc;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
 
-        .progress {
-            height: 100%;
-            background-color: #f00;
-            border-radius: 3px;
-            width: 0;
-        }
+.progress {
+    height: 100%;
+    background-color: #f00;
+    border-radius: 3px;
+    width: 0;
+}
+
+/* 闪烁动画 */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+        color: #000000	; /* 默认颜色 */
+    }
+    50% {
+        transform: scale(1.2); /* 增加缩放效果 */
+        color: #ff4d4d; /* 闪烁时的亮红色 */
+    }
+}
+
+/* 设置动画仅在页面加载初期闪烁 */
+.play-button.flash {
+    animation: pulse 1s infinite;
+}
+
