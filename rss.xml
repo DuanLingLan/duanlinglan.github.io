@@ -1,30 +1,171 @@
-const fs = require('fs');
-const posts = require('./posts.json');
-
-const rssHeader = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
     <channel>
         <title>Arashi's Blog</title>
         <link>https://duanlinglan.github.io/blog.html</link>
         <description>Latest updates from my blog</description>
         <language>zh-cn</language>
-        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`;
-
-const rssFooter = `
-    </channel>
-</rss>`;
-
-const items = posts.map(post => `
+        <lastBuildDate>Sat, 26 Oct 2024 15:33:11 GMT</lastBuildDate>
     <item>
-        <title>${post.title}</title>
-        <link>https://duanlinglan.github.io/${post.file}</link>
-        <description>${post.summary || 'New post on my blog!'}</description>
-        <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+        <title>2020-03-20 记（还算能见人的）梦</title>
+        <link>https://duanlinglan.github.io/blog/2020-03-20-记（还算能见人的）梦.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Fri, 20 Mar 2020 00:00:00 GMT</pubDate>
     </item>
-`).join('');
 
-const rssContent = `${rssHeader}${items}${rssFooter}`;
+    <item>
+        <title>2023-10-24 普鲁斯特问卷于23岁尾</title>
+        <link>https://duanlinglan.github.io/blog/2023-10-24-普鲁斯特问卷于23岁尾.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Tue, 24 Oct 2023 00:00:00 GMT</pubDate>
+    </item>
 
-// 将 RSS 保存到项目根目录的 rss.xml
-fs.writeFileSync('rss.xml', rssContent, { encoding: 'utf8' });
-console.log('RSS feed updated.');
+    <item>
+        <title>2023-12-01 来NZ后我都学到了什么</title>
+        <link>https://duanlinglan.github.io/blog/2023-12-01-来NZ后我都学到了什么.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Fri, 01 Dec 2023 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-02-01 时间魔法师</title>
+        <link>https://duanlinglan.github.io/blog/2024-02-01-时间魔法师.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Thu, 01 Feb 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-02-16 简单记录一下今天</title>
+        <link>https://duanlinglan.github.io/blog/2024-02-16-简单记录一下今天.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Fri, 16 Feb 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-02-18 冷泳成就</title>
+        <link>https://duanlinglan.github.io/blog/2024-02-18-冷泳成就.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Sun, 18 Feb 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-02-21 Memories of</title>
+        <link>https://duanlinglan.github.io/blog/2024-02-21-Memories of.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Wed, 21 Feb 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-02-28 I know nothing</title>
+        <link>https://duanlinglan.github.io/blog/2024-02-28-I know nothing.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Wed, 28 Feb 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-03-13 主动选择</title>
+        <link>https://duanlinglan.github.io/blog/2024-03-13-主动选择.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Wed, 13 Mar 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-04-18 我们是进化的最好结果吗？</title>
+        <link>https://duanlinglan.github.io/blog/2024-04-18-我们是进化的最好结果吗？.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Thu, 18 Apr 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-04-21 追逐</title>
+        <link>https://duanlinglan.github.io/blog/2024-04-21-追逐.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Sun, 21 Apr 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-04-24 You Have Full Control of Your Own</title>
+        <link>https://duanlinglan.github.io/blog/2024-04-24-You Have Full Control of Your Own.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Wed, 24 Apr 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-05-03 卡斯帕豪泽尔</title>
+        <link>https://duanlinglan.github.io/blog/2024-05-03-卡斯帕豪泽尔.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Fri, 03 May 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-05-17 你这两年在做什么？</title>
+        <link>https://duanlinglan.github.io/blog/2024-05-17-你这两年在做什么？.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Fri, 17 May 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-05-20 投射</title>
+        <link>https://duanlinglan.github.io/blog/2024-05-20-投射.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Mon, 20 May 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-05-24 清醒梦记录</title>
+        <link>https://duanlinglan.github.io/blog/2024-05-24-清醒梦记录.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Fri, 24 May 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-06-05 一个个游戏</title>
+        <link>https://duanlinglan.github.io/blog/2024-06-05-一个个游戏.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-06-05 小时候不明白</title>
+        <link>https://duanlinglan.github.io/blog/2024-06-05-小时候不明白.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-06-09 现在就做</title>
+        <link>https://duanlinglan.github.io/blog/2024-06-09-现在就做.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Sun, 09 Jun 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-06-18 bonus</title>
+        <link>https://duanlinglan.github.io/blog/2024-06-18-bonus.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Tue, 18 Jun 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-10-19 幸好有之前的想法提醒自己，关于心态</title>
+        <link>https://duanlinglan.github.io/blog/2024-10-19-幸好有之前的想法提醒自己，关于心态.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Sat, 19 Oct 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-10-26 Blog建成！</title>
+        <link>https://duanlinglan.github.io/blog/2024-10-26-Blog建成！.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Sat, 26 Oct 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+        <title>2024-10-26 也许还没想明白</title>
+        <link>https://duanlinglan.github.io/blog/2024-10-26-也许还没想明白.md</link>
+        <description>New post on my blog!</description>
+        <pubDate>Sat, 26 Oct 2024 00:00:00 GMT</pubDate>
+    </item>
+
+    </channel>
+</rss>

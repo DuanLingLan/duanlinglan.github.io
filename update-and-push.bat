@@ -5,6 +5,8 @@ node copyImagesAndUpdate.js
 
 node generatePosts.js
 
+node generateRSS.js
+
 git add .  
 
 git commit -m "Update posts and posts.json"  
