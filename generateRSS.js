@@ -18,14 +18,19 @@ const rssFooter = `
     </channel>
 </rss>`;
 
-const items = posts.map(post => `
+const items = posts.map(post => {
+    // 使用正则表达式去掉标题中的日期前缀（如 "2020-03-20 "）
+    const titleWithoutDate = post.title.replace(/^\d{4}-\d{2}-\d{2} /, '');
+
+    return `
     <item>
-        <title>${post.title}</title>
+        <title>${titleWithoutDate}</title>
         <link>https://duanlinglan.github.io/${post.file}</link>
         <description><![CDATA[${post.content || 'New post on my blog!'}]]></description>
         <pubDate>${new Date(post.date).toUTCString()}</pubDate>
     </item>
-`).join('');
+    `;
+}).join('');
 
 const rssContent = `${rssHeader}${items}${rssFooter}`;
 
