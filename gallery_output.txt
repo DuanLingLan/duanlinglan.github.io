@@ -1,0 +1,180 @@
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/aurora.jpg" alt="aurora">
+            <div class="slide-name">aurora</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/com.oculus.vrshell-20241001-193226.jpg" alt="com.oculus.vrshell-20241001-193226">
+            <div class="slide-name">com.oculus.vrshell-20241001-193226</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/duo.jpg" alt="duo">
+            <div class="slide-name">duo</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/free.jpg" alt="free">
+            <div class="slide-name">free</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/nebula.jpg" alt="nebula">
+            <div class="slide-name">nebula</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/R0007660.JPG" alt="R0007660">
+            <div class="slide-name">R0007660</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/swim.png" alt="swim">
+            <div class="slide-name">swim</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/work.jpg" alt="work">
+            <div class="slide-name">work</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/oculus.jpg" alt="oculus">
+            <div class="slide-name">oculus</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/Ferry to the South.jpg" alt="Ferry to the South">
+            <div class="slide-name">Ferry to the South</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/aurora.jpg" alt="aurora">
+            <div class="slide-name">aurora</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/duo.jpg" alt="duo">
+            <div class="slide-name">duo</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/free.jpg" alt="free">
+            <div class="slide-name">free</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/nebula.jpg" alt="nebula">
+            <div class="slide-name">nebula</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/R0007660.JPG" alt="R0007660">
+            <div class="slide-name">R0007660</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/swim.png" alt="swim">
+            <div class="slide-name">swim</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/work.jpg" alt="work">
+            <div class="slide-name">work</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/5am.JPG" alt="5am">
+            <div class="slide-name">5am</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/dream.JPG" alt="dream">
+            <div class="slide-name">dream</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/echo.JPG" alt="echo">
+            <div class="slide-name">echo</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/gallery.JPG" alt="gallery">
+            <div class="slide-name">gallery</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/hieroglyph.JPG" alt="hieroglyph">
+            <div class="slide-name">hieroglyph</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/je ne sais pas.JPG" alt="je ne sais pas">
+            <div class="slide-name">je ne sais pas</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/liz.JPG" alt="liz">
+            <div class="slide-name">liz</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/lizard people(x.JPG" alt="lizard people(x">
+            <div class="slide-name">lizard people(x</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/tablet.JPG" alt="tablet">
+            <div class="slide-name">tablet</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/tranquility.JPG" alt="tranquility">
+            <div class="slide-name">tranquility</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/vibration!.JPG" alt="vibration!">
+            <div class="slide-name">vibration!</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/yay.JPG" alt="yay">
+            <div class="slide-name">yay</div>
+        </div>
+        
+
+        <div class="slide">
+            <img src="assets/pic/gallery_photos/yes to all.JPG" alt="yes to all">
+            <div class="slide-name">yes to all</div>
+        </div>
+        

@@ -11,87 +11,24 @@
         <!-- 这里要做自动监测图片文件的添加，然后生成gallery.html内容的工作流，记录下先 -->
 
 
-    <h2 class="colorText">Echoes of Time</h2>        <!-- 在这里继续添加博物馆的图片 -->
+    <h2 class="colorText">Echoes of Time</h2> <!-- 新的一行标题 -->
     <div class="horizontal-scroll">
         <div class="slide">
-            <img src="assets/pic/gallery_photos/echo.JPG" alt="echo">
-            <div class="slide-name">echo</div>
+            <img src="assets/pic/gallery_photos/a.jpg" alt="image">
+            <div class="slide-name">a</div>
         </div>
-        
-
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/gallery.JPG" alt="gallery">
-            <div class="slide-name">gallery</div>
-        </div>
-        
-
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/hieroglyph.JPG" alt="hieroglyph">
-            <div class="slide-name">hieroglyph</div>
-        </div>
-                <div class="slide">
-            <img src="assets/pic/gallery_photos/yay.JPG" alt="yay">
-            <div class="slide-name">yay</div>
-        </div>
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/lizard people(x.JPG" alt="lizard people(x">
-            <div class="slide-name">lizard people (x</div>
-        </div>
-        
-
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/tablet.JPG" alt="tablet">
-            <div class="slide-name">tablet</div>
-        </div>
-        
-
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/tranquility.JPG" alt="tranquility">
-            <div class="slide-name">tranquility</div>
-        </div>
-        
-
-
+        <!-- 在这里继续添加博物馆的图片 -->
     </div>
 
 
 
-    <h2 class="colorText">Oz Gems</h2>         <!-- 在这里继续添加澳大利亚的图片 -->
+    <h2 class="colorText">Oz Gems</h2> <!-- 新的一行标题 -->
     <div class="horizontal-scroll">
         <div class="slide">
             <img src="assets/pic/gallery_photos/nebula.jpg" alt="image">
             <div class="slide-name">City Nebula</div>
-        </div>	
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/aurora.jpg" alt="aurora">
-            <div class="slide-name">aurora</div>
         </div>
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/dream.JPG" alt="dream">
-            <div class="slide-name">dream</div>
-        </div>		
-         <div class="slide">
-            <img src="assets/pic/gallery_photos/5am.JPG" alt="5am">
-            <div class="slide-name">5am</div>
-        </div>       
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/je ne sais pas.JPG" alt="je ne sais pas">
-            <div class="slide-name">je ne sais pas</div>
-        </div>
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/liz.JPG" alt="liz">
-            <div class="slide-name">liz</div>
-        </div>
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/vibration!.JPG" alt="vibration!">
-            <div class="slide-name">vibration!</div>
-        </div>
-        <div class="slide">
-            <img src="assets/pic/gallery_photos/yes to all.JPG" alt="yes to all">
-            <div class="slide-name">yes to all</div>
-        </div>
-        		
-
+        <!-- 在这里继续添加澳大利亚的图片 -->
     </div>
 
     <h2 class="colorText">Kiwi Canvas</h2>
@@ -171,11 +108,47 @@
     </div>
 
 
-    <h2 class="colorText">Dynamic Collection</h2>
-    <div class="horizontal-scroll" data-collection="collection1"></div>
 
-
+    <div class="collection">
+        <h2>集子 1</h2>
+        <div class="horizontal-scroll" data-collection="collection1"></div>
+    </div>
+    <div class="collection">
+        <h2>集子 2</h2>
+        <div class="horizontal-scroll" data-collection="collection2"></div>
+    </div>
 </div>
+
+    <script>
+        async function loadGallery() {
+            try {
+                const response = await fetch('gallery.json');
+                const images = await response.json();
+
+                // 根据图片路径插入每个图片
+                images.forEach((image, index) => {
+                    // 例如：按照奇偶分配到不同的集子
+                    const collectionContainer = document.querySelector(
+                        index % 2 === 0 ? '[data-collection="collection1"]' : '[data-collection="collection2"]'
+                    );
+
+                    const slideDiv = document.createElement('div');
+                    slideDiv.classList.add('slide');
+
+                    const img = document.createElement('img');
+                    img.src = image;
+                    img.alt = 'image';
+
+                    slideDiv.appendChild(img);
+                    collectionContainer.appendChild(slideDiv);
+                });
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+            }
+        }
+
+        loadGallery();
+    </script>
 
 </body>
 </html>

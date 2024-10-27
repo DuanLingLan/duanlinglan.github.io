@@ -19,12 +19,49 @@ a:hover {
     text-align: center;
 }
 
+.navtext{
+background: linear-gradient(to top, rgba(220, 220, 220, 0.5) 0%, transparent 100%);
+margin:-2px;
+border-radius: 5px;
+border: 2px outset rgba(199, 21, 133, 0.3);
+padding: 2px;
+	
+}
+
 .library-title{
     background-color: rgba(255, 182, 193, 0.3); /* 背景 */
     border-radius: 3px; /* 可选，圆角效果 */
     display: inline-block; /* 保持背景仅包裹文字 */
 }	
-	
+
+.line {
+    color: MediumVioletRed;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(250, 250, 250, 0.6);
+    animation: smooth-glow 3s infinite ease-in-out;
+}
+
+.ashe {
+
+
+}
+
+@keyframes smooth-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px lightpink, 0 0 20px lightpink, 0 0 30px lightpink, 0 0 40px lightpink;
+  }
+  25% {
+    text-shadow: 0 0 8px #fff, 0 0 16px lightpink, 0 0 24px lightpink, 0 0 32px lightpink, 0 0 40px lightpink, 0 0 50px lightpink;
+  }
+  50% {
+    text-shadow: 0 0 12px #fff, 0 0 20px lightpink, 0 0 30px lightpink, 0 0 40px lightpink, 0 0 50px lightpink, 0 0 60px lightpink;
+  }
+  75% {
+    text-shadow: 0 0 8px #fff, 0 0 16px lightpink, 0 0 24px lightpink, 0 0 32px lightpink, 0 0 40px lightpink, 0 0 50px lightpink;
+  }
+}
+
+
 
 /* 全局样式 */
 body {
@@ -146,7 +183,7 @@ body {
 /* 横幅、导航和页脚样式 */
 .banner {
     text-align: center;
-	margin-top: -100px;
+	margin-top: -200px;
     margin-left: 600px;
     width: 80%;
     border: 5px pink;
@@ -162,12 +199,7 @@ body {
 }
 
 
-.line {
-	scale:0.5;
-    text-align: center;
-    margin-left: 100px;
-    width: 80%;
-}
+
 
 .footer {
     text-align: center;
