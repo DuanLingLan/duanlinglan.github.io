@@ -434,7 +434,7 @@ hr {
 
 /* Giscus 容器整体样式 */
 #giscus {
-    font-family: 'Segoe Print', 'Comic Sans MS', sans-serif;
+    font-family: 'Segoe Print', 'Comic Sans MS','幼圆', sans-serif;
     color: #64002B;
     padding: 20px;
     background: rgba(255, 255, 255, 0.8); /* 轻微透明的背景 */
@@ -469,10 +469,8 @@ hr {
 
 /* 调整 iframe 边框和圆角 */
 #giscus iframe {
-    border: none;
-    border-radius: 15px; /* 轻微圆角 */
-    width: 100%;
-    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8) !important; /* 设置为半透明白色背景 */
+    border-radius: 15px; /* 调整边框圆角 */
 }
 
 /* 调整字体颜色和大小 */
@@ -522,22 +520,19 @@ hr {
     text-align: center;
 }
 
-/* 输入框样式 */
-#giscus input[type="text"], #giscus textarea {
-    border: 2px solid #D6659F;
-    border-radius: 8px;
-    padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.9);
-    font-family: 'Segoe Print', 'Comic Sans MS', sans-serif;
-    color: #64002B;
+/* 输入框和评论框的背景 */
+#giscus input[type="text"], 
+#giscus textarea {
+    background-color: rgba(255, 255, 255, 0.8) !important; /* 设置背景为与主背景协调的颜色 */
+    border: 2px solid #D6659F; /* 调整边框为柔和的粉色 */
+    color: #64002B; /* 调整文字颜色 */
 }
 
-#giscus input[type="text"]:focus, #giscus textarea:focus {
-    border-color: #ff99ac;
-    outline: none;
-    box-shadow: 0 0 8px rgba(255, 153, 172, 0.5); /* 粉色光晕效果 */
+#giscus input[type="text"]:focus, 
+#giscus textarea:focus {
+    background-color: rgba(255, 255, 255, 0.9) !important; /* 聚焦时更亮一些 */
+    border-color: #ff99ac; /* 聚焦时边框颜色 */
+    box-shadow: 0 0 8px rgba(255, 153, 172, 0.5); /* 增加聚焦阴影 */
 }
 
 /* 滚动条样式 */
