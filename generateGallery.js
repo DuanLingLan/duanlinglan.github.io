@@ -3,7 +3,7 @@ const path = require('path');
 
 const directoryPath = path.join(__dirname, 'assets/pic/gallery_photos');
 const outputPath = path.join(__dirname, 'gallery.json');
-const cachePath = path.join(__dirname, 'cache.json');
+const cachePath = path.join(__dirname, 'cache/cache.json');
 const outputTextPath = path.join(__dirname, 'gallery_output.txt');
 
 const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif'];

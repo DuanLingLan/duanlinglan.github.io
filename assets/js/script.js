@@ -82,33 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	updatePlayPauseButton();
 
 
-	
-//blog对话框部分，暂时弃用------------------
-	// 获取对话框元素
-	const blogDialog = document.getElementById('blogDialog');
-
-	// 添加事件监听，当点击对话框外部时关闭对话框
-	blogDialog.addEventListener('click', function(event) {
-		if (event.target === blogDialog) {
-			blogDialog.close();
-		}
-	});
-
-	// 示例的打开对话框函数（你可以根据需要调用这个函数）
-	function openBlogDialog() {
-		blogDialog.showModal();
-	}
-
-	// 添加放大功能函数
-	function openFullBlog() {
-		window.open('blog.html', '_blank');
-			// 关闭 homepage 中的对话框
-		const blogDialog = document.getElementById('blogDialog');
-		if (blogDialog) {
-			blogDialog.close();
-		}
-	}
-//以上全部暂时弃用---------------------------
 
 });
 	

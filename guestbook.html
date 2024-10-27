@@ -1,1 +1,203 @@
-<h1>我还没做 打算用gitissues做 但是估计也没人留言。。。</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+</head>
+
+<body>
+
+    <!-- 背景和标题 -->
+    <div class="profile">
+        <h1 class="colorHead"><img src="assets/img/title.png" alt="Guestbook" width="400" height="200" /></h1>
+    </div>
+
+    <!-- 留言簿标题和说明 -->
+    <h2 class="line">
+        <img src="assets/img/hearts-pink-hearts.gif" alt="line" /><br>欢迎来踩踩
+    </h2>
+
+    <!-- 留言簿容器 -->
+    <div class="container-guestbook">
+        <div id="giscus">
+            <script src="https://giscus.app/client.js"
+                    data-repo="DuanLingLan/duanlinglan.github.io"
+                    data-repo-id="R_kgDOK7yHWA"
+                    data-category="Announcements"
+                    data-category-id="DIC_kwDOK7yHWM4CjupO"
+                    data-mapping="pathname"
+                    data-strict="0"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="bottom"
+                    data-theme="custom"
+                    data-lang="zh-CN"
+                    crossorigin="anonymous"
+                    async>
+            </script>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p class="colorText">
+            <a href="https://drive.google.com/file/d/1PYyf7V-OBr94GSa0huSqZFjPRs5B7CAg/view?usp=sharing" target="_blank">CV</a> / 
+            <a href="mailto:ashe.duan@gmail.com">E-Mail</a> / 
+            <a href="https://steamcommunity.com/profiles/76561198205807517/" target="_blank">Steam</a> / 
+            <a href="https://Linkedin.com/in/linglan-duan/" target="_blank">LinkedIn</a> 
+        </p>
+    </div>
+
+</body>
+</html>
+
+<style>
+/* 全局样式 */
+body {
+    font-family: 'Segoe Print', '等线', 'Comic Sans MS', 'Courier', Arial, sans-serif;
+    background: url("assets/pic/bg.png") no-repeat center center fixed;
+    background-size: cover;
+    overflow-x: hidden;
+    color: MediumVioletRed;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* 留言簿容器 */
+.container-guestbook {
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Giscus 容器整体样式 */
+#giscus {
+    font-family: 'Segoe Print', 'Comic Sans MS', sans-serif;
+    color: #64002B;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* 轻微透明的背景 */
+    border-radius: 20px;
+    border: 3px solid #D6659F; /* 柔和的粉色边框 */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* 增加阴影让其更立体 */
+    margin: 20px auto;
+    max-width: 800px;
+    position: relative;
+}
+
+/* 添加花边装饰 */
+#giscus:before, #giscus:after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url("assets/img/flower-corner.png"); /* 左上角装饰图片 */
+    background-size: cover;
+}
+
+#giscus:before {
+    top: -15px;
+    left: -15px;
+}
+
+#giscus:after {
+    bottom: -15px;
+    right: -15px;
+    transform: rotate(180deg); /* 旋转装饰，适合右下角 */
+}
+
+/* 调整 iframe 边框和圆角 */
+#giscus iframe {
+    border: none;
+    border-radius: 15px; /* 轻微圆角 */
+    width: 100%;
+    height: 100%;
+}
+
+/* 调整字体颜色和大小 */
+#giscus p, #giscus div, #giscus span {
+    font-size: 15px;
+    color: #64002B; /* 符合主页的深红色 */
+    line-height: 1.6;
+}
+
+/* 链接样式 */
+#giscus a {
+    color: MediumVioletRed;
+    text-decoration: none;
+    border-bottom: 1px dotted MediumVioletRed;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+#giscus a:hover {
+    color: deeppink;
+    border-bottom-color: deeppink;
+}
+
+/* 按钮样式 */
+#giscus button {
+    background-color: #ffd1dc; /* 柔和的粉色 */
+    color: #64002B;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #D6659F;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#giscus button:hover {
+    background-color: #ffb3c2;
+    transform: scale(1.05); /* 悬停时轻微放大 */
+}
+
+/* 标题装饰 */
+#giscus h1, #giscus h2, #giscus h3 {
+    font-family: 'Segoe Print', 'Comic Sans MS', sans-serif;
+    color: #D6659F;
+    text-shadow: 1px 1px 3px rgba(250, 200, 250, 0.6); /* 柔和的粉色阴影 */
+    margin-bottom: 10px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* 输入框样式 */
+#giscus input[type="text"], #giscus textarea {
+    border: 2px solid #D6659F;
+    border-radius: 8px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-family: 'Segoe Print', 'Comic Sans MS', sans-serif;
+    color: #64002B;
+}
+
+#giscus input[type="text"]:focus, #giscus textarea:focus {
+    border-color: #ff99ac;
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 153, 172, 0.5); /* 粉色光晕效果 */
+}
+
+/* 滚动条样式 */
+#giscus::-webkit-scrollbar {
+    width: 8px;
+}
+
+#giscus::-webkit-scrollbar-thumb {
+    background-color: #D6659F; /* 粉色滑块 */
+    border-radius: 4px;
+}
+
+#giscus::-webkit-scrollbar-track {
+    background-color: #ffd1dc; /* 滑道颜色 */
+}
+
+</style>
