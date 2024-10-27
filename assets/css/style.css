@@ -62,7 +62,6 @@ padding: 2px;
 body {
     font-family: 'Segoe Print', '等线', 'Comic Sans MS', 'Courier', Arial, sans-serif;
     background-size: cover;
-    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
 }
@@ -283,20 +282,6 @@ hr {
 }
 
 
-/* blog对话框,以下暂时没用了 */
-    #blogDialog {
-        border: none; /* 去除默认边框 */
-        border-radius: 15px; /* 添加圆角 */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影 */
-        background: rgba(255, 255, 255, 0.95); /* 半透明背景，显得更加柔和 */
- /*        padding: 20px; 内边距增加一些，让内容不会紧贴边缘 */
-    }
-
-    #blogDialog::backdrop {
-        background: rgba(0, 0, 0, 0.5); /* 设置对话框背景遮罩的颜色 */
-    }
-/* 以上暂时没用了 */
-
 /* Flexbox 布局 */
 .container-row {
     display: flex;
@@ -434,7 +419,7 @@ hr {
 
 /* Giscus 容器整体样式 */
 #giscus {
-    font-family: 'Segoe Print', 'Comic Sans MS','幼圆', sans-serif;
+    font-family: 'Segoe Print','幼圆', 'Comic Sans MS', sans-serif;
     color: #64002B;
     padding: 20px;
     background: rgba(255, 255, 255, 0.8); /* 轻微透明的背景 */
