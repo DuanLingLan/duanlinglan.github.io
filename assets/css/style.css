@@ -395,6 +395,14 @@ hr {
 	overflow: hidden;
 }
 
+.container-pipi {
+
+    background-color:rgba(255,182,193, 1);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
 
 /* 音频播放器样式 */
 #audioPlayerContainer {
