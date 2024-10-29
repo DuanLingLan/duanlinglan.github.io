@@ -168,13 +168,27 @@ body {
 
 }
 
-.deco-left {
+.deco-upleft {
         position: absolute;
         z-index: 1000;
-        padding-left: 40px; /* 可调整边距 */
-		padding-top:200px;
+		transform: translate(20px, -50px);	
 }
 
+.deco-upright {
+        position: absolute;
+        z-index: -1000;
+		top: 0;
+        right: 0; /* 可调整边距 */
+		padding-top:0px;
+}
+
+.deco-midright {
+        position: absolute;
+        z-index: 0;
+		top: 0;
+        right: 0; /* 可调整边距 */
+		transform: translate(-20px, 900px);
+}
 
 
 
