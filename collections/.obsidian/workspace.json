@@ -1,53 +1,80 @@
 {
   "main": {
-    "id": "f35c25740a882ffe",
+    "id": "9730d3c0a9f1af40",
     "type": "split",
     "children": [
       {
-        "id": "7088762e2c56c42e",
+        "id": "de53872649abde9c",
         "type": "tabs",
         "children": [
           {
-            "id": "9acf12a30c4c69df",
+            "id": "f3178c11089dc168",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "xiami.jpg"
+              },
+              "icon": "lucide-image",
+              "title": "xiami"
+            }
+          },
+          {
+            "id": "49a9def5729c0d1a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2024-11-01-十一月的碎碎念合集.md",
+                "file": "test.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2024-11-01-十一月的碎碎念合集"
+              "title": "test"
+            }
+          },
+          {
+            "id": "3660bc0e06fa1b20",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "my holy markdown.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "my holy markdown"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "f50e6db44cc932d8",
+    "id": "c3680a93f365489e",
     "type": "split",
     "children": [
       {
-        "id": "7b7372f3ea584886",
+        "id": "5fc1e6fb2da4c23f",
         "type": "tabs",
         "children": [
           {
-            "id": "70777e0d312797ab",
+            "id": "7991272a2d1939b5",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabeticalReverse"
+                "sortOrder": "alphabetical"
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
             }
           },
           {
-            "id": "7e42f1783ec3aa6e",
+            "id": "dccee77231794e7d",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -64,7 +91,7 @@
             }
           },
           {
-            "id": "c77616035cbf0ce1",
+            "id": "61dd7a7d52dadff6",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,23 +104,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 297.5
+    "width": 300
   },
   "right": {
-    "id": "e477b5b08e7a9521",
+    "id": "cfb6279e739831c8",
     "type": "split",
     "children": [
       {
-        "id": "b98f303c0ddfe85e",
+        "id": "6c9fad13a4494c30",
         "type": "tabs",
         "children": [
           {
-            "id": "ce8707901cd3a0c5",
+            "id": "5f9c89a2bdcf686c",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2024-10-27-网站大修！.md",
+                "file": "my holy markdown.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,25 +130,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "2024-10-27-网站大修！ 的反向链接列表"
+              "title": "my holy markdown 的反向链接列表"
             }
           },
           {
-            "id": "458d0749dcb8eb69",
+            "id": "d8b47138a281c85a",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "未命名.md",
+                "file": "my holy markdown.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "未命名 的出链列表"
+              "title": "my holy markdown 的出链列表"
             }
           },
           {
-            "id": "074e93031e878e61",
+            "id": "f5fdb4adbbc0a20e",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -134,15 +161,15 @@
             }
           },
           {
-            "id": "8f3b4445c0a3b2d0",
+            "id": "1c37da47954193dd",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md"
+                "file": "my holy markdown.md"
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "my holy markdown 的大纲"
             }
           }
         ]
@@ -159,47 +186,16 @@
       "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
-      "templater-obsidian:Templater": false
+      "command-palette:打开命令面板": false
     }
   },
-  "active": "9acf12a30c4c69df",
+  "active": "3660bc0e06fa1b20",
   "lastOpenFiles": [
-    "2017-05-16 整理出了一些高中时的老物存档.md",
-    "2024-11-01-十一月的碎碎念合集.md",
-    "2024-10-27-网站大修！.md",
-    "2024-10-26-Blog建成！.md",
-    "2024-10-28-周一.md",
-    "2024-10-26-也许还没想明白.md",
-    "2020-03-20-记（还算能见人的）梦.md",
-    "2023-06-30-一些碎碎念.md",
-    "2023-12-01-来NZ后我都学到了什么.md",
-    "2023-10-24-普鲁斯特问卷于23岁尾.md",
-    "2024-02-01-时间魔法师.md",
-    "2024-02-16-简单记录一下今天.md",
-    "2024-02-18-冷泳成就.md",
-    "2024-10-19-幸好有之前的想法提醒自己，关于心态.md",
-    "2024-06-05-一个个游戏.md",
-    "2024-06-05-小时候不明白.md",
-    "2024-05-24-清醒梦记录 🌌.md",
-    "2024-05-20-投射.md",
-    "2024-06-09-现在就做.md",
-    "2024-02-21-Memories of 🍂.md",
-    "hidden, draft/2024-05-11-只有你的心是你一切力量的源泉.md",
-    "hidden, draft/2024-10-27-为什么要建自己的blog？-草稿-.md",
-    "hidden, draft/about me.md",
-    "hidden, draft/currently存档记录.md",
-    "2024-02-28-I know nothing.md",
-    "2024-05-17-你这两年在做什么？.md",
-    "images/image20241026042614.png",
-    "image20241026042614.png",
-    "images",
-    "新建文件夹",
-    "未命名",
-    "blog/image20241026042614.png",
-    "blog",
-    "hidden, draft",
-    "templates",
-    "blog.html"
+    "life.jpg",
+    "test.md",
+    "starstarstar.png",
+    "my holy markdown.md",
+    "xiami.jpg",
+    "akutagawa.jpg"
   ]
 }
