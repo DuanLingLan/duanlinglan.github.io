@@ -82,6 +82,17 @@ document.addEventListener('DOMContentLoaded', function() {
 	updatePlayPauseButton();
 
 
+        const gif = document.getElementById('gif');
+        
+        gif.addEventListener('mouseover', () => {
+            gif.classList.add('shake'); // 鼠标悬停时添加 shake 类
+        });
+
+        gif.addEventListener('mouseout', () => {
+            gif.classList.remove('shake'); // 鼠标移开时移除 shake 类
+        });
+
+
 
 });
 	
