@@ -360,7 +360,7 @@ hr {
 
 /* library容器(变成当前状态栏了，但是名字就不改了… */
 .container-library {
-    flex: 2.5; /* 左侧占 70% 宽度 */
+    flex: 3; /* 左侧占 70% 宽度 */
     padding: 30px;
 	padding-top: 5px;
 	padding-left: 30px;	
