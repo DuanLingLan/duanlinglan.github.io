@@ -503,3 +503,64 @@ a {
 }
 
 /* Start https://www.cursors-4u.com * {cursor: url(https://cur.cursors-4u.net/nature/nat-1/nat21.ani), url(https://cur.cursors-4u.net/nature/nat-1/nat21.png), auto !important;}  End https://www.cursors-4u.com */
+
+/* 自定义滚动条样式 */
+.container-library::-webkit-scrollbar,
+.container-gallery::-webkit-scrollbar,
+.container-video::-webkit-scrollbar,
+.container-achive::-webkit-scrollbar {
+    width: 14px;
+}
+
+/* 滚动条轨道 - 使用粉色渐变背景 */
+.container-library::-webkit-scrollbar-track,
+.container-gallery::-webkit-scrollbar-track,
+.container-video::-webkit-scrollbar-track,
+.container-achive::-webkit-scrollbar-track {
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 228, 225, 0.8),  /* 淡玫瑰色 */
+        rgba(255, 192, 203, 0.8),  /* 粉红色 */
+        rgba(255, 228, 225, 0.8)   /* 淡玫瑰色 */
+    );
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+/* 滚动条滑块 */
+.container-library::-webkit-scrollbar-thumb,
+.container-gallery::-webkit-scrollbar-thumb,
+.container-video::-webkit-scrollbar-thumb,
+.container-achive::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        to right,
+        rgba(216, 191, 216, 0.9),  /* 蓟色 */
+        rgba(221, 160, 221, 0.9)    /* 梅红色 */
+    );
+    border-radius: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    background-clip: padding-box;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 滑块悬停效果 */
+.container-library::-webkit-scrollbar-thumb:hover,
+.container-gallery::-webkit-scrollbar-thumb:hover,
+.container-video::-webkit-scrollbar-thumb:hover,
+.container-achive::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        45deg,
+        rgba(221, 160, 221, 0.9),    /* 梅红色 */
+        rgba(216, 191, 216, 0.9),    /* 蓟色 */
+        rgba(230, 190, 230, 0.9)     /* 淡紫色 */
+    );
+    box-shadow: inset 0 0 8px rgba(255, 192, 203, 0.4);
+}
+
+/* 滚动条角落样式 */
+.container-library::-webkit-scrollbar-corner,
+.container-gallery::-webkit-scrollbar-corner,
+.container-video::-webkit-scrollbar-corner,
+.container-achive::-webkit-scrollbar-corner {
+    background: transparent;
+}
