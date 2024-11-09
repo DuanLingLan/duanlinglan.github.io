@@ -8,6 +8,7 @@
     <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         /* 统一基础样式 */
         body {
@@ -17,6 +18,49 @@
             overflow-x: hidden;
             color: MediumVioletRed;
             margin: 0;
+            overflow-y: hidden;
+        }
+
+        /* 修改布局容器样式 */
+        .notebook-layout {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* 左侧区域（包含笔记本和便签） */
+        .left-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;  /* 适应内容高度 */
+        }
+
+        /* 右侧区域 */
+        .right-container {
+            height: fit-content;  /* 适应内容高度 */
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            height: fit-content;  /* 适应内容高度 */
+        }
+
+        /* 便签区域 */
+        .note-section {
+            margin-top: 0;  /* 移除便签的顶部边距 */
+        }
+
+        /* 笔记本和文章列表容器 */
+        .nav-themes, .sub-nav {
+            height: fit-content;  /* 适应内容高度 */
+        }
+
+        /* 确保内容区域不会过度拉伸 */
+        .notebook-page {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         /* 修改布局样式 */
@@ -57,18 +101,177 @@
 
         /* 统一导航文字样式 */
         .navtext {
-            color: MediumVioletRed;
-            padding: 5px;
-            margin: 5px 0;
-            border-radius: 5px;
-            transition: color 0.3s ease;
+            display: block;
+            color: #6f0635;  /* 深玫瑰褐色，更温暖的深色调 */
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #fff7f7, #ffe6e6);
+            box-shadow: 3px 3px 6px #ffcccc,
+                       -3px -3px 6px #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* 鼠标悬停效果 */
         .navtext:hover {
+            color: #FF69B4;  /* 保持鼠标悬停时的粉色 */
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 8px #ffcccc,
+                       -4px -4px 8px #ffffff;
+        }
+
+        /* 点击效果 */
+        .navtext:active {
+            transform: translateY(1px);
+            box-shadow: 2px 2px 4px #ffcccc,
+                       -2px -2px 4px #ffffff;
+        }
+
+        /* 添加波纹效果 */
+        .navtext::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #ff69b4 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+
+        .navtext:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* 导航列表样式 */
+        .nav-themes ul, .sub-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* 添加滚动条美化 */
+        .nav-themes, .sub-nav {
+            max-height: calc(100vh - 400px);
+            overflow-y: auto;
+        }
+
+        .nav-themes::-webkit-scrollbar,
+        .sub-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .nav-themes::-webkit-scrollbar-track,
+        .sub-nav::-webkit-scrollbar-track {
+            background: #fff7f7;
+            border-radius: 3px;
+        }
+
+        .nav-themes::-webkit-scrollbar-thumb,
+        .sub-nav::-webkit-scrollbar-thumb {
+            background: #ffcccc;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-themes::-webkit-scrollbar-thumb:hover,
+        .sub-nav::-webkit-scrollbar-thumb:hover {
+            background: #ffb3b3;
+        }
+
+        /* 当前选中项的样式 */
+        .navtext.active {
+            background: linear-gradient(145deg, #ffe6e6, #ffd9d9);
+            color: #FF69B4;  /* 亮粉色显示当前选中项 */
+            font-weight: bold;
+        }
+
+        /* 添加可爱的图标 */
+        .nav-themes h3::before,
+        .sub-nav h3::before {
+            content: '🔸';
+            margin-right: 8px;
             color: deeppink;
         }
 
         /* 其他样式保持不变... */
+
+        .markdown-content {
+            font-family: 'Comic Sans MS', '霞鹜文楷', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: #4A4A4A;  /* 深灰色作为主要文字颜色，清晰易读 */
+            text-align: left;
+            padding: 20px;
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+
+        .markdown-content p {
+            margin: 1em 0;
+            text-align: justify;
+            line-height: 2;
+            text-indent: 2em;
+        }
+
+        .markdown-content strong {
+            color: #C71585;  /* 中等紫红色，突出重点但不太艳丽 */
+            font-weight: bold;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            padding-left: 2em;
+            margin: 1em 0;
+        }
+
+        .markdown-content li {
+            margin: 0.5em 0;
+        }
+
+        .markdown-content h1, .markdown-content h2, 
+        .markdown-content h3, .markdown-content h4 {
+            color: #DB7093;  /* 古典玫瑰红，优雅但不刺眼 */
+            margin: 1em 0;
+            font-family: 'Comic Sans MS', 'PingFang SC', sans-serif;
+        }
+
+        .main-content {
+            overflow-y: auto;
+            max-height: calc(100vh - 300px);
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #fff7f7;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #ffcccc;
+            border-radius: 4px;
+        }
+
+        /* 文章列表项样式 */
+        .sub-nav .navtext {
+            color: #6f0635;  /* 与左侧导航保持一致 */
+        }
+
+        /* 便签区域文字样式 */
+        .note-section .markdown-content {
+            color: #696969;  /* 暗灰色，区分于主要内容但保持可读性 */
+        }
     </style>
 </head>
 <body>
@@ -79,34 +282,33 @@
     </div>
 
     <div class="notebook-layout">
-        <!-- 左侧导航栏（主题导航） -->
-        <div class="nav-themes">
-            <h3 class="colorHead">笔记本</h3>
-            <ul>
-                <!-- JavaScript 将动态填充内容 -->
-            </ul>
+        <div class="left-container">
+            <div class="nav-themes">
+                <h3 class="colorHead">笔记本</h3>
+                <ul>
+                    <!-- JavaScript 将动态填充内容 -->
+                </ul>
+            </div>
+            <div class="note-section">
+                <h3 class="colorHead">说点什么</h3>
+                <p class="colorText">这里是你的便签和感想...</p>
+            </div>
         </div>
-
-        <!-- 主内容区域（笔记本页面） -->
+        
         <div class="main-content">
             <div class="notebook-page">
                 <h2 class="colorHead">Notebook</h2>
                 <p class="colorText">这里是主要内容...</p>
             </div>
         </div>
-
-        <!-- 右侧导航栏（小文章导航） -->
-        <div class="sub-nav">
-            <h3 class="colorHead">文章列表</h3>
-            <ul>
-                <!-- JavaScript 将动态填充内容 -->
-            </ul>
-        </div>
-
-        <!-- 底部便签部分 -->
-        <div class="note-section">
-            <h3 class="colorHead">说点什么</h3>
-            <p class="colorText">这里是你的便签和感想...</p>
+        
+        <div class="right-container">
+            <div class="sub-nav">
+                <h3 class="colorHead">文章列表</h3>
+                <ul>
+                    <!-- JavaScript 将动态填充内容 -->
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -126,17 +328,14 @@
             const response = await fetch('notebook-content.json');
             const data = await response.json();
             
-            // 加载主题导航
+            // 只加载主题导航
             loadThemes(data.themes);
             
-            // 默认加载第一个主题的文章
-            if (data.themes.length > 0) {
-                loadArticles(data.themes[0]);
-                // 默认显示第一篇文章
-                if (data.themes[0].articles.length > 0) {
-                    displayArticle(data.themes[0].articles[0]);
-                }
-            }
+            // 显示默认欢迎信息
+            displayWelcomeMessage();
+            
+            // 显示默认的文章列表提示
+            displayDefaultArticleList();
         } catch (error) {
             console.error('加载内容失败:', error);
         }
@@ -151,31 +350,62 @@
             li.className = 'navtext';
             li.textContent = theme.name;
             li.onclick = () => {
+                // 移除其他项的active类
+                document.querySelectorAll('.nav-themes .navtext').forEach(item => {
+                    item.classList.remove('active');
+                });
+                // 添加当前项的active类
+                li.classList.add('active');
+                
                 currentTheme = theme;
+                // 加载该主题的文章列表
                 loadArticles(theme);
-                // 加载主题下的第一篇文章
-                if (theme.articles.length > 0) {
-                    displayArticle(theme.articles[0]);
-                }
             };
             themesList.appendChild(li);
         });
     }
 
     function loadArticles(theme) {
-        const articlesList = document.querySelector('.sub-nav ul');
-        articlesList.innerHTML = '';
+        // 获取 sub-nav 元素
+        const subNav = document.querySelector('.sub-nav');
         
-        theme.articles.forEach(article => {
-            const li = document.createElement('li');
-            li.className = 'navtext';
-            li.textContent = article.title;
-            li.onclick = () => {
-                currentArticle = article;
-                displayArticle(article);
-            };
-            articlesList.appendChild(li);
-        });
+        // 清空现有内容并添加标题
+        subNav.innerHTML = `
+            <h3 class="colorHead">文章列表</h3>
+            <ul></ul>
+        `;
+        
+        // 获取新创建的 ul 元素
+        const articlesList = subNav.querySelector('ul');
+        
+        // 检查是否有文章
+        if (theme.articles && theme.articles.length > 0) {
+            theme.articles.forEach(article => {
+                const li = document.createElement('li');
+                li.className = 'navtext';
+                li.textContent = article.title;
+                li.onclick = () => {
+                    // 移除其他项的active类
+                    document.querySelectorAll('.sub-nav .navtext').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    // 添加当前项的active类
+                    li.classList.add('active');
+                    
+                    currentArticle = article;
+                    displayArticle(article);
+                };
+                articlesList.appendChild(li);
+            });
+        } else {
+            // 如果没有文章，显示提示信息
+            subNav.innerHTML = `
+                <h3 class="colorHead">文章列表</h3>
+                <div class="markdown-content" style="text-align: center; padding: 20px;">
+                    <p style="text-indent: 0;">该主题下暂无文章 </p>
+                </div>
+            `;
+        }
     }
 
     function displayArticle(article) {
@@ -183,14 +413,58 @@
         const mainContent = document.querySelector('.main-content .notebook-page');
         mainContent.innerHTML = `
             <h2 class="colorHead">${article.title}</h2>
-            <p class="colorText">${article.content}</p>
+            <div class="markdown-content">
+                ${marked.parse(article.content || '')}
+            </div>
         `;
         
         // 更新便签区域
         const noteSection = document.querySelector('.note-section');
         noteSection.innerHTML = `
             <h3 class="colorHead">说点什么</h3>
-            <p class="colorText">${article.note}</p>
+            <div class="markdown-content">
+                ${marked.parse(article.note || '')}
+            </div>
+        `;
+
+        // 确保 marked 正确解析 Markdown
+        marked.setOptions({
+            breaks: true,  // 支持 GitHub 风格的换行
+            gfm: true,     // 启用 GitHub 风格的 Markdown
+            headerIds: true,
+            mangle: false,
+            sanitize: false
+        });
+    }
+
+    // 添加显示欢迎信息的函数
+    function displayWelcomeMessage() {
+        const mainContent = document.querySelector('.main-content .notebook-page');
+        mainContent.innerHTML = `
+            <h2 class="colorHead">Welcome to My Notebook</h2>
+            <div class="markdown-content" style="text-align: center;">
+                <p style="text-indent: 0;">Select a note to read </p>
+            </div>
+        `;
+        
+        // 显示默认的便签信息
+        const noteSection = document.querySelector('.note-section');
+        noteSection.innerHTML = `
+            <h3 class="colorHead">说点什么</h3>
+            <div class="markdown-content" style="text-align: center;">
+                <p style="text-indent: 0;">选择一篇文章来查看相关笔记 ...</p>
+            </div>
+        `;
+    }
+
+    // 添加显示默认文章列表提示的函数
+    function displayDefaultArticleList() {
+        const articlesList = document.querySelector('.sub-nav');
+        articlesList.innerHTML = `
+            <h3 class="colorHead">文章列表</h3>
+            <div class="markdown-content" style="text-align: center; padding: 20px;">
+                <p style="text-indent: 0;">请先选择一个笔记本主题 </p>
+            </div>
         `;
     }
 

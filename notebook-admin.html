@@ -95,6 +95,73 @@
             color: maroon;
             font-weight: bold;
         }
+
+        .preview-section {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ffcccc;
+            border-radius: 4px;
+        }
+
+        .markdown-content {
+            font-family: 'Comic Sans MS', '霞鹜文楷', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: rgb(155, 26, 107);
+            text-align: left;
+        }
+        
+        .markdown-content p {
+            margin: 1em 0;
+        }
+        
+        .markdown-content strong {
+            color: maroon;
+            font-weight: bold;
+        }
+
+        /* 添加拖拽相关样式 */
+        .sortable-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .article-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #fff;
+            border: 1px solid #ffcccc;
+            border-radius: 4px;
+            cursor: move;
+            transition: all 0.3s ease;
+        }
+
+        .article-item:hover {
+            background-color: #fff7f7;
+        }
+
+        .article-item.dragging {
+            opacity: 0.5;
+            background-color: #ffe6e6;
+        }
+
+        .delete-btn {
+            background-color: #ffcccc;
+            color: maroon;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #ffb3b3;
+        }
     </style>
 </head>
 <body>
@@ -129,18 +196,30 @@
             </div>
             <div class="input-group">
                 <label>文章内容：</label>
-                <textarea id="articleContent"></textarea>
+                <textarea id="articleContent" oninput="updatePreview()"></textarea>
+                <div class="preview-section">
+                    <h4 class="colorHead">预览</h4>
+                    <div id="contentPreview" class="markdown-content"></div>
+                </div>
             </div>
             <div class="input-group">
                 <label>便签内容：</label>
-                <textarea id="articleNote"></textarea>
+                <textarea id="articleNote" oninput="updatePreview()"></textarea>
+                <div class="preview-section">
+                    <h4 class="colorHead">便签预览</h4>
+                    <div id="notePreview" class="markdown-content"></div>
+                </div>
             </div>
             <button onclick="addArticle()">添加文章</button>
-            <div class="article-list" id="articleList"></div>
-        </div>
+            <div class="article-list" id="articleList">
+                <ul class="sortable-list">
+                    <!-- 文章项会被动态添加到这里 -->
+                </ul>
+            </div>
 
-        <button onclick="exportToJson()">导出JSON文件</button>
-        <button onclick="window.location.href='notebook.html'">返回笔记本</button>
+            <button onclick="exportToJson()">导出JSON文件</button>
+            <button onclick="window.location.href='notebook.html'">返回笔记本</button>
+        </div>
     </div>
 
     <script>
@@ -161,28 +240,22 @@
 
         // 刷新界面
         function refreshUI() {
+            // 保存当前选中的主题
+            const currentThemeIndex = document.getElementById('themeSelect').value;
+            
             // 刷新主题列表
             const themeList = document.getElementById('themeList');
             const themeSelect = document.getElementById('themeSelect');
             
             themeList.innerHTML = '';
-            themeSelect.innerHTML = '';
+            themeSelect.innerHTML = '<option value="">请选择主题</option>';
             
             notebookData.themes.forEach((theme, index) => {
-                // 更新主题列表
-                themeList.innerHTML += `
-                    <div class="theme-item">
-                        <span>${theme.name}</span>
-                        <button onclick="deleteTheme(${index})">删除</button>
-                    </div>
-                `;
-
-                // 更新主题选择下拉框
                 themeSelect.innerHTML += `
-                    <option value="${index}">${theme.name}</option>
+                    <option value="${index}" ${currentThemeIndex == index ? 'selected' : ''}>${theme.name}</option>
                 `;
             });
-
+            
             // 刷新文章列表
             refreshArticleList();
         }
@@ -190,19 +263,74 @@
         // 刷新文章列表
         function refreshArticleList() {
             const themeIndex = document.getElementById('themeSelect').value;
-            const articleList = document.getElementById('articleList');
+            const articleList = document.querySelector('#articleList .sortable-list');
             articleList.innerHTML = '';
 
-            if (themeIndex !== '' && notebookData.themes[themeIndex]) {
+            if (themeIndex === '') {
+                articleList.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: maroon;">
+                        请先选择一个笔记本主题 ♥
+                    </div>
+                `;
+                return;
+            }
+
+            if (notebookData.themes[themeIndex]) {
                 notebookData.themes[themeIndex].articles.forEach((article, index) => {
-                    articleList.innerHTML += `
-                        <div class="article-item">
-                            <span>${article.title}</span>
-                            <button onclick="deleteArticle(${themeIndex}, ${index})">删除</button>
-                        </div>
+                    const li = document.createElement('li');
+                    li.className = 'article-item';
+                    li.draggable = true;
+                    li.innerHTML = `
+                        <span>${article.title}</span>
+                        <button class="delete-btn" onclick="deleteArticle(${themeIndex}, ${index})">×</button>
                     `;
+
+                    // 添加拖拽事件监听器
+                    li.addEventListener('dragstart', () => {
+                        li.classList.add('dragging');
+                    });
+
+                    li.addEventListener('dragend', () => {
+                        li.classList.remove('dragging');
+                        updateArticlesOrder(themeIndex);
+                    });
+
+                    articleList.appendChild(li);
                 });
             }
+
+            // 添加拖拽排序功能
+            articleList.addEventListener('dragover', e => {
+                e.preventDefault();
+                const draggingItem = articleList.querySelector('.dragging');
+                const siblings = [...articleList.querySelectorAll('.article-item:not(.dragging)')];
+                const nextSibling = siblings.find(sibling => {
+                    const rect = sibling.getBoundingClientRect();
+                    return e.clientY <= rect.top + rect.height / 2;
+                });
+
+                if (nextSibling) {
+                    articleList.insertBefore(draggingItem, nextSibling);
+                } else {
+                    articleList.appendChild(draggingItem);
+                }
+            });
+        }
+
+        // 更新文章顺序的函数
+        function updateArticlesOrder(themeIndex) {
+            const articleItems = document.querySelectorAll('.article-item');
+            const newArticles = [];
+            
+            articleItems.forEach(item => {
+                const title = item.querySelector('span').textContent;
+                const article = notebookData.themes[themeIndex].articles.find(a => a.title === title);
+                if (article) {
+                    newArticles.push(article);
+                }
+            });
+
+            notebookData.themes[themeIndex].articles = newArticles;
         }
 
         // 添加主题
@@ -227,6 +355,7 @@
             const note = document.getElementById('articleNote').value;
 
             if (themeIndex !== '' && title && content) {
+                // 保存原始的 Markdown 文本
                 notebookData.themes[themeIndex].articles.push({
                     id: 'article' + Date.now(),
                     title: title,
@@ -234,12 +363,17 @@
                     note: note
                 });
 
-                // 清空输入框
+                // 只清空内容输入框，保持主题选择
                 document.getElementById('articleTitle').value = '';
                 document.getElementById('articleContent').value = '';
                 document.getElementById('articleNote').value = '';
+                
+                // 清空预览区域
+                document.getElementById('contentPreview').innerHTML = '';
+                document.getElementById('notePreview').innerHTML = '';
 
-                refreshUI();
+                // 只刷新文章列表，不刷新整个UI
+                refreshArticleList();
             }
         }
 
@@ -253,10 +387,8 @@
 
         // 删除文章
         function deleteArticle(themeIndex, articleIndex) {
-            if (confirm('确定要删除这篇文章吗？')) {
-                notebookData.themes[themeIndex].articles.splice(articleIndex, 1);
-                refreshUI();
-            }
+            notebookData.themes[themeIndex].articles.splice(articleIndex, 1);
+            refreshUI();
         }
 
         // 导出JSON文件
@@ -325,30 +457,22 @@
             `;
         }
 
-        // 修改添加文章时的处理
-        function addArticle() {
-            const themeIndex = document.getElementById('themeSelect').value;
-            const title = document.getElementById('articleTitle').value;
+        function updatePreview() {
+            // 更新文章内容预览
+            const contentPreview = document.getElementById('contentPreview');
             const content = document.getElementById('articleContent').value;
+            contentPreview.innerHTML = marked.parse(content);
+            
+            // 更新便签预览
+            const notePreview = document.getElementById('notePreview');
             const note = document.getElementById('articleNote').value;
-
-            if (themeIndex !== '' && title && content) {
-                // 保存原始的 Markdown 文本
-                notebookData.themes[themeIndex].articles.push({
-                    id: 'article' + Date.now(),
-                    title: title,
-                    content: content,  // 保存原始 Markdown
-                    note: note
-                });
-
-                // 清空输入框
-                document.getElementById('articleTitle').value = '';
-                document.getElementById('articleContent').value = '';
-                document.getElementById('articleNote').value = '';
-
-                refreshUI();
-            }
+            notePreview.innerHTML = marked.parse(note);
         }
+
+        // 添加主题选择变化的监听器
+        document.getElementById('themeSelect').addEventListener('change', function() {
+            refreshArticleList();
+        });
     </script>
 </body>
 </html> 
