@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notebook 管理界面</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .admin-panel {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff7f7;
+            border: 2px solid #ffcccc;
+            border-radius: 8px;
+        }
+
+        .theme-section, .article-section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: maroon;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ffcccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #ffcccc;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            color: maroon;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #ffb3b3;
+        }
+
+        .theme-list, .article-list {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+
+        .theme-item, .article-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #ffcccc;
+        }
+
+        .article-content {
+            white-space: pre-wrap;  /* 保持换行 */
+            line-height: 1.6;
+        }
+        
+        .markdown-content {
+            font-family: 'Comic Sans MS', '霞鹜文楷', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: rgb(155, 26, 107);
+        }
+        
+        .markdown-content p {
+            margin: 1em 0;
+        }
+        
+        .markdown-content strong {
+            color: maroon;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h2 class="colorHead">笔记本管理</h2>
+        <div class="import-section">
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+            <button onclick="document.getElementById('importFile').click()">导入JSON文件</button>
+        </div>
+        
+        <!-- 主题管理部分 -->
+        <div class="theme-section">
+            <h3 class="colorHead">主题理</h3>
+            <div class="input-group">
+                <label>主题名称：</label>
+                <input type="text" id="themeName">
+            </div>
+            <button onclick="addTheme()">添加主题</button>
+            <div class="theme-list" id="themeList"></div>
+        </div>
+
+        <!-- 文章管理部分 -->
+        <div class="article-section">
+            <h3 class="colorHead">文章管理</h3>
+            <div class="input-group">
+                <label>选择主题：</label>
+                <select id="themeSelect"></select>
+            </div>
+            <div class="input-group">
+                <label>文章标题：</label>
+                <input type="text" id="articleTitle">
+            </div>
+            <div class="input-group">
+                <label>文章内容：</label>
+                <textarea id="articleContent"></textarea>
+            </div>
+            <div class="input-group">
+                <label>便签内容：</label>
+                <textarea id="articleNote"></textarea>
+            </div>
+            <button onclick="addArticle()">添加文章</button>
+            <div class="article-list" id="articleList"></div>
+        </div>
+
+        <button onclick="exportToJson()">导出JSON文件</button>
+        <button onclick="window.location.href='notebook.html'">返回笔记本</button>
+    </div>
+
+    <script>
+        let notebookData = {
+            themes: []
+        };
+
+        // 初始化加载数据
+        async function loadData() {
+            try {
+                const response = await fetch('notebook-content.json');
+                notebookData = await response.json();
+                refreshUI();
+            } catch (error) {
+                console.error('加载数据失败:', error);
+            }
+        }
+
+        // 刷新界面
+        function refreshUI() {
+            // 刷新主题列表
+            const themeList = document.getElementById('themeList');
+            const themeSelect = document.getElementById('themeSelect');
+            
+            themeList.innerHTML = '';
+            themeSelect.innerHTML = '';
+            
+            notebookData.themes.forEach((theme, index) => {
+                // 更新主题列表
+                themeList.innerHTML += `
+                    <div class="theme-item">
+                        <span>${theme.name}</span>
+                        <button onclick="deleteTheme(${index})">删除</button>
+                    </div>
+                `;
+
+                // 更新主题选择下拉框
+                themeSelect.innerHTML += `
+                    <option value="${index}">${theme.name}</option>
+                `;
+            });
+
+            // 刷新文章列表
+            refreshArticleList();
+        }
+
+        // 刷新文章列表
+        function refreshArticleList() {
+            const themeIndex = document.getElementById('themeSelect').value;
+            const articleList = document.getElementById('articleList');
+            articleList.innerHTML = '';
+
+            if (themeIndex !== '' && notebookData.themes[themeIndex]) {
+                notebookData.themes[themeIndex].articles.forEach((article, index) => {
+                    articleList.innerHTML += `
+                        <div class="article-item">
+                            <span>${article.title}</span>
+                            <button onclick="deleteArticle(${themeIndex}, ${index})">删除</button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // 添加主题
+        function addTheme() {
+            const themeName = document.getElementById('themeName').value;
+            if (themeName) {
+                notebookData.themes.push({
+                    id: 'theme' + Date.now(),
+                    name: themeName,
+                    articles: []
+                });
+                document.getElementById('themeName').value = '';
+                refreshUI();
+            }
+        }
+
+        // 添加文章
+        function addArticle() {
+            const themeIndex = document.getElementById('themeSelect').value;
+            const title = document.getElementById('articleTitle').value;
+            const content = document.getElementById('articleContent').value;
+            const note = document.getElementById('articleNote').value;
+
+            if (themeIndex !== '' && title && content) {
+                notebookData.themes[themeIndex].articles.push({
+                    id: 'article' + Date.now(),
+                    title: title,
+                    content: content,
+                    note: note
+                });
+
+                // 清空输入框
+                document.getElementById('articleTitle').value = '';
+                document.getElementById('articleContent').value = '';
+                document.getElementById('articleNote').value = '';
+
+                refreshUI();
+            }
+        }
+
+        // 删除主题
+        function deleteTheme(index) {
+            if (confirm('确定要删除这个主题吗？')) {
+                notebookData.themes.splice(index, 1);
+                refreshUI();
+            }
+        }
+
+        // 删除文章
+        function deleteArticle(themeIndex, articleIndex) {
+            if (confirm('确定要删除这篇文章吗？')) {
+                notebookData.themes[themeIndex].articles.splice(articleIndex, 1);
+                refreshUI();
+            }
+        }
+
+        // 导出JSON文件
+        function exportToJson() {
+            // 创建一个 Blob 对象
+            const jsonString = JSON.stringify(notebookData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            
+            // 创建下载链接
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'notebook-content.json';
+            
+            // 触发下载
+            document.body.appendChild(a);
+            a.click();
+            
+            // 清理
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('JSON文件已导出，请将其替换原有的 notebook-content.json 文件');
+        }
+
+        // 页面加载时初始化数据
+        document.addEventListener('DOMContentLoaded', loadData);
+
+        // 添加导入功能的JavaScript
+        document.getElementById('importFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        notebookData = JSON.parse(e.target.result);
+                        refreshUI();
+                        alert('导入成功！');
+                    } catch (error) {
+                        alert('导入失败，请确保文件格式正确！');
+                        console.error('导入错误:', error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // 修改 displayArticle 函数
+        function displayArticle(article) {
+            // 更新主内容区域
+            const mainContent = document.querySelector('.main-content .notebook-page');
+            mainContent.innerHTML = `
+                <h2 class="colorHead">${article.title}</h2>
+                <div class="markdown-content">
+                    ${marked.parse(article.content)}
+                </div>
+            `;
+            
+            // 更新便签区域
+            const noteSection = document.querySelector('.note-section');
+            noteSection.innerHTML = `
+                <h3 class="colorHead">我的便签</h3>
+                <div class="markdown-content">
+                    ${marked.parse(article.note)}
+                </div>
+            `;
+        }
+
+        // 修改添加文章时的处理
+        function addArticle() {
+            const themeIndex = document.getElementById('themeSelect').value;
+            const title = document.getElementById('articleTitle').value;
+            const content = document.getElementById('articleContent').value;
+            const note = document.getElementById('articleNote').value;
+
+            if (themeIndex !== '' && title && content) {
+                // 保存原始的 Markdown 文本
+                notebookData.themes[themeIndex].articles.push({
+                    id: 'article' + Date.now(),
+                    title: title,
+                    content: content,  // 保存原始 Markdown
+                    note: note
+                });
+
+                // 清空输入框
+                document.getElementById('articleTitle').value = '';
+                document.getElementById('articleContent').value = '';
+                document.getElementById('articleNote').value = '';
+
+                refreshUI();
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -3,43 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notebook</title>
+    <title>Notebook Style Layout</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
-	<link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">	
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
+    <link href="//cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css" rel="stylesheet">
+    <style>
+        /* 统一基础样式 */
+        body {
+            font-family: 'Comic Sans MS', 'PingFang SC', 'Microsoft YaHei', '霞鹜文楷', sans-serif;
+            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+            color: MediumVioletRed;
+            margin: 0;
+        }
+
+        /* 修改布局样式 */
+        .notebook-layout {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-areas:
+                "nav-themes main-content sub-nav"
+                "note-section main-content sub-nav";
+            grid-template-columns: 1fr 3fr 1fr;
+            gap: 30px;
+            padding: 50px 150px;
+        }
+
+        /* 统一卡片样式 */
+        .nav-themes, .sub-nav, .note-section, .main-content {
+            background-color: #fff7f7;
+            border: 2px solid #ffcccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        /* 统一文字样式 */
+        .colorHead {
+            color: maroon;
+            text-align: center;
+            font-family: 'Comic Sans MS', 'PingFang SC', sans-serif;
+        }
+
+        .colorText {
+            color: rgb(155, 26, 107);
+            text-align: center;
+            font-family: 'Comic Sans MS', '霞鹜文楷', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+        }
+
+        /* 统一导航文字样式 */
+        .navtext {
+            color: MediumVioletRed;
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .navtext:hover {
+            color: deeppink;
+        }
+
+        /* 其他样式保持不变... */
+    </style>
 </head>
-
 <body>
-
-    <!-- 背景和标题 -->
     <div class="profile">
-        <a href="index.html"  class="colorHead"><img src="assets/img/title.png" alt="Guestbook" width="400" height="200" /></a>
+        <a href="index.html" class="colorHead">
+            <img src="assets/img/title.png" alt="alt" width="400" height="200" />
+        </a>
     </div>
 
+    <div class="notebook-layout">
+        <!-- 左侧导航栏（主题导航） -->
+        <div class="nav-themes">
+            <h3 class="colorHead">笔记本</h3>
+            <ul>
+                <!-- JavaScript 将动态填充内容 -->
+            </ul>
+        </div>
 
+        <!-- 主内容区域（笔记本页面） -->
+        <div class="main-content">
+            <div class="notebook-page">
+                <h2 class="colorHead">Notebook</h2>
+                <p class="colorText">这里是主要内容...</p>
+            </div>
+        </div>
 
+        <!-- 右侧导航栏（小文章导航） -->
+        <div class="sub-nav">
+            <h3 class="colorHead">文章列表</h3>
+            <ul>
+                <!-- JavaScript 将动态填充内容 -->
+            </ul>
+        </div>
 
-    <!-- 页脚 -->
+        <!-- 底部便签部分 -->
+        <div class="note-section">
+            <h3 class="colorHead">说点什么</h3>
+            <p class="colorText">这里是你的便签和感想...</p>
+        </div>
+    </div>
+
     <div class="footer">
         <p class="colorText">
-			Made by Ashe (Arashi) with ♥ © 2024. All Rights Surrendered. 
-			<br><a href="index.html"><img src="assets/img/ashe-button.gif" alt="alt"></a>
+            Made by Ashe (Arashi) with ♥ © 2024. All Rights Surrendered.
+            <br><a href="index.html"><img src="assets/img/ashe-button.gif" alt="alt"></a>
         </p>
     </div>
 
+    <script>
+    let currentTheme = null;
+    let currentArticle = null;
 
+    async function loadNotebookContent() {
+        try {
+            const response = await fetch('notebook-content.json');
+            const data = await response.json();
+            
+            // 加载主题导航
+            loadThemes(data.themes);
+            
+            // 默认加载第一个主题的文章
+            if (data.themes.length > 0) {
+                loadArticles(data.themes[0]);
+                // 默认显示第一篇文章
+                if (data.themes[0].articles.length > 0) {
+                    displayArticle(data.themes[0].articles[0]);
+                }
+            }
+        } catch (error) {
+            console.error('加载内容失败:', error);
+        }
+    }
+
+    function loadThemes(themes) {
+        const themesList = document.querySelector('.nav-themes ul');
+        themesList.innerHTML = '';
+        
+        themes.forEach(theme => {
+            const li = document.createElement('li');
+            li.className = 'navtext';
+            li.textContent = theme.name;
+            li.onclick = () => {
+                currentTheme = theme;
+                loadArticles(theme);
+                // 加载主题下的第一篇文章
+                if (theme.articles.length > 0) {
+                    displayArticle(theme.articles[0]);
+                }
+            };
+            themesList.appendChild(li);
+        });
+    }
+
+    function loadArticles(theme) {
+        const articlesList = document.querySelector('.sub-nav ul');
+        articlesList.innerHTML = '';
+        
+        theme.articles.forEach(article => {
+            const li = document.createElement('li');
+            li.className = 'navtext';
+            li.textContent = article.title;
+            li.onclick = () => {
+                currentArticle = article;
+                displayArticle(article);
+            };
+            articlesList.appendChild(li);
+        });
+    }
+
+    function displayArticle(article) {
+        // 更新主内容区域
+        const mainContent = document.querySelector('.main-content .notebook-page');
+        mainContent.innerHTML = `
+            <h2 class="colorHead">${article.title}</h2>
+            <p class="colorText">${article.content}</p>
+        `;
+        
+        // 更新便签区域
+        const noteSection = document.querySelector('.note-section');
+        noteSection.innerHTML = `
+            <h3 class="colorHead">说点什么</h3>
+            <p class="colorText">${article.note}</p>
+        `;
+    }
+
+    // 页面加载时初始化内容
+    document.addEventListener('DOMContentLoaded', loadNotebookContent);
+    </script>
 </body>
 </html>
-
-<style>
-/* 全局样式 */
-body {
-    font-family: 'Segoe Print', '幼圆', 'Comic Sans MS', 'Courier', Arial, sans-serif;
-    background: url("assets/pic/bg.png") no-repeat center center fixed;
-    background-size: cover;
-    overflow-x: hidden;
-    color: MediumVioletRed;
-    margin: 0;
-    padding: 0;
-}
-
-</style>
