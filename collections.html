@@ -150,6 +150,7 @@
         </p>
     </div>
 
+
     <script>
 async function loadNotes() {
     const response = await fetch('notes.json');
@@ -164,7 +165,7 @@ async function loadNotes() {
 
         // 添加随机胶带装饰
         const tapeNumber = Math.floor(Math.random() * 3) + 1;
-        const rotation = -35 - Math.random() * 10; // 随机旋转角度
+        const rotation = -35 - Math.random() * 10;
         
         noteDiv.setAttribute('data-tape', `tape${tapeNumber}`);
         noteDiv.style.setProperty('--tape-rotation', `${rotation}deg`);
@@ -211,10 +212,16 @@ async function loadNotes() {
             noteDiv.classList.add('note-text-only');
         }
 
-        // 添加文本内容
+        // 添加文本内容，并检查是否有链接
         if (note.content) {
             const textP = document.createElement('p');
-            textP.textContent = note.content;
+            if (note.link) {
+                // 将内容设置为包含链接的HTML
+                textP.innerHTML = `${note.content} <a href="${note.link}" target="_blank">戳这里</a>`;
+            } else {
+                // 仅设置文本内容
+                textP.textContent = note.content;
+            }
             contentDiv.appendChild(textP);
         }
 
