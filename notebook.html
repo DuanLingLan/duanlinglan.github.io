@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notebook Style Layout</title>
+    <title>Notebook</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap" rel="stylesheet">
@@ -441,9 +441,9 @@
     function displayWelcomeMessage() {
         const mainContent = document.querySelector('.main-content .notebook-page');
         mainContent.innerHTML = `
-            <h2 class="colorHead">Welcome to My Notebook</h2>
+            <h2 class="colorHead">小兔的笔记本</h2>
             <div class="markdown-content" style="text-align: center;">
-                <p style="text-indent: 0;">Select a note to read </p>
+                <p style="text-indent: 0;">Select a note to read (づ￣ 3￣)づ</p>
             </div>
         `;
         
@@ -452,7 +452,7 @@
         noteSection.innerHTML = `
             <h3 class="colorHead">说点什么</h3>
             <div class="markdown-content" style="text-align: center;">
-                <p style="text-indent: 0;">选择一篇文章来查看相关笔记 ...</p>
+                <p style="text-indent: 0;">管理页面是notebook-admin</p>
             </div>
         `;
     }
@@ -461,7 +461,7 @@
     function displayDefaultArticleList() {
         const articlesList = document.querySelector('.sub-nav');
         articlesList.innerHTML = `
-            <h3 class="colorHead">文章列表</h3>
+            <h3 class="colorHead">笔记列表</h3>
             <div class="markdown-content" style="text-align: center; padding: 20px;">
                 <p style="text-indent: 0;">请先选择一个笔记本主题 </p>
             </div>

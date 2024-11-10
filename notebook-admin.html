@@ -162,6 +162,21 @@
         .delete-btn:hover {
             background-color: #ffb3b3;
         }
+
+        .edit-btn {
+            background-color: #ffcccc;
+            color: maroon;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .edit-btn:hover {
+            background-color: #ffb3b3;
+        }
     </style>
 </head>
 <body>
@@ -282,7 +297,10 @@
                     li.draggable = true;
                     li.innerHTML = `
                         <span>${article.title}</span>
-                        <button class="delete-btn" onclick="deleteArticle(${themeIndex}, ${index})">×</button>
+                        <div>
+                            <button class="edit-btn" onclick="editArticle(${themeIndex}, ${index})">编辑</button>
+                            <button class="delete-btn" onclick="deleteArticle(${themeIndex}, ${index})">×</button>
+                        </div>
                     `;
 
                     // 添加拖拽事件监听器
@@ -473,6 +491,58 @@
         document.getElementById('themeSelect').addEventListener('change', function() {
             refreshArticleList();
         });
+
+        // 添加编辑文章的函数
+        function editArticle(themeIndex, articleIndex) {
+            const article = notebookData.themes[themeIndex].articles[articleIndex];
+            
+            // 填充表单
+            document.getElementById('themeSelect').value = themeIndex;
+            document.getElementById('articleTitle').value = article.title;
+            document.getElementById('articleContent').value = article.content;
+            document.getElementById('articleNote').value = article.note || '';
+            
+            // 更新预览
+            updatePreview();
+            
+            // 修改添加按钮为保存按钮
+            const addButton = document.querySelector('.article-section button');
+            addButton.textContent = '保存修改';
+            addButton.onclick = function() {
+                saveArticleEdit(themeIndex, articleIndex);
+            };
+        }
+
+        function saveArticleEdit(themeIndex, articleIndex) {
+            const title = document.getElementById('articleTitle').value;
+            const content = document.getElementById('articleContent').value;
+            const note = document.getElementById('articleNote').value;
+
+            if (title && content) {
+                // 更新文章内容
+                notebookData.themes[themeIndex].articles[articleIndex] = {
+                    ...notebookData.themes[themeIndex].articles[articleIndex],
+                    title: title,
+                    content: content,
+                    note: note
+                };
+
+                // 清空表单
+                document.getElementById('articleTitle').value = '';
+                document.getElementById('articleContent').value = '';
+                document.getElementById('articleNote').value = '';
+                document.getElementById('contentPreview').innerHTML = '';
+                document.getElementById('notePreview').innerHTML = '';
+
+                // 恢复添加按钮
+                const addButton = document.querySelector('.article-section button');
+                addButton.textContent = '添加文章';
+                addButton.onclick = addArticle;
+
+                // 刷新文章列表
+                refreshArticleList();
+            }
+        }
     </script>
 </body>
 </html> 
