@@ -170,16 +170,6 @@ async function loadNotes() {
         noteDiv.setAttribute('data-tape', `tape${tapeNumber}`);
         noteDiv.style.setProperty('--tape-rotation', `${rotation}deg`);
 
-        // 添加调试信息
-        console.log('Note div:', noteDiv);
-        console.log('data-tape attribute:', noteDiv.getAttribute('data-tape'));
-        
-        // 检查计算样式
-        setTimeout(() => {
-            const computedStyle = window.getComputedStyle(noteDiv, '::before');
-            console.log('Before element background-image:', computedStyle.backgroundImage);
-        }, 100);
-
         // 创建内容容器
         const contentDiv = document.createElement('div');
         contentDiv.className = 'note-content';
@@ -190,39 +180,37 @@ async function loadNotes() {
             <div class="date">${note.date}</div>
         `;
 
-        // 如果有图片，创建图片容器
+        // 添加图片（如果有）
         if (note.image) {
             noteDiv.classList.add('note-with-image');
             const img = document.createElement('img');
             img.src = note.image;
             img.alt = note.title;
-            
-            img.onload = function() {
-                const aspectRatio = img.naturalWidth / img.naturalHeight;
-                const maxWidth = Math.min(700, img.naturalWidth);
-                const scaledHeight = maxWidth / aspectRatio;
-                
-                img.style.width = `${maxWidth}px`;
-                img.style.height = `${scaledHeight}px`;
-            };
-            
             contentDiv.appendChild(img);
         } else {
-            // 纯文本便签保持较窄的宽度
             noteDiv.classList.add('note-text-only');
         }
 
-        // 添加文本内容，并检查是否有链接
+        // 添加文本内容
         if (note.content) {
             const textP = document.createElement('p');
-            if (note.link) {
-                // 将内容设置为包含链接的HTML
-                textP.innerHTML = `${note.content} <a href="${note.link}" target="_blank">戳这里</a>`;
-            } else {
-                // 仅设置文本内容
-                textP.textContent = note.content;
-            }
+            textP.textContent = note.content;
             contentDiv.appendChild(textP);
+        }
+
+        // 添加多个链接
+        if (note.links && Array.isArray(note.links)) {
+            const linksDiv = document.createElement('div');
+            linksDiv.className = 'note-links';
+            note.links.forEach(link => {
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url;
+                linkElement.textContent = link.text;
+                linkElement.target = "_blank"; // 新窗口打开
+                linksDiv.appendChild(linkElement);
+                linksDiv.appendChild(document.createElement('br')); // 换行
+            });
+            contentDiv.appendChild(linksDiv);
         }
 
         noteDiv.appendChild(contentDiv);
@@ -231,6 +219,7 @@ async function loadNotes() {
 }
 
 loadNotes();
+
     </script>
 </body>
 </html>

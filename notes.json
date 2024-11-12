@@ -35,13 +35,6 @@
         "hash": "13b80308998687be93ed147bc0414cac"
     },
     {
-        "title": "my holy markdown",
-        "date": "2024-11-01",
-        "content": "",
-        "image": "",
-        "hash": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    {
         "title": "Neon Succubus",
         "date": "2021-12-24",
         "content": "Merry Christmas!",
@@ -51,9 +44,31 @@
     {
         "title": "",
         "date": "2024-11-10",
-        "content": "孝利姐真靓啊",
-		"link":"https://www.youtube.com/watch?v=wWHkx9fnerc",
+        "content": " ",
+    "links": [
+        {
+            "text": "孝利姐真靓啊",
+            "url": "https://www.youtube.com/watch?v=wWHkx9fnerc"
+        }
+    ],		
         "image": "collections/hyori.png",
         "hash": "6688649f09dbdb0c79f5aa830a56b9ee"
-    }
+    },
+{
+    "title": "Gnostic",
+    "date": "2024-11-11",
+    "content": "（我其实没玩P5！）",
+    "links": [
+        {
+            "text": "<Bilibili>除了天下第一，还藏着什么？《女神异闻录5》中的灵知主义——人义的激情与世界的寂静结伴而行【玩心】",
+            "url": "https://www.bilibili.com/video/BV1NT41127nK"
+        },
+        {
+            "text": "<douban>玫瑰十字会与愚人",
+            "url": "https://book.douban.com/review/15954920/"
+        }
+    ],
+    "image": "",
+    "hash": "eca01eca459be9ffe84db2e3de978651"
+}
 ]
