@@ -13,15 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2024-11-17-Fight, Flight or Freeze.md",
+                "file": "2024-11-19-我很难读完一本书.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2024-11-17-Fight, Flight or Freeze"
+              "title": "2024-11-19-我很难读完一本书"
+            }
+          },
+          {
+            "id": "4423971d6b1bd9a6",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "新标签页"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -93,7 +104,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2024-10-27-网站大修！.md",
+                "file": "未命名.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +114,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "2024-10-27-网站大修！ 的反向链接列表"
+              "title": "未命名 的反向链接列表"
             }
           },
           {
@@ -163,20 +174,27 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "0bb6c867a018ab3b",
+  "active": "4423971d6b1bd9a6",
   "lastOpenFiles": [
-    "templates/title 1.md",
     "2024-11-19-我很难读完一本书.md",
+    "未命名.md",
+    "2024-10-26-也许还没想明白.md",
     "2024-11-17-Fight, Flight or Freeze.md",
+    "2024-10-27-网站大修！.md",
+    "2024-10-28-周一.md",
+    "2024-10-19-幸好有之前的想法提醒自己，关于心态.md",
+    "2024-06-05-小时候不明白.md",
+    "2024-02-21-Memories of 🍂.md",
+    "2023-12-01-来NZ后我都学到了什么.md",
+    "2023-10-24-普鲁斯特问卷于23岁尾.md",
+    "templates/title 1.md",
     "templates/Blog date.md",
     "templates/Blog Post Template.md.md",
     "templates/Clean Empty Lines.md.md",
     "templates/title.md",
     "hidden, draft/currently存档记录.md",
     "2024-11-01-十一月的碎碎念合集.md",
-    "2024-10-28-周一.md",
     "未命名",
-    "2024-10-27-网站大修！.md",
     "未命名 1.md",
     "2024-06-18-bonus.md",
     "2024-06-09-现在就做.md",
@@ -195,13 +213,6 @@
     "2024-02-01-时间魔法师.md",
     "images/52.png",
     "images/53.png",
-    "hidden, draft/2024-11-04-决定不润了.md",
-    "2024-05-24-清醒梦记录 🌌.md",
-    "2023-12-01-来NZ后我都学到了什么.md",
-    "hidden, draft/悼词.md",
-    "hidden, draft/2024-10-27-为什么要建自己的blog？-草稿-.md",
-    "hidden, draft/about me.md",
-    "2024-05-11-只有你的心是你一切力量的源泉.md",
     "images",
     "新建文件夹",
     "blog",
