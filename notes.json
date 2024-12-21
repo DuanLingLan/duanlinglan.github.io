@@ -45,30 +45,37 @@
         "title": "",
         "date": "2024-11-10",
         "content": " ",
-    "links": [
-        {
-            "text": "孝利姐真靓啊",
-            "url": "https://www.youtube.com/watch?v=wWHkx9fnerc"
-        }
-    ],		
+        "links": [
+            {
+                "text": "孝利姐真靓啊",
+                "url": "https://www.youtube.com/watch?v=wWHkx9fnerc"
+            }
+        ],
         "image": "collections/hyori.png",
         "hash": "6688649f09dbdb0c79f5aa830a56b9ee"
     },
-{
-    "title": "Gnostic",
-    "date": "2024-11-11",
-    "content": "（我其实没玩P5！）",
-    "links": [
-        {
-            "text": "<Bilibili>除了天下第一，还藏着什么？《女神异闻录5》中的灵知主义——人义的激情与世界的寂静结伴而行【玩心】",
-            "url": "https://www.bilibili.com/video/BV1NT41127nK"
-        },
-        {
-            "text": "<douban>玫瑰十字会与愚人",
-            "url": "https://book.douban.com/review/15954920/"
-        }
-    ],
-    "image": "",
-    "hash": "eca01eca459be9ffe84db2e3de978651"
-}
+    {
+        "title": "Gnostic",
+        "date": "2024-11-11",
+        "content": "（我其实没玩P5！）",
+        "links": [
+            {
+                "text": "<Bilibili>除了天下第一，还藏着什么？《女神异闻录5》中的灵知主义——人义的激情与世界的寂静结伴而行【玩心】",
+                "url": "https://www.bilibili.com/video/BV1NT41127nK"
+            },
+            {
+                "text": "<douban>玫瑰十字会与愚人",
+                "url": "https://book.douban.com/review/15954920/"
+            }
+        ],
+        "image": "",
+        "hash": "eca01eca459be9ffe84db2e3de978651"
+    },
+    {
+        "title": "Ali, Fear Eats the Soul",
+        "date": "2024-12-21",
+        "content": "「我们应该去买一片小天堂」",
+        "image": "collections/Ali, Fear Eats the Soul.jpg",
+        "hash": "4d579119466266455379f8eceb559dce"
+    }
 ]
