@@ -25,12 +25,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "my holy markdown.md",
+                "file": "test.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "my holy markdown"
+              "title": "test"
             }
           }
         ],
@@ -177,11 +177,13 @@
   },
   "active": "3660bc0e06fa1b20",
   "lastOpenFiles": [
-    "test.md",
-    "my holy markdown.md",
+    "akutagawa.jpg",
+    "hyori.png",
     "life.jpg",
+    "my holy markdown.md",
+    "test.md",
     "starstarstar.png",
-    "xiami.jpg",
-    "akutagawa.jpg"
+    "Ali, Fear Eats the Soul.jpg",
+    "xiami.jpg"
   ]
 }

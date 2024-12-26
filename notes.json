@@ -28,13 +28,6 @@
         "hash": "45951f8d508eee9497b410c64d4699f2"
     },
     {
-        "title": "test",
-        "date": "2024-11-01",
-        "content": "test test 123",
-        "image": "",
-        "hash": "13b80308998687be93ed147bc0414cac"
-    },
-    {
         "title": "Neon Succubus",
         "date": "2021-12-24",
         "content": "Merry Christmas!",
@@ -74,8 +67,15 @@
     {
         "title": "Ali, Fear Eats the Soul",
         "date": "2024-12-21",
-        "content": "「我们应该去买一片小天堂」",
+        "content": "「我们应该去买一小片天堂」",
         "image": "collections/Ali, Fear Eats the Soul.jpg",
         "hash": "4d579119466266455379f8eceb559dce"
+    },
+    {
+        "title": "哥林多前书 13:4-8",
+        "date": "2024-12-26",
+        "content": "爱是恒久忍耐，又有恩慈；爱是不嫉妒；爱是不自夸，不张狂， 不做害羞的事，不求自己的益处，不轻易发怒，不计算人的恶， 不喜欢不义，只喜欢真理； 凡事包容，凡事相信，凡事盼望，凡事忍耐。 爱是永不止息。先知讲道之能终必归于无有；说方言之能终必停止；知识也终必归于无有。",
+        "image": "",
+        "hash": "a5a447d5a982e8ec4bf09d71e7d1a2ea"
     }
 ]
