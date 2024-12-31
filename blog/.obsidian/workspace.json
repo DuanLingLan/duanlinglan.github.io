@@ -13,30 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2024年终总结.md",
+                "file": "hidden, draft/2024-12-31-2024年度总结.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2024年终总结"
-            }
-          },
-          {
-            "id": "0b0f8ba79ee55e14",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2025 Resolution.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2025 Resolution"
+              "title": "2024-12-31-2024年度总结"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -178,10 +163,10 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "0b0f8ba79ee55e14",
+  "active": "70777e0d312797ab",
   "lastOpenFiles": [
-    "2024年终总结.md",
-    "2025 Resolution.md",
+    "hidden, draft/2025 Resolution.md",
+    "hidden, draft/2024-12-31-2024年度总结.md",
     "2024-11-27-想见的人就要去见555.md",
     "hidden, draft/2024-10-27-为什么要建自己的blog？-草稿-.md",
     "hidden, draft/2024-11-04-决定不润了.md",
