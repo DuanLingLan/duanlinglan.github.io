@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2025-01-01-2025新年愿景.md",
+                "file": "2024-12-31-2024年度总结.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-01-01-2025新年愿景"
+              "title": "2024-12-31-2024年度总结"
             }
           }
         ]
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "未命名.md",
+                "file": "2024-12-31-2024年度总结.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "未命名 的反向链接列表"
+              "title": "2024-12-31-2024年度总结 的反向链接列表"
             }
           },
           {
@@ -165,11 +165,11 @@
   },
   "active": "4179fd0deab790cb",
   "lastOpenFiles": [
-    "2025-01-01-11pm 啊？.md",
+    "2025-01-01-8am 好.md",
     "2025-01-01-2025新年愿景.md",
+    "2025-01-01-11pm 啊？.md",
     "给自己的悼词.md",
     "2024-12-31-2024年度总结.md",
-    "2025-01-01-8am 好.md",
     "hidden, draft/2024-11-08-和Chatgpt的聊天总结存档.md",
     "hidden, draft/2024-10-27-为什么要建自己的blog？-草稿-.md",
     "hidden, draft/2024-11-04-决定不润了.md",
