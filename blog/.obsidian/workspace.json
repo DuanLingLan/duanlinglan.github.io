@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "72c79f8c358b5f7c",
+        "id": "f6194bcc98d63310",
         "type": "tabs",
         "children": [
           {
-            "id": "54bfd3c368f854d1",
+            "id": "acb4f9d7f60adbe7",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2025-02-01-二月三月碎碎念.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "2025-02-01-二月三月碎碎念"
+              "title": "新标签页"
             }
           }
         ]
@@ -164,7 +160,7 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "54bfd3c368f854d1",
+  "active": "70777e0d312797ab",
   "lastOpenFiles": [
     "2025-01-01-一月碎碎念.md",
     "2025-02-01-二月三月碎碎念.md",
