@@ -79,7 +79,7 @@
         "hash": "a5a447d5a982e8ec4bf09d71e7d1a2ea"
     },
     {
-        "title": "Vangelis Blade Runner - Trilogy",
+        "title": "Vangelis Blade Runner - Trilogy OST",
         "date": "2025-02-04",
         "content": "",
         "image": "collections/Vangelis Blade Runner - Trilogy.jpg",
@@ -91,5 +91,56 @@
         "content": "",
         "image": "collections/Antonin Artaud.jpg",
         "hash": "748a1fd03de32feada2c3dedc4024129"
+    },
+
+    {
+        "title": "Un coeur en hiver",
+        "date": "2025-04-26",
+        "content": "",
+        "image": "collections/Un coeur en hiver.png",
+        "hash": "1e3f315b967279e2685a8e531c7b5bc4"
+    },
+
+    {
+        "title": "神灵变化，但祈祷在这里永存",
+        "date": "2025-04-26",
+        "content": "",
+        "image": "collections/神灵变化，但祈祷在这里永存.jpg",
+        "hash": "64c944439bc05a45e56627c03c350c16"
+    },
+    {
+        "title": "",
+        "date": "2021-01-18",
+        "content": "自制美甲的巅峰之作",
+        "image": "collections/b2519d0574fa90cfe3bbc4204611b9e.jpg",
+        "hash": "17119998d3803a1832a81735a0be119b"
+    },
+    {
+        "title": "Her-OST",
+        "date": "2025-04-26",
+        "content": "",
+        "image": "collections/Her-OST.jpg",
+        "hash": "e15a415418c72355098670cc8e9b568d"
+    },
+    {
+        "title": "花",
+        "date": "2017-12-03",
+        "content": "花，一款匿名交换日记的APP。以前非常喜欢用。",
+        "image": "collections/Screenshot_2017-12-03-19-10-56-549_花.jpg",
+        "hash": "1fe26563cca7995e01ce24ad62a3aecd"
+    },
+    {
+        "title": "The Shape of Water",
+        "date": "2025-04-26",
+        "content": "",
+        "image": "collections/The Shape of Water.jpg",
+        "hash": "03d06b0419af902d82d8ab4a3abf4b2a"
+    },
+    {
+        "title": "招财宝",
+        "date": "2022-03-20",
+        "content": "",
+        "image": "collections/招财宝.jpg",
+        "hash": "60e56b8efacbcbe74fe34b59480e785e"
     }
 ]
