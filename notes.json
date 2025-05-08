@@ -92,7 +92,6 @@
         "image": "collections/Antonin Artaud.jpg",
         "hash": "748a1fd03de32feada2c3dedc4024129"
     },
-
     {
         "title": "Un coeur en hiver",
         "date": "2025-04-26",
@@ -100,7 +99,6 @@
         "image": "collections/Un coeur en hiver.png",
         "hash": "1e3f315b967279e2685a8e531c7b5bc4"
     },
-
     {
         "title": "神灵变化，但祈祷在这里永存",
         "date": "2025-04-26",
@@ -142,5 +140,26 @@
         "content": "",
         "image": "collections/招财宝.jpg",
         "hash": "60e56b8efacbcbe74fe34b59480e785e"
+    },
+    {
+        "title": "Amrapoli(1966)",
+        "date": "2025-05-08",
+        "content": "",
+        "image": "collections/Amrapoli(1966).png",
+        "hash": "e9814eadb55c159c0906eed619fcc3f6"
+    },
+    {
+        "title": "",
+        "date": "2025-05-08",
+        "content": "",
+        "image": "collections/chapel.jpg",
+        "hash": "3f33f5595f1104b73d956cfe5bc70c2c"
+    },
+    {
+        "title": "Simone Weil",
+        "date": "2025-05-08",
+        "content": "",
+        "image": "collections/Simone Weil.jpg",
+        "hash": "c0f3ba9d94e31cdbbcbc21c774392f9e"
     }
 ]
