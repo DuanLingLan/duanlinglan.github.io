@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "2025-09-01-我真的！！！"
             }
+          },
+          {
+            "id": "bb14a59bed0d18a6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-09-02-个人博客.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-09-02-个人博客"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -169,16 +184,17 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "49cff8b6da29e9f6",
+  "active": "bb14a59bed0d18a6",
   "lastOpenFiles": [
+    "2025-09-01-我真的！！！.md",
+    "2025-09-02-个人博客.md",
+    "templates/title.md",
+    "2025-08-01-八九月.md",
+    "2025-07-06-都2025下半年了.md",
     "2025-09-01-画画和小猫.md",
     "2025-07-01-七月.md",
-    "2025-07-06-都2025下半年了.md",
-    "2025-08-01-八九月.md",
-    "2025-09-01-我真的！！！.md",
     "2025-09-01-赏味期限.md",
     "2024-11-19-我很难读完一本书.md",
-    "templates/title.md",
     "2025-05-01-五月小碎片.md",
     "2025-06-01-六月.md",
     "2025-06-09-日记.md",
@@ -196,7 +212,6 @@
     "2025-04-14-虾米.md",
     "2025-04-12-《暗喻幻想》通关纪念与感想！~spoiler alert~.md",
     "2024-12-31-2024年度总结.md",
-    "hidden, draft/2025-06-24-福宝.md",
     "未命名",
     "images/sjsw.jpg",
     "images/2077.jpg",
