@@ -161,5 +161,21 @@
         "content": "",
         "image": "collections/Simone Weil.jpg",
         "hash": "c0f3ba9d94e31cdbbcbc21c774392f9e"
+    },
+    {
+        "title": "好文章",
+        "date": "2025-09-01",
+        "content": "我的天啊，距离看上篇竟然已经过去三年了",
+        "links": [
+            {
+                "text": "一场友谊（上）",
+                "url": "https://www.douban.com/note/837376497/?_i=6671705--UDzA4"
+            },
+            {
+                "text": "一场友谊（下）",
+                "url": "https://www.douban.com/note/875350743/?_dtcc=1&_i=6671688--UDzA4"
+            }
+        ],
+        "image": ""
     }
 ]

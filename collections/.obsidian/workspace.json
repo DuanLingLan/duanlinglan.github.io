@@ -18,8 +18,33 @@
               "icon": "lucide-image",
               "title": "神灵变化，但祈祷在这里永存"
             }
+          },
+          {
+            "id": "442e4a2a77d76ce0",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.12"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.9.12"
+            }
+          },
+          {
+            "id": "5367e88b0e96f2c1",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "xiami.jpg"
+              },
+              "icon": "lucide-image",
+              "title": "xiami"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -153,6 +178,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:创建新数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
@@ -161,23 +187,24 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "d28f6e3ba2a65a0f",
+  "active": "5367e88b0e96f2c1",
   "lastOpenFiles": [
-    "Screenshot_2017-12-03-19-10-56-549_花.jpg",
+    "神灵变化，但祈祷在这里永存.jpg",
+    "Antonin Artaud.jpg",
+    "chapel.jpg",
+    "Her-OST.jpg",
+    "hyori.png",
+    "life.jpg",
+    "my holy markdown.md",
+    "Neon Succubus.png",
+    "Simone Weil.jpg",
+    "starstarstar.png",
+    "xiami.jpg",
+    "test.md",
+    "The Shape of Water.jpg",
+    "未命名.md",
     "Her-OST.jpg.~tmp",
     "招财宝.jpg.~tmp",
-    "akutagawa.jpg",
-    "神灵变化，但祈祷在这里永存.jpg",
-    "fb4cf2399907eb10d063c40d508f275.jpg",
-    "神灵变化，但祈祷在这里永存.md",
-    "Vangelis Blade Runner - Trilogy.jpg",
-    "b2519d0574fa90cfe3bbc4204611b9e.jpg",
-    "Vangelis Blade Runner - Trilogy OST.jpg",
-    "The Shape of Water.jpg",
-    "招财宝.jpg",
-    "Un coeur en hiver.png",
-    "e8694e44357798d91150909089b576a.png",
-    "test.md",
-    "my holy markdown.md"
+    "神灵变化，但祈祷在这里永存.md"
   ]
 }
