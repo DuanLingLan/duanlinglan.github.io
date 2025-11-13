@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "2025-08-01-八九十月大合集"
             }
+          },
+          {
+            "id": "0417f7ba4f50d325",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-08-01-八~十一月大合集.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-08-01-八~十一月大合集"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -169,14 +184,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "f129fbcfcf865a2a",
+  "active": "0417f7ba4f50d325",
   "lastOpenFiles": [
-    "2025-07-06-都2025下半年了.md",
     "2025-10-15-性格使然.md",
-    "2025-08-01-八九十月大合集.md",
+    "2025-10-15-关于视频.md",
+    "2025-07-06-都2025下半年了.md",
+    "2025-08-01-八~十一月大合集.md",
     "未命名.md",
     "2025-10-15-翻译真得看AI.md",
-    "2025-10-15-关于视频.md",
     "2025-09-01-画画和小猫.md",
     "2025-09-01-我真的！！！.md",
     "2025-09-02-个人博客.md",
