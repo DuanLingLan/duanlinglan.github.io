@@ -41,6 +41,13 @@ padding: 2px;
     display: inline-block; /* 保持背景仅包裹文字 */
 }	
 
+.library-content,
+.library-content li,
+.library-content p,
+.library-content strong {
+    color: #64002B;
+}
+
 .line {
 	
     color: MediumVioletRed;

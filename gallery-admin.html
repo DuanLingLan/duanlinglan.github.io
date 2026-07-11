@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Admin</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            color: #64002B;
+        }
+
+        .admin-panel {
+            width: 86%;
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff7f7;
+            border: 2px solid #ffcccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .admin-toolbar,
+        .admin-section {
+            margin: 16px 0;
+            padding: 14px;
+            background-color: rgba(255, 255, 255, 0.72);
+            border: 1px solid #ffcccc;
+            border-radius: 8px;
+        }
+
+        .admin-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 180px;
+            flex: 1;
+        }
+
+        .input-group label {
+            color: maroon;
+            font-size: 0.95em;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            font-family: inherit;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 8px;
+            border: 1px solid #ffcccc;
+            border-radius: 5px;
+            color: #64002B;
+            background-color: #fff;
+        }
+
+        button {
+            background-color: #ffcccc;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            color: maroon;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        button:hover {
+            background-color: #ffb3b3;
+        }
+
+        .group-block {
+            margin: 16px 0;
+            border: 1px solid #ffcccc;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: linear-gradient(145deg, #fff7f7, #ffe6e6);
+            border-bottom: 1px solid #ffcccc;
+        }
+
+        .group-header input {
+            max-width: 360px;
+            font-size: 1.05em;
+            font-weight: bold;
+        }
+
+        .gallery-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .gallery-admin-item {
+            background-color: #fff7f7;
+            border: 1px solid #ffcccc;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .gallery-admin-item img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 6px;
+            background-color: #ffe6e6;
+        }
+
+        .item-fields {
+            display: grid;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+
+        .empty-state {
+            padding: 18px;
+            text-align: center;
+            color: rgba(100, 0, 43, 0.65);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1 class="colorHead">Gallery Admin</h1>
+
+        <div class="admin-toolbar">
+            <div class="admin-row">
+                <input type="file" id="importJsonInput" accept=".json" style="display: none;">
+                <input type="file" id="imageFileInput" accept="image/*" multiple style="display: none;">
+                <button onclick="document.getElementById('importJsonInput').click()">Import JSON</button>
+                <button onclick="document.getElementById('imageFileInput').click()">Add Images</button>
+                <button onclick="addGroup()">Add Group</button>
+                <button onclick="exportGalleryJson()">Export JSON</button>
+                <button onclick="window.location.href='admin.html'">Admin Home</button>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <div class="admin-row">
+                <div class="input-group">
+                    <label for="imageBasePath">Image base path</label>
+                    <input id="imageBasePath" value="assets/pic/gallery_photos">
+                </div>
+                <div class="input-group">
+                    <label for="targetGroup">Target group</label>
+                    <select id="targetGroup"></select>
+                </div>
+            </div>
+        </div>
+
+        <div id="galleryGroups"></div>
+    </div>
+
+    <script>
+        let galleryData = {
+            imageBasePath: 'assets/pic/gallery_photos',
+            groups: []
+        };
+
+        function slugify(value) {
+            return String(value || 'gallery')
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '') || `group-${Date.now()}`;
+        }
+
+        function fileNameWithoutExt(name) {
+            return name.replace(/\.[^.]+$/, '');
+        }
+
+        function normalizeGalleryData(data) {
+            if (Array.isArray(data)) {
+                return {
+                    imageBasePath: 'assets/pic/gallery_photos',
+                    groups: [{
+                        id: 'dynamic-collection',
+                        title: 'Dynamic Collection',
+                        items: data.map(src => ({
+                            src,
+                            title: fileNameWithoutExt(src.split('/').pop() || src),
+                            alt: fileNameWithoutExt(src.split('/').pop() || src)
+                        }))
+                    }]
+                };
+            }
+
+            return {
+                imageBasePath: data.imageBasePath || 'assets/pic/gallery_photos',
+                groups: Array.isArray(data.groups) ? data.groups : []
+            };
+        }
+
+        async function loadGalleryData() {
+            try {
+                const response = await fetch('data/gallery.json');
+                if (!response.ok) throw new Error('Failed to load data/gallery.json');
+                galleryData = normalizeGalleryData(await response.json());
+            } catch (error) {
+                console.error(error);
+            }
+
+            refreshUI();
+        }
+
+        function refreshUI() {
+            document.getElementById('imageBasePath').value = galleryData.imageBasePath || 'assets/pic/gallery_photos';
+            refreshGroupSelect();
+            renderGroups();
+        }
+
+        function refreshGroupSelect() {
+            const select = document.getElementById('targetGroup');
+            select.innerHTML = '';
+
+            galleryData.groups.forEach((group, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = group.title || group.id || `Group ${index + 1}`;
+                select.appendChild(option);
+            });
+        }
+
+        function renderGroups() {
+            const container = document.getElementById('galleryGroups');
+            container.innerHTML = '';
+
+            if (galleryData.groups.length === 0) {
+                container.innerHTML = '<div class="empty-state">No gallery groups.</div>';
+                return;
+            }
+
+            galleryData.groups.forEach((group, groupIndex) => {
+                const block = document.createElement('section');
+                block.className = 'group-block';
+
+                const header = document.createElement('div');
+                header.className = 'group-header';
+                header.innerHTML = `
+                    <input value="${group.title || ''}" aria-label="Group title">
+                    <div>
+                        <button type="button" data-action="up">Up</button>
+                        <button type="button" data-action="down">Down</button>
+                        <button type="button" data-action="delete">Delete</button>
+                    </div>
+                `;
+
+                const titleInput = header.querySelector('input');
+                titleInput.addEventListener('input', () => {
+                    group.title = titleInput.value;
+                    group.id = group.id || slugify(group.title);
+                    refreshGroupSelect();
+                });
+
+                header.querySelector('[data-action="up"]').addEventListener('click', () => moveGroup(groupIndex, -1));
+                header.querySelector('[data-action="down"]').addEventListener('click', () => moveGroup(groupIndex, 1));
+                header.querySelector('[data-action="delete"]').addEventListener('click', () => deleteGroup(groupIndex));
+
+                const grid = document.createElement('div');
+                grid.className = 'gallery-admin-grid';
+
+                (group.items || []).forEach((item, itemIndex) => {
+                    grid.appendChild(renderItem(groupIndex, itemIndex, item));
+                });
+
+                block.appendChild(header);
+                block.appendChild(grid);
+                container.appendChild(block);
+            });
+        }
+
+        function renderItem(groupIndex, itemIndex, item) {
+            const card = document.createElement('div');
+            card.className = 'gallery-admin-item';
+            card.innerHTML = `
+                <img src="${item.src}" alt="${item.alt || item.title || ''}">
+                <div class="item-fields">
+                    <input value="${item.src || ''}" aria-label="Image path">
+                    <input value="${item.title || ''}" aria-label="Image title">
+                    <input value="${item.alt || ''}" aria-label="Image alt">
+                </div>
+                <div class="item-actions">
+                    <span>
+                        <button type="button" data-action="up">Up</button>
+                        <button type="button" data-action="down">Down</button>
+                    </span>
+                    <button type="button" data-action="delete">Delete</button>
+                </div>
+            `;
+
+            const [srcInput, titleInput, altInput] = card.querySelectorAll('input');
+            srcInput.addEventListener('input', () => {
+                item.src = srcInput.value;
+                card.querySelector('img').src = item.src;
+            });
+            titleInput.addEventListener('input', () => {
+                item.title = titleInput.value;
+            });
+            altInput.addEventListener('input', () => {
+                item.alt = altInput.value;
+                card.querySelector('img').alt = item.alt;
+            });
+
+            card.querySelector('[data-action="up"]').addEventListener('click', () => moveItem(groupIndex, itemIndex, -1));
+            card.querySelector('[data-action="down"]').addEventListener('click', () => moveItem(groupIndex, itemIndex, 1));
+            card.querySelector('[data-action="delete"]').addEventListener('click', () => deleteItem(groupIndex, itemIndex));
+
+            return card;
+        }
+
+        function addGroup() {
+            const title = `New Group ${galleryData.groups.length + 1}`;
+            galleryData.groups.push({
+                id: slugify(title),
+                title,
+                items: []
+            });
+            refreshUI();
+        }
+
+        function deleteGroup(index) {
+            if (confirm('Delete this group?')) {
+                galleryData.groups.splice(index, 1);
+                refreshUI();
+            }
+        }
+
+        function moveGroup(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= galleryData.groups.length) return;
+            const [group] = galleryData.groups.splice(index, 1);
+            galleryData.groups.splice(target, 0, group);
+            refreshUI();
+        }
+
+        function moveItem(groupIndex, itemIndex, direction) {
+            const items = galleryData.groups[groupIndex].items;
+            const target = itemIndex + direction;
+            if (target < 0 || target >= items.length) return;
+            const [item] = items.splice(itemIndex, 1);
+            items.splice(target, 0, item);
+            renderGroups();
+        }
+
+        function deleteItem(groupIndex, itemIndex) {
+            galleryData.groups[groupIndex].items.splice(itemIndex, 1);
+            renderGroups();
+        }
+
+        function addImages(files) {
+            if (galleryData.groups.length === 0) {
+                addGroup();
+            }
+
+            const groupIndex = Number(document.getElementById('targetGroup').value || 0);
+            const group = galleryData.groups[groupIndex];
+            const basePath = document.getElementById('imageBasePath').value.replace(/\/+$/, '');
+            galleryData.imageBasePath = basePath;
+            group.items = group.items || [];
+
+            [...files].forEach(file => {
+                const title = fileNameWithoutExt(file.name);
+                group.items.push({
+                    src: `${basePath}/${file.name}`,
+                    title,
+                    alt: title
+                });
+            });
+
+            refreshUI();
+        }
+
+        function exportGalleryJson() {
+            galleryData.imageBasePath = document.getElementById('imageBasePath').value.replace(/\/+$/, '');
+            galleryData.groups.forEach(group => {
+                group.id = group.id || slugify(group.title);
+                group.items = group.items || [];
+            });
+
+            const blob = new Blob([JSON.stringify(galleryData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'gallery.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('imageBasePath').addEventListener('input', event => {
+            galleryData.imageBasePath = event.target.value.replace(/\/+$/, '');
+        });
+
+        document.getElementById('imageFileInput').addEventListener('change', event => {
+            addImages(event.target.files);
+            event.target.value = '';
+        });
+
+        document.getElementById('importJsonInput').addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    galleryData = normalizeGalleryData(JSON.parse(reader.result));
+                    refreshUI();
+                } catch (error) {
+                    alert('Invalid gallery JSON.');
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        });
+
+        document.addEventListener('DOMContentLoaded', loadGalleryData);
+    </script>
+</body>
+</html>

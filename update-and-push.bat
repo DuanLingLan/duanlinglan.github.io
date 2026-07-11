@@ -5,6 +5,8 @@ node scripts\generate-posts.js
 
 node scripts\generate-rss.js
 
+node scripts\generate-gallery.js
+
 git add .  
 
 git commit -m "Update posts and posts.json"  

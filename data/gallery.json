@@ -1,32 +1,183 @@
-[
-  "assets/pic/gallery_photos/aurora.jpg",
-  "assets/pic/gallery_photos/com.oculus.vrshell-20241001-193226.jpg",
-  "assets/pic/gallery_photos/duo.jpg",
-  "assets/pic/gallery_photos/free.jpg",
-  "assets/pic/gallery_photos/nebula.jpg",
-  "assets/pic/gallery_photos/R0007660.JPG",
-  "assets/pic/gallery_photos/swim.png",
-  "assets/pic/gallery_photos/work.jpg",
-  "assets/pic/gallery_photos/oculus.jpg",
-  "assets/pic/gallery_photos/Ferry to the South.jpg",
-  "assets/pic/gallery_photos/aurora.jpg",
-  "assets/pic/gallery_photos/duo.jpg",
-  "assets/pic/gallery_photos/free.jpg",
-  "assets/pic/gallery_photos/nebula.jpg",
-  "assets/pic/gallery_photos/R0007660.JPG",
-  "assets/pic/gallery_photos/swim.png",
-  "assets/pic/gallery_photos/work.jpg",
-  "assets/pic/gallery_photos/5am.JPG",
-  "assets/pic/gallery_photos/dream.JPG",
-  "assets/pic/gallery_photos/echo.JPG",
-  "assets/pic/gallery_photos/gallery.JPG",
-  "assets/pic/gallery_photos/hieroglyph.JPG",
-  "assets/pic/gallery_photos/je ne sais pas.JPG",
-  "assets/pic/gallery_photos/liz.JPG",
-  "assets/pic/gallery_photos/lizard people(x.JPG",
-  "assets/pic/gallery_photos/tablet.JPG",
-  "assets/pic/gallery_photos/tranquility.JPG",
-  "assets/pic/gallery_photos/vibration!.JPG",
-  "assets/pic/gallery_photos/yay.JPG",
-  "assets/pic/gallery_photos/yes to all.JPG"
-]
+{
+  "imageBasePath": "assets/pic/gallery_photos",
+  "groups": [
+    {
+      "id": "echoes-of-time",
+      "title": "Echoes of Time",
+      "items": [
+        {
+          "src": "assets/pic/gallery_photos/echo.JPG",
+          "title": "echo",
+          "alt": "echo"
+        },
+        {
+          "src": "assets/pic/gallery_photos/gallery.JPG",
+          "title": "gallery",
+          "alt": "gallery"
+        },
+        {
+          "src": "assets/pic/gallery_photos/hieroglyph.JPG",
+          "title": "hieroglyph",
+          "alt": "hieroglyph"
+        },
+        {
+          "src": "assets/pic/gallery_photos/yay.JPG",
+          "title": "yay",
+          "alt": "yay"
+        },
+        {
+          "src": "assets/pic/gallery_photos/lizard people(x.JPG",
+          "title": "lizard people (x",
+          "alt": "lizard people(x"
+        },
+        {
+          "src": "assets/pic/gallery_photos/tablet.JPG",
+          "title": "tablet",
+          "alt": "tablet"
+        },
+        {
+          "src": "assets/pic/gallery_photos/tranquility.JPG",
+          "title": "tranquility",
+          "alt": "tranquility"
+        }
+      ]
+    },
+    {
+      "id": "mewb",
+      "title": "Mewb",
+      "items": [
+        {
+          "src": "assets/pic/gallery_photos/nebula.jpg",
+          "title": "City Nebula",
+          "alt": "image"
+        },
+        {
+          "src": "assets/pic/gallery_photos/aurora.jpg",
+          "title": "aurora",
+          "alt": "aurora"
+        },
+        {
+          "src": "assets/pic/gallery_photos/dream.JPG",
+          "title": "dream",
+          "alt": "dream"
+        },
+        {
+          "src": "assets/pic/gallery_photos/5am.JPG",
+          "title": "5am",
+          "alt": "5am"
+        },
+        {
+          "src": "assets/pic/gallery_photos/liz.JPG",
+          "title": "liz",
+          "alt": "liz"
+        },
+        {
+          "src": "assets/pic/gallery_photos/vibration!.JPG",
+          "title": "vibration!",
+          "alt": "vibration!"
+        },
+        {
+          "src": "assets/pic/gallery_photos/yes to all.JPG",
+          "title": "yes to all",
+          "alt": "yes to all"
+        }
+      ]
+    },
+    {
+      "id": "kiwi-canvas",
+      "title": "Kiwi Canvas",
+      "items": [
+        {
+          "src": "assets/pic/Auckland.jpg",
+          "title": "Auckland 25.12.2022",
+          "alt": "Auckland"
+        },
+        {
+          "src": "assets/pic/Tutukaka Walkway.jpg",
+          "title": "Tutukaka Walkway 04.04.2023",
+          "alt": "Tutukaka Walkway"
+        },
+        {
+          "src": "assets/pic/Whangarei Falls.jpg",
+          "title": "Whangarei Falls 04.04.2023",
+          "alt": "Whangarei Falls"
+        },
+        {
+          "src": "assets/pic/Blue Spring.jpg",
+          "title": "Blue Spring 04.05.2023",
+          "alt": "Blue Spring"
+        },
+        {
+          "src": "assets/pic/Rotorua.jpg",
+          "title": "Rotorua 05.05.2023",
+          "alt": "Rotorua"
+        },
+        {
+          "src": "assets/pic/Huka Falls.jpg",
+          "title": "Huka Falls 06.05.2023",
+          "alt": "Huka Falls"
+        },
+        {
+          "src": "assets/pic/Tongariro Alpine Crossing.jpg",
+          "title": "Tongariro Alpine Crossing 07.05.2023",
+          "alt": "Tongariro Alpine Crossing"
+        },
+        {
+          "src": "assets/pic/Waterfront, Wellington.jpg",
+          "title": "Waterfront, Wellington 09.05.2023",
+          "alt": "Waterfront, Wellington"
+        },
+        {
+          "src": "assets/pic/Cuba St, Wellington.jpg",
+          "title": "Cuba St, Wellington 10.05.2023",
+          "alt": "Cuba St, Wellington"
+        },
+        {
+          "src": "assets/pic/Ferry to the South.jpg",
+          "title": "Ferry to the South 13.05.2023",
+          "alt": "Ferry to the South"
+        },
+        {
+          "src": "assets/pic/Tasman Bay.jpg",
+          "title": "Tasman Bay 15.05.2023",
+          "alt": "Tasman Bay"
+        },
+        {
+          "src": "assets/pic/Lake Rotoiti.jpg",
+          "title": "Lake Rotoiti 16.05.2023",
+          "alt": "Lake Rotoiti"
+        },
+        {
+          "src": "assets/pic/Greymouth.jpg",
+          "title": "Greymouth 20.05.2023",
+          "alt": "Greymouth"
+        },
+        {
+          "src": "assets/pic/Wanaka.jpg",
+          "title": "Wanaka 23.05.2023",
+          "alt": "Wanaka"
+        },
+        {
+          "src": "assets/pic/Queenstown.jpg",
+          "title": "Queenstown 23.05.2023",
+          "alt": "Queenstown"
+        },
+        {
+          "src": "assets/pic/Alexandra.jpg",
+          "title": "Alexandra 04.06.2023",
+          "alt": "Alexandra"
+        },
+        {
+          "src": "assets/pic/Lake Tekapo.jpg",
+          "title": "Lake Tekapo 05.07.2023",
+          "alt": "Lake Tekapo"
+        },
+        {
+          "src": "assets/pic/Island Bay, Wellington.jpg",
+          "title": "Island Bay, Wellington 23.10.2023",
+          "alt": "Island Bay, Wellington"
+        }
+      ]
+    }
+  ]
+}
