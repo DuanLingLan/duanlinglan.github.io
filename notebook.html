@@ -6,8 +6,8 @@
     <title>Notebook</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link href="//cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/markdown.js"></script>
     <style>
         /* 统一基础样式 */
         body {
@@ -324,7 +324,7 @@
 
     async function loadNotebookContent() {
         try {
-            const response = await fetch('notebook-content.json');
+            const response = await fetch('data/notebook-content.json');
             const data = await response.json();
             
             // 只加载主题导航
@@ -413,7 +413,7 @@
         mainContent.innerHTML = `
             <h2 class="colorHead">${article.title}</h2>
             <div class="markdown-content">
-                ${marked.parse(article.content || '')}
+                ${renderMarkdown(article.content || '')}
             </div>
         `;
         
@@ -422,8 +422,28 @@
         noteSection.innerHTML = `
             <h3 class="colorHead">说点什么</h3>
             <div class="markdown-content">
-                ${marked.parse(article.note || '')}
-            </div>
+                ${renderMarkdown(article.note || '')}
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
         `;
 
         // 确保 marked 正确解析 Markdown

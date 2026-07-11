@@ -6,6 +6,7 @@
     <title>Notebook 管理界面</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/markdown.js"></script>
     <style>
         .admin-panel {
             max-width: 1200px;
@@ -245,7 +246,7 @@
         // 初始化加载数据
         async function loadData() {
             try {
-                const response = await fetch('notebook-content.json');
+                const response = await fetch('data/notebook-content.json');
                 notebookData = await response.json();
                 refreshUI();
             } catch (error) {
@@ -429,7 +430,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert('JSON文件已导出，请将其替换原有的 notebook-content.json 文件');
+            alert('JSON文件已导出，请将其替换 data/notebook-content.json 文件');
         }
 
         // 页面加载时初始化数据
@@ -461,7 +462,7 @@
             mainContent.innerHTML = `
                 <h2 class="colorHead">${article.title}</h2>
                 <div class="markdown-content">
-                    ${marked.parse(article.content)}
+                    ${renderMarkdown(article.content)}
                 </div>
             `;
             
@@ -470,7 +471,7 @@
             noteSection.innerHTML = `
                 <h3 class="colorHead">我的便签</h3>
                 <div class="markdown-content">
-                    ${marked.parse(article.note)}
+                    ${renderMarkdown(article.note)}
                 </div>
             `;
         }
@@ -479,12 +480,12 @@
             // 更新文章内容预览
             const contentPreview = document.getElementById('contentPreview');
             const content = document.getElementById('articleContent').value;
-            contentPreview.innerHTML = marked.parse(content);
+            contentPreview.innerHTML = renderMarkdown(content);
             
             // 更新便签预览
             const notePreview = document.getElementById('notePreview');
             const note = document.getElementById('articleNote').value;
-            notePreview.innerHTML = marked.parse(note);
+            notePreview.innerHTML = renderMarkdown(note);
         }
 
         // 添加主题选择变化的监听器

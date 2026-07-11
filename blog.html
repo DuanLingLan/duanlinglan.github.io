@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <!-- 引入 marked.js 库 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/markdown.js"></script>
     <style>
         body {
             font-family: 'Comic Sans MS','Segoe Print', 'Courier', Arial, sans-serif;
@@ -61,7 +62,7 @@
     // 加载 posts.json 并生成文章列表
     async function loadPosts() {
         try {
-            const response = await fetch('posts.json');
+            const response = await fetch('data/posts.json');
             if (!response.ok) throw new Error('Failed to load post list');
             const posts = await response.json();
             
@@ -145,7 +146,7 @@
             console.log("Markdown content:", markdown); // 检查 Markdown 文件内容是否正确加载
             
             // 使用 marked.parse 来解析 Markdown 内容
-            const htmlContent = marked.parse(markdown);
+            const htmlContent = renderMarkdown(markdown);
             console.log("Converted HTML content:", htmlContent); // 检查是否成功转换为 HTML
             
             document.getElementById('content').innerHTML = htmlContent;

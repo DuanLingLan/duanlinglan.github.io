@@ -1,9 +1,9 @@
 @echo off
 cd C:\Users\Horiz\Desktop\web pack\asheweb
 
-node generatePosts.js
+node scripts\generate-posts.js
 
-node generateRSS.js
+node scripts\generate-rss.js
 
 git add .  
 

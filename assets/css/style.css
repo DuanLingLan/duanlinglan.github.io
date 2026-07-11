@@ -447,16 +447,16 @@ hr {
 
 .play-button::before,
 .pause-button::before {
-    font-family: FontAwesome;
     font-size: 24px;
+    color: #64002B;
 }
 
 .play-button::before {
-    content: '\f04b'; /* FontAwesome play icon */
+    content: '▶';
 }
 
 .pause-button::before {
-    content: '\f04c'; /* FontAwesome pause icon */
+    content: 'Ⅱ';
 }
 
 .progress-bar {

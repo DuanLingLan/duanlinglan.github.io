@@ -2,7 +2,7 @@
 cd C:\Users\Horiz\Desktop\web pack\asheweb
 
 
-node generateGallery.js
+node scripts\generate-gallery.js
 
 
 echo Update completed!
