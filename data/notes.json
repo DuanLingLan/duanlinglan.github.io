@@ -200,11 +200,17 @@
         "image": ""
     },
     {
-        "title": "Dheera Dheera",
+        "title": "",
         "date": "2026-07-11",
-        "content": "【Dheera Dheera - 勇士柏拉瓦传奇 Magadheera (2009)】 https://www.bilibili.com/video/BV1hqVpzYE7x/?share_source=copy_web&vd_source=80d36090be2f876aebe751454df04e06",
+        "content": "",
         "image": "",
         "hash": "5edf2057acc13e09893dd947d3ab1564",
-        "file": "collections/Dheera Dheera.md"
+        "file": "collections/Dheera Dheera.md",
+        "links": [
+            {
+                "text": "【Dheera Dheera - 勇士柏拉瓦传奇 Magadheera (2009)】 ",
+                "url": "https://www.bilibili.com/video/BV1hqVpzYE7x/?share_source=copy_web&vd_source=80d36090be2f876aebe751454df04e06"
+            }
+        ]
     }
 ]
