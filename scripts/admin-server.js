@@ -311,6 +311,20 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
+server.on('error', error => {
+    if (error.code === 'EADDRINUSE') {
+        console.error('----------------------------------------------');
+        console.error(`  端口 ${PORT} 已被占用！`);
+        console.error('  很可能已经有一个管理站窗口在运行了——');
+        console.error(`  直接在浏览器打开 http://localhost:${PORT}/admin.html 即可，`);
+        console.error('  或者关掉那个窗口后重新运行 admin.bat。');
+        console.error('----------------------------------------------');
+    } else {
+        console.error(error);
+    }
+    process.exit(1);
+});
+
 server.listen(PORT, '127.0.0.1', () => {
     const address = `http://localhost:${PORT}/admin.html`;
     console.log('----------------------------------------------');
