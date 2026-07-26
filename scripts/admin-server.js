@@ -247,15 +247,20 @@ async function handlePublish(req, res) {
 
     // diff --cached --quiet：退出码 1 = 有待提交变更
     const diff = await run('git', ['diff', '--cached', '--quiet']);
-    if (diff.ok) {
-        log.push('No changes to publish.');
-        return sendJson(res, 200, { ok: true, published: false, log: log.join('\n\n') });
-    }
-
-    const commit = await run('git', ['commit', '-m', message]);
-    log.push(`> git commit\n${commit.output}`);
-    if (!commit.ok) {
-        return sendJson(res, 500, { ok: false, log: log.join('\n\n') });
+    if (!diff.ok) {
+        const commit = await run('git', ['commit', '-m', message]);
+        log.push(`> git commit\n${commit.output}`);
+        if (!commit.ok) {
+            return sendJson(res, 500, { ok: false, log: log.join('\n\n') });
+        }
+    } else {
+        // 没有新变更，但可能有之前 push 失败留下的本地提交，照样推
+        const ahead = await run('git', ['rev-list', '--count', 'origin/main..main']);
+        if (ahead.ok && Number(ahead.output) === 0) {
+            log.push('No changes to publish.');
+            return sendJson(res, 200, { ok: true, published: false, log: log.join('\n\n') });
+        }
+        log.push(`发现 ${ahead.output.trim()} 个未推送的本地提交，继续推送……`);
     }
 
     const push = await run('git', ['push', 'origin', 'main']);
