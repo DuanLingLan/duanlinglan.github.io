@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections Admin</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <script src="assets/js/admin-tools.js"></script>
+    <style>
+        body {
+            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            color: #64002B;
+        }
+
+        .admin-panel {
+            width: 86%;
+            max-width: 1280px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff7f7;
+            border: 2px solid #ffcccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .admin-toolbar {
+            margin: 16px 0;
+            padding: 14px;
+            background-color: rgba(255, 255, 255, 0.72);
+            border: 1px solid #ffcccc;
+            border-radius: 8px;
+        }
+
+        .admin-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input,
+        textarea,
+        button {
+            font-family: inherit;
+        }
+
+        input,
+        textarea {
+            padding: 8px;
+            border: 1px solid #ffcccc;
+            border-radius: 5px;
+            color: #64002B;
+            background-color: #fff;
+        }
+
+        button {
+            background-color: #ffcccc;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            color: maroon;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        button:hover {
+            background-color: #ffb3b3;
+        }
+
+        .notes-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 14px;
+        }
+
+        .note-admin-card {
+            background-color: #fff;
+            border: 1px solid #ffcccc;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .note-admin-card img {
+            max-width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 6px;
+            background-color: #ffe6e6;
+            align-self: center;
+        }
+
+        .note-admin-card textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .note-admin-card .card-index {
+            font-size: 0.85em;
+            color: rgba(100, 0, 43, 0.55);
+        }
+
+        .link-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .link-row input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .empty-state {
+            padding: 18px;
+            text-align: center;
+            color: rgba(100, 0, 43, 0.65);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1 class="colorHead">Collections Admin</h1>
+        <p class="colorText">管理 My Precious 页面的便签（data/notes.json）。新卡片默认加在最后。</p>
+
+        <div class="admin-toolbar">
+            <div class="admin-row">
+                <input type="file" id="importJsonInput" accept=".json" style="display: none;">
+                <input type="file" id="imageFileInput" accept="image/*" multiple style="display: none;">
+                <button data-local-admin style="display: none;" onclick="document.getElementById('imageFileInput').click()">📷 上传图片建卡片</button>
+                <button onclick="addTextNote()">📝 新建文字卡片</button>
+                <button onclick="document.getElementById('importJsonInput').click()">Import JSON</button>
+                <button onclick="exportNotesJson()">Export JSON</button>
+                <button data-local-admin style="display: none;" onclick="saveNotes()">💾 保存</button>
+                <button data-local-admin style="display: none;" onclick="adminApi.publishWithFeedback()">🚀 发布</button>
+                <button onclick="window.location.href='collections.html'">查看页面</button>
+                <button onclick="window.location.href='admin.html'">Admin Home</button>
+            </div>
+            <div class="admin-row">
+                <span id="adminStatus" style="padding: 4px;"></span>
+            </div>
+        </div>
+
+        <div id="notesGrid" class="notes-admin-grid"></div>
+    </div>
+
+    <script>
+        let notesData = [];
+
+        async function loadNotes() {
+            try {
+                const response = await fetch('data/notes.json');
+                if (!response.ok) throw new Error('Failed to load data/notes.json');
+                notesData = await response.json();
+            } catch (error) {
+                console.error(error);
+                if (window.adminApi) {
+                    adminApi.setStatus('加载 data/notes.json 失败（如果是本地 file:// 打开，请改用 admin.bat 启动）', true);
+                }
+            }
+            renderNotes();
+        }
+
+        function renderNotes() {
+            const grid = document.getElementById('notesGrid');
+            grid.innerHTML = '';
+
+            if (!notesData.length) {
+                grid.innerHTML = '<div class="empty-state">还没有便签。</div>';
+                return;
+            }
+
+            notesData.forEach((note, index) => {
+                grid.appendChild(renderCard(note, index));
+            });
+        }
+
+        function renderCard(note, index) {
+            const card = document.createElement('div');
+            card.className = 'note-admin-card';
+
+            const indexLabel = document.createElement('div');
+            indexLabel.className = 'card-index';
+            indexLabel.textContent = `#${index + 1}${note.image ? ' · 图片便签' : ' · 文字便签'}`;
+            card.appendChild(indexLabel);
+
+            if (note.image) {
+                const img = document.createElement('img');
+                img.src = note.image;
+                img.alt = note.title || '';
+                img.loading = 'lazy';
+                card.appendChild(img);
+            }
+
+            const titleInput = document.createElement('input');
+            titleInput.placeholder = '标题（可留空）';
+            titleInput.value = note.title || '';
+            titleInput.addEventListener('input', () => { note.title = titleInput.value; });
+            card.appendChild(titleInput);
+
+            const dateInput = document.createElement('input');
+            dateInput.type = 'date';
+            dateInput.value = note.date || '';
+            dateInput.addEventListener('input', () => { note.date = dateInput.value; });
+            card.appendChild(dateInput);
+
+            const contentInput = document.createElement('textarea');
+            contentInput.placeholder = '内容/说明文字（可留空）';
+            contentInput.value = note.content || '';
+            contentInput.addEventListener('input', () => { note.content = contentInput.value; });
+            card.appendChild(contentInput);
+
+            const linksWrap = document.createElement('div');
+            renderLinks(linksWrap, note);
+            card.appendChild(linksWrap);
+
+            const actions = document.createElement('div');
+            actions.className = 'card-actions';
+            actions.innerHTML = `
+                <span>
+                    <button type="button" data-action="up">Up</button>
+                    <button type="button" data-action="down">Down</button>
+                </span>
+                <button type="button" data-action="delete">Delete</button>
+            `;
+            actions.querySelector('[data-action="up"]').addEventListener('click', () => moveNote(index, -1));
+            actions.querySelector('[data-action="down"]').addEventListener('click', () => moveNote(index, 1));
+            actions.querySelector('[data-action="delete"]').addEventListener('click', () => deleteNote(index));
+            card.appendChild(actions);
+
+            return card;
+        }
+
+        function renderLinks(container, note) {
+            container.innerHTML = '';
+            const links = Array.isArray(note.links) ? note.links : [];
+
+            links.forEach((link, linkIndex) => {
+                const row = document.createElement('div');
+                row.className = 'link-row';
+
+                const textInput = document.createElement('input');
+                textInput.placeholder = '链接文字';
+                textInput.value = link.text || '';
+                textInput.addEventListener('input', () => { link.text = textInput.value; });
+
+                const urlInput = document.createElement('input');
+                urlInput.placeholder = 'https://…';
+                urlInput.value = link.url || '';
+                urlInput.addEventListener('input', () => { link.url = urlInput.value; });
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.textContent = '×';
+                removeBtn.addEventListener('click', () => {
+                    note.links.splice(linkIndex, 1);
+                    if (!note.links.length) delete note.links;
+                    renderLinks(container, note);
+                });
+
+                row.appendChild(textInput);
+                row.appendChild(urlInput);
+                row.appendChild(removeBtn);
+                container.appendChild(row);
+            });
+
+            const addBtn = document.createElement('button');
+            addBtn.type = 'button';
+            addBtn.textContent = '+ 加链接';
+            addBtn.addEventListener('click', () => {
+                note.links = Array.isArray(note.links) ? note.links : [];
+                note.links.push({ text: '', url: '' });
+                renderLinks(container, note);
+            });
+            container.appendChild(addBtn);
+        }
+
+        function todayString() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function addTextNote() {
+            notesData.push({
+                title: '',
+                date: todayString(),
+                content: '',
+                image: ''
+            });
+            renderNotes();
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        function moveNote(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= notesData.length) return;
+            const [note] = notesData.splice(index, 1);
+            notesData.splice(target, 0, note);
+            renderNotes();
+        }
+
+        function deleteNote(index) {
+            if (confirm('删除这张便签？（不会删除 collections/ 里的原文件）')) {
+                notesData.splice(index, 1);
+                renderNotes();
+            }
+        }
+
+        async function uploadImages(files) {
+            for (const file of [...files]) {
+                try {
+                    adminApi.setStatus(`上传中：${file.name} ……`);
+                    const uploaded = await adminApi.upload('collections', file);
+                    notesData.push({
+                        title: file.name.replace(/\.[^.]+$/, ''),
+                        date: todayString(),
+                        content: '',
+                        image: uploaded.path,
+                        file: uploaded.path
+                    });
+                } catch (error) {
+                    adminApi.setStatus(`上传失败：${file.name}（${error.message}）`, true);
+                    renderNotes();
+                    return;
+                }
+            }
+            adminApi.setStatus(`已上传 ${files.length} 张图片，编辑好卡片后点「保存」`);
+            renderNotes();
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        async function saveNotes() {
+            try {
+                await adminApi.save('data/notes.json', notesData);
+                adminApi.setStatus('已保存到 data/notes.json ✓（点「发布」推送上线）');
+            } catch (error) {
+                adminApi.setStatus(`保存失败：${error.message}`, true);
+            }
+        }
+
+        function exportNotesJson() {
+            const blob = new Blob([JSON.stringify(notesData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'notes.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('imageFileInput').addEventListener('change', event => {
+            uploadImages(event.target.files);
+            event.target.value = '';
+        });
+
+        document.getElementById('importJsonInput').addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const parsed = JSON.parse(reader.result);
+                    if (!Array.isArray(parsed)) throw new Error('notes.json 应该是数组');
+                    notesData = parsed;
+                    renderNotes();
+                } catch (error) {
+                    alert('Invalid notes JSON.');
+                    console.error(error);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        });
+
+        document.addEventListener('DOMContentLoaded', loadNotes);
+    </script>
+</body>
+</html>

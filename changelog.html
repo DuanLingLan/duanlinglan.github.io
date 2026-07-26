@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Log · Arashi</title>
+    <meta name="description" content="Site changelog, generated from git history">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+            color: MediumVioletRed;
+            margin: 0;
+        }
+
+        .changelog-container {
+            width: 82%;
+            max-width: 720px;
+            margin: 10px auto 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .changelog-month {
+            margin: 22px 0 8px;
+            color: maroon;
+            font-size: 1.15em;
+            border-bottom: 1px dashed #ffcccc;
+            padding-bottom: 4px;
+        }
+
+        .changelog-day {
+            margin: 8px 0;
+            line-height: 1.9;
+            color: rgb(155, 26, 107);
+        }
+
+        .changelog-date {
+            display: inline-block;
+            min-width: 60px;
+            color: rgba(139, 0, 139, 0.55);
+            font-size: 0.9em;
+        }
+
+        .changelog-count {
+            color: rgba(139, 0, 139, 0.45);
+            font-size: 0.85em;
+        }
+
+        .changelog-note {
+            text-align: center;
+            font-size: 0.9em;
+            color: rgba(139, 0, 139, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile">
+        <a href="index.html" class="colorHead"><img src="assets/img/title.png" alt="Arashi's homepage" width="400" height="200" /></a>
+    </div>
+    <div>
+        <h3 class="slogan" style="transform: translate(-200px,-150px);">Dear diary, today my website...</h3>
+    </div>
+
+    <h2 class="line">
+        <img src="assets/img/hearts-pink-hearts.gif" alt="line" /><br>🛠️ Site Log 🛠️
+    </h2>
+
+    <div class="changelog-container">
+        <div id="changelog-content" class="colorText">Loading...</div>
+    </div>
+
+    <p class="changelog-note">这页由 git 提交历史自动生成 ✦ 记录这个小站的一砖一瓦</p>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p class="colorText">
+            Made by Ashe (Arashi) with ♥ © 2024. All Rights Surrendered.
+            <br><a href="index.html"><img src="assets/img/ashe-button.gif" alt="back to home"></a>
+        </p>
+    </div>
+
+    <script src="assets/js/counter.js"></script>
+    <script>
+        async function loadChangelog() {
+            const container = document.getElementById('changelog-content');
+            try {
+                const response = await fetch('data/changelog.json');
+                if (!response.ok) throw new Error('Failed to load changelog');
+                const days = await response.json();
+
+                if (!days.length) {
+                    container.textContent = 'Nothing here yet.';
+                    return;
+                }
+
+                container.innerHTML = '';
+                container.style.textAlign = 'left';
+
+                let currentMonth = '';
+                days.forEach(day => {
+                    const month = day.date.slice(0, 7); // YYYY-MM
+                    if (month !== currentMonth) {
+                        currentMonth = month;
+                        const monthTitle = document.createElement('div');
+                        monthTitle.className = 'changelog-month';
+                        monthTitle.textContent = `✿ ${month.replace('-', ' 年 ')} 月`;
+                        container.appendChild(monthTitle);
+                    }
+
+                    day.items.forEach(item => {
+                        const line = document.createElement('div');
+                        line.className = 'changelog-day';
+
+                        const date = document.createElement('span');
+                        date.className = 'changelog-date';
+                        date.textContent = day.date.slice(5); // MM-DD
+
+                        line.appendChild(date);
+                        line.appendChild(document.createTextNode(` ✦ ${item.message}`));
+
+                        if (item.count > 1) {
+                            const count = document.createElement('span');
+                            count.className = 'changelog-count';
+                            count.textContent = ` ×${item.count}`;
+                            line.appendChild(count);
+                        }
+
+                        container.appendChild(line);
+                    });
+                });
+            } catch (error) {
+                console.error(error);
+                container.textContent = 'Error loading changelog.';
+            }
+        }
+
+        loadChangelog();
+    </script>
+</body>
+</html>

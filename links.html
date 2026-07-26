@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Wall · Arashi</title>
+    <meta name="description" content="88x31 buttons, links and neighbors">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+            color: MediumVioletRed;
+            margin: 0;
+        }
+
+        .links-container {
+            width: 82%;
+            max-width: 820px;
+            margin: 10px auto 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-wall {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px;
+        }
+
+        /* 88x31 按钮：像素风格，不平滑缩放 */
+        .button-wall img {
+            width: 88px;
+            height: 31px;
+            image-rendering: pixelated;
+            border: 1px solid rgba(199, 21, 133, 0.25);
+        }
+
+        .button-wall a:hover img {
+            box-shadow: 0 0 8px lightpink;
+            transform: translateY(-2px);
+        }
+
+        .snippet-box {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #64002B;
+            background-color: #fff7f7;
+            border: 1px dashed #ffcccc;
+            border-radius: 5px;
+            resize: none;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .wall-note {
+            text-align: center;
+            font-size: 0.9em;
+            color: rgba(139, 0, 139, 0.6);
+            line-height: 1.8;
+        }
+
+        .wall-note a {
+            color: MediumVioletRed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile">
+        <a href="index.html" class="colorHead"><img src="assets/img/title.png" alt="Arashi's homepage" width="400" height="200" /></a>
+    </div>
+    <div>
+        <h3 class="slogan" style="transform: translate(-200px,-150px);">The Web Is Yours</h3>
+    </div>
+
+    <h2 class="line">
+        <img src="assets/img/hearts-pink-hearts.gif" alt="line" /><br>🔘 Button Wall 🔘
+    </h2>
+
+    <div class="links-container">
+        <h2 class="colorText">🌙 My button</h2>
+        <p class="colorText">这是我的 88x31 按钮，欢迎放到你的网站上！复制下面的代码就可以：</p>
+        <div class="button-wall">
+            <a href="index.html"><img src="assets/img/ashe-button.gif" alt="Arashi's homepage"></a>
+        </div>
+        <textarea class="snippet-box" rows="3" readonly onclick="this.select()">&lt;a href="https://duanlinglan.github.io/"&gt;&lt;img src="https://duanlinglan.github.io/assets/img/ashe-button.gif" alt="Arashi's homepage" width="88" height="31"&gt;&lt;/a&gt;</textarea>
+
+        <h2 class="colorText">🏡 Neighbors &amp; friends</h2>
+        <p class="colorText">互联网街坊四邻（还在慢慢收集中……）</p>
+        <div class="button-wall">
+            <!-- 交换来的友链按钮加在这里，一行一个：
+                 <a href="https://friend-site.example" target="_blank"><img src="assets/img/buttons/xxx.gif" alt="Friend's site"></a>
+            -->
+            <a href="https://neocities.org" target="_blank"><img src="assets/img/neocities pink.gif" alt="NeoCities - the web is yours"></a>
+        </div>
+
+        <p class="wall-note">
+            想交换按钮吗？把你的 88x31 按钮<a href="mailto:ashe.duan@gmail.com">发邮件给我</a>，我会把它贴上墙 ♥<br>
+            No webring yet — but if you know a cozy one, tell me!
+        </p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p class="colorText">
+            Made by Ashe (Arashi) with ♥ © 2024. All Rights Surrendered.
+            <br><a href="index.html"><img src="assets/img/ashe-button.gif" alt="back to home"></a>
+        </p>
+    </div>
+
+    <script src="assets/js/counter.js"></script>
+</body>
+</html>

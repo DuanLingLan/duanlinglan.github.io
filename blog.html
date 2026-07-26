@@ -138,19 +138,21 @@
     // 加载并渲染 Markdown 文件内容
     async function loadMarkdown(file, title) {
         try {
-            console.log("Loading file:", file); // 确认文件路径
             const response = await fetch(file);
             if (!response.ok) throw new Error('Failed to load markdown file');
-            
+
             const markdown = await response.text();
-            console.log("Markdown content:", markdown); // 检查 Markdown 文件内容是否正确加载
-            
+
             // 使用 marked.parse 来解析 Markdown 内容
             const htmlContent = renderMarkdown(markdown);
-            console.log("Converted HTML content:", htmlContent); // 检查是否成功转换为 HTML
-            
+
             document.getElementById('content').innerHTML = htmlContent;
-            
+
+            // 文章内的图片延迟加载
+            document.querySelectorAll('#content img').forEach(img => {
+                img.loading = 'lazy';
+            });
+
             // 更新标题
             document.getElementById('blogTitle').textContent = title; // 使用没有日期的标题
         } catch (error) {
@@ -179,6 +181,7 @@
     loadPosts();
 </script>
 <script src="assets/js/script.js"></script>
+<script src="assets/js/counter.js"></script>
 
 </body>
 </html>

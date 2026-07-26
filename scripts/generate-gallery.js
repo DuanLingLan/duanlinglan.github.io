@@ -48,7 +48,7 @@ function renderItem(item) {
     const alt = escapeHtml(item.alt || item.title || path.parse(item.src || '').name);
 
     return `        <div class="slide">
-            <img src="${src}" alt="${alt}">
+            <img src="${src}" alt="${alt}" loading="lazy">
             <div class="slide-name">${title}</div>
         </div>`;
 }

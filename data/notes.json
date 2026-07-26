@@ -4,35 +4,40 @@
         "date": "2024-05-10",
         "content": "",
         "image": "collections/akutagawa.jpg",
-        "hash": "d98f4738501422fa6155e6a18493073f"
+        "hash": "d98f4738501422fa6155e6a18493073f",
+        "file": "collections/akutagawa.jpg"
     },
     {
         "title": "Be cheerful, live your life.",
         "date": "2024-10-31",
         "content": "3rd century BCE",
         "image": "collections/life.jpg",
-        "hash": "666aa2a34d712e773f9b268f6530303f"
+        "hash": "666aa2a34d712e773f9b268f6530303f",
+        "file": "collections/life.jpg"
     },
     {
         "title": "",
         "date": "2024-10-30",
         "content": "",
         "image": "collections/starstarstar.png",
-        "hash": "75c524dbcbaa3d885e4091e961d33364"
+        "hash": "75c524dbcbaa3d885e4091e961d33364",
+        "file": "collections/starstarstar.png"
     },
     {
         "title": "还是会时不时就想起虾米",
         "date": "2020-12-29",
         "content": "R.I.P. my friend. Starry night never ends.",
         "image": "collections/xiami.jpg",
-        "hash": "45951f8d508eee9497b410c64d4699f2"
+        "hash": "45951f8d508eee9497b410c64d4699f2",
+        "file": "collections/xiami.jpg"
     },
     {
         "title": "Neon Succubus",
         "date": "2021-12-24",
         "content": "Merry Christmas!",
         "image": "collections/Neon Succubus.png",
-        "hash": "fc404f8f6e30df407456a5cb97ec1594"
+        "hash": "fc404f8f6e30df407456a5cb97ec1594",
+        "file": "collections/Neon Succubus.png"
     },
     {
         "title": "",
@@ -45,7 +50,8 @@
             }
         ],
         "image": "collections/hyori.png",
-        "hash": "6688649f09dbdb0c79f5aa830a56b9ee"
+        "hash": "6688649f09dbdb0c79f5aa830a56b9ee",
+        "file": "collections/hyori.png"
     },
     {
         "title": "Gnostic",
@@ -62,105 +68,120 @@
             }
         ],
         "image": "",
-        "hash": "eca01eca459be9ffe84db2e3de978651"
+        "hash": "eca01eca459be9ffe84db2e3de978651",
+        "file": "collections/my holy markdown.md"
     },
     {
         "title": "Ali, Fear Eats the Soul",
         "date": "2024-12-21",
         "content": "「我们应该去买一小片天堂」",
         "image": "collections/Ali, Fear Eats the Soul.jpg",
-        "hash": "4d579119466266455379f8eceb559dce"
+        "hash": "4d579119466266455379f8eceb559dce",
+        "file": "collections/Ali, Fear Eats the Soul.jpg"
     },
     {
         "title": "哥林多前书 13:4-8",
         "date": "2024-12-26",
         "content": "爱是恒久忍耐，又有恩慈；爱是不嫉妒；爱是不自夸，不张狂， 不做害羞的事，不求自己的益处，不轻易发怒，不计算人的恶， 不喜欢不义，只喜欢真理； 凡事包容，凡事相信，凡事盼望，凡事忍耐。 爱是永不止息。先知讲道之能终必归于无有；说方言之能终必停止；知识也终必归于无有。",
         "image": "",
-        "hash": "a5a447d5a982e8ec4bf09d71e7d1a2ea"
+        "hash": "a5a447d5a982e8ec4bf09d71e7d1a2ea",
+        "file": "collections/test.md"
     },
     {
         "title": "Vangelis Blade Runner - Trilogy OST",
         "date": "2025-02-04",
         "content": "",
         "image": "collections/Vangelis Blade Runner - Trilogy.jpg",
-        "hash": "ad82d7e1bf28700c9c5bc95a3b494269"
+        "hash": "ad82d7e1bf28700c9c5bc95a3b494269",
+        "file": "collections/Vangelis Blade Runner - Trilogy.jpg"
     },
     {
         "title": "Antonin Artaud",
         "date": "2020-11-10",
         "content": "",
         "image": "collections/Antonin Artaud.jpg",
-        "hash": "748a1fd03de32feada2c3dedc4024129"
+        "hash": "748a1fd03de32feada2c3dedc4024129",
+        "file": "collections/Antonin Artaud.jpg"
     },
     {
         "title": "Un coeur en hiver",
         "date": "2025-04-26",
         "content": "",
         "image": "collections/Un coeur en hiver.png",
-        "hash": "1e3f315b967279e2685a8e531c7b5bc4"
+        "hash": "1e3f315b967279e2685a8e531c7b5bc4",
+        "file": "collections/Un coeur en hiver.png"
     },
     {
         "title": "神灵变化，但祈祷在这里永存",
         "date": "2025-04-26",
         "content": "",
         "image": "collections/神灵变化，但祈祷在这里永存.jpg",
-        "hash": "64c944439bc05a45e56627c03c350c16"
+        "hash": "64c944439bc05a45e56627c03c350c16",
+        "file": "collections/神灵变化，但祈祷在这里永存.jpg"
     },
     {
         "title": "",
         "date": "2021-01-18",
         "content": "自制美甲的巅峰之作",
         "image": "collections/b2519d0574fa90cfe3bbc4204611b9e.jpg",
-        "hash": "17119998d3803a1832a81735a0be119b"
+        "hash": "17119998d3803a1832a81735a0be119b",
+        "file": "collections/b2519d0574fa90cfe3bbc4204611b9e.jpg"
     },
     {
         "title": "Her-OST",
         "date": "2025-04-26",
         "content": "",
         "image": "collections/Her-OST.jpg",
-        "hash": "e15a415418c72355098670cc8e9b568d"
+        "hash": "e15a415418c72355098670cc8e9b568d",
+        "file": "collections/Her-OST.jpg"
     },
     {
         "title": "花",
         "date": "2017-12-03",
         "content": "花，一款匿名交换日记的APP。以前非常喜欢用。",
         "image": "collections/Screenshot_2017-12-03-19-10-56-549_花.jpg",
-        "hash": "1fe26563cca7995e01ce24ad62a3aecd"
+        "hash": "1fe26563cca7995e01ce24ad62a3aecd",
+        "file": "collections/Screenshot_2017-12-03-19-10-56-549_花.jpg"
     },
     {
         "title": "The Shape of Water",
         "date": "2025-04-26",
         "content": "",
         "image": "collections/The Shape of Water.jpg",
-        "hash": "03d06b0419af902d82d8ab4a3abf4b2a"
+        "hash": "03d06b0419af902d82d8ab4a3abf4b2a",
+        "file": "collections/The Shape of Water.jpg"
     },
     {
         "title": "招财宝",
         "date": "2022-03-20",
         "content": "",
         "image": "collections/招财宝.jpg",
-        "hash": "60e56b8efacbcbe74fe34b59480e785e"
+        "hash": "60e56b8efacbcbe74fe34b59480e785e",
+        "file": "collections/招财宝.jpg"
     },
     {
         "title": "Amrapali(1966)",
         "date": "2025-05-08",
         "content": "",
         "image": "collections/Amrapoli(1966).png",
-        "hash": "e9814eadb55c159c0906eed619fcc3f6"
+        "hash": "e9814eadb55c159c0906eed619fcc3f6",
+        "file": "collections/Amrapoli(1966).png"
     },
     {
         "title": "",
         "date": "2025-05-08",
         "content": "",
         "image": "collections/chapel.jpg",
-        "hash": "3f33f5595f1104b73d956cfe5bc70c2c"
+        "hash": "3f33f5595f1104b73d956cfe5bc70c2c",
+        "file": "collections/chapel.jpg"
     },
     {
         "title": "Simone Weil",
         "date": "2025-05-08",
         "content": "",
         "image": "collections/Simone Weil.jpg",
-        "hash": "c0f3ba9d94e31cdbbcbc21c774392f9e"
+        "hash": "c0f3ba9d94e31cdbbcbc21c774392f9e",
+        "file": "collections/Simone Weil.jpg"
     },
     {
         "title": "好文章",
@@ -183,6 +204,7 @@
         "date": "2026-07-11",
         "content": "【Dheera Dheera - 勇士柏拉瓦传奇 Magadheera (2009)】 https://www.bilibili.com/video/BV1hqVpzYE7x/?share_source=copy_web&vd_source=80d36090be2f876aebe751454df04e06",
         "image": "",
-        "hash": "5edf2057acc13e09893dd947d3ab1564"
+        "hash": "5edf2057acc13e09893dd947d3ab1564",
+        "file": "collections/Dheera Dheera.md"
     }
 ]

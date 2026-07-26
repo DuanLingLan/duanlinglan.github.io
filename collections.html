@@ -184,6 +184,7 @@ async function loadNotes() {
             const img = document.createElement('img');
             img.src = note.image;
             img.alt = note.title;
+            img.loading = 'lazy';
             contentDiv.appendChild(img);
         } else {
             noteDiv.classList.add('note-text-only');
@@ -219,6 +220,7 @@ async function loadNotes() {
 loadNotes();
 
     </script>
+    <script src="assets/js/counter.js"></script>
 </body>
 </html>
 

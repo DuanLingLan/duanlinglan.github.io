@@ -1,0 +1,21 @@
+# Obsidian 库配置（含插件源码、workspace.json 等私人信息）——只留在本地，不发布
+blog/.obsidian/
+collections/.obsidian/
+
+# 未被站点引用的旧缓存
+cache/
+
+# Node 依赖（sharp 等只在本地用）
+node_modules/
+package-lock.json
+
+# 图片压缩前的原图备份（scripts/optimize-images.js --apply 生成）
+_originals-backup/
+
+# Claude Code 本地配置
+.claude/
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -6,6 +6,7 @@
     <title>Gallery Admin</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <script src="assets/js/admin-tools.js"></script>
     <style>
         body {
             background: url("assets/pic/bg.png") no-repeat center center fixed;
@@ -161,7 +162,12 @@
                 <button onclick="document.getElementById('imageFileInput').click()">Add Images</button>
                 <button onclick="addGroup()">Add Group</button>
                 <button onclick="exportGalleryJson()">Export JSON</button>
+                <button data-local-admin style="display: none;" onclick="saveGallery()">💾 保存</button>
+                <button data-local-admin style="display: none;" onclick="adminApi.publishWithFeedback()">🚀 发布</button>
                 <button onclick="window.location.href='admin.html'">Admin Home</button>
+            </div>
+            <div class="admin-row" data-local-admin style="display: none;">
+                <span id="adminStatus" style="padding: 4px;"></span>
             </div>
         </div>
 
@@ -377,7 +383,7 @@
             renderGroups();
         }
 
-        function addImages(files) {
+        async function addImages(files) {
             if (galleryData.groups.length === 0) {
                 addGroup();
             }
@@ -388,16 +394,49 @@
             galleryData.imageBasePath = basePath;
             group.items = group.items || [];
 
-            [...files].forEach(file => {
-                const title = fileNameWithoutExt(file.name);
-                group.items.push({
-                    src: `${basePath}/${file.name}`,
-                    title,
-                    alt: title
+            if (window.adminApi && adminApi.enabled) {
+                // 本地管理服务器：真上传，文件直接写进 assets/pic/gallery_photos/
+                for (const file of [...files]) {
+                    try {
+                        adminApi.setStatus(`上传中：${file.name} ……`);
+                        const uploaded = await adminApi.upload('gallery', file);
+                        const title = fileNameWithoutExt(uploaded.name);
+                        group.items.push({ src: uploaded.path, title, alt: title });
+                    } catch (error) {
+                        adminApi.setStatus(`上传失败：${file.name}（${error.message}）`, true);
+                        refreshUI();
+                        return;
+                    }
+                }
+                adminApi.setStatus(`已上传 ${files.length} 张图片，记得点「保存」写入 gallery.json`);
+            } else {
+                // 线上/无服务器兜底：只登记路径，需自己把文件放进对应目录
+                [...files].forEach(file => {
+                    const title = fileNameWithoutExt(file.name);
+                    group.items.push({
+                        src: `${basePath}/${file.name}`,
+                        title,
+                        alt: title
+                    });
                 });
-            });
+            }
 
             refreshUI();
+        }
+
+        async function saveGallery() {
+            galleryData.imageBasePath = document.getElementById('imageBasePath').value.replace(/\/+$/, '');
+            galleryData.groups.forEach(group => {
+                group.id = group.id || slugify(group.title);
+                group.items = group.items || [];
+            });
+
+            try {
+                await adminApi.save('data/gallery.json', galleryData);
+                adminApi.setStatus('已保存到 data/gallery.json ✓（点「发布」推送上线）');
+            } catch (error) {
+                adminApi.setStatus(`保存失败：${error.message}`, true);
+            }
         }
 
         function exportGalleryJson() {

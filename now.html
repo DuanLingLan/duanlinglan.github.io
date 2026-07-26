@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now · Arashi</title>
+    <meta name="description" content="What Ashe is up to now">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: url("assets/pic/bg.png") no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+            color: MediumVioletRed;
+            margin: 0;
+        }
+
+        .now-container {
+            width: 82%;
+            max-width: 760px;
+            margin: 10px auto 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .now-note {
+            text-align: center;
+            font-size: 0.9em;
+            color: rgba(139, 0, 139, 0.6);
+            line-height: 1.8;
+        }
+
+        .now-note a {
+            color: MediumVioletRed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile">
+        <a href="index.html" class="colorHead"><img src="assets/img/title.png" alt="Arashi's homepage" width="400" height="200" /></a>
+    </div>
+    <div>
+        <h3 class="slogan" style="transform: translate(-200px,-150px);">What I'm doing now</h3>
+    </div>
+
+    <h2 class="line">
+        <img src="assets/img/hearts-pink-hearts.gif" alt="line" /><br>🌱 Now 🌱
+    </h2>
+
+    <div class="now-container">
+        <!-- 内容与首页 Currently... 同源：partials/library.html，改一处两边都更新 -->
+        <div id="now-content" class="colorText">Loading...</div>
+    </div>
+
+    <p class="now-note">
+        This is a <a href="https://nownownow.com/about" target="_blank">/now page</a> —
+        a little corner that tells you what I'm focused on at this point of my life.<br>
+        内容随时更新，比任何社交动态都真实。
+    </p>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p class="colorText">
+            Made by Ashe (Arashi) with ♥ © 2024. All Rights Surrendered.
+            <br><a href="index.html"><img src="assets/img/ashe-button.gif" alt="back to home"></a>
+        </p>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/counter.js"></script>
+    <script>
+        loadContent('partials/library.html', 'now-content');
+    </script>
+</body>
+</html>

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="assets/js/markdown.js"></script>
+    <script src="assets/js/admin-tools.js"></script>
     <style>
         .admin-panel {
             max-width: 1200px;
@@ -234,7 +235,13 @@
             </div>
 
             <button onclick="exportToJson()">导出JSON文件</button>
+            <button data-local-admin style="display: none;" onclick="saveNotebook()">💾 保存</button>
+            <button data-local-admin style="display: none;" onclick="adminApi.publishWithFeedback()">🚀 发布</button>
             <button onclick="window.location.href='notebook.html'">返回笔记本</button>
+            <button onclick="window.location.href='admin.html'">管理首页</button>
+            <div data-local-admin style="display: none; margin-top: 8px;">
+                <span id="adminStatus"></span>
+            </div>
         </div>
     </div>
 
@@ -408,6 +415,16 @@
         function deleteArticle(themeIndex, articleIndex) {
             notebookData.themes[themeIndex].articles.splice(articleIndex, 1);
             refreshUI();
+        }
+
+        // 保存到 data/notebook-content.json（本地管理服务器）
+        async function saveNotebook() {
+            try {
+                await adminApi.save('data/notebook-content.json', notebookData);
+                adminApi.setStatus('已保存到 data/notebook-content.json ✓（点「发布」推送上线）');
+            } catch (error) {
+                adminApi.setStatus(`保存失败：${error.message}`, true);
+            }
         }
 
         // 导出JSON文件
