@@ -3,8 +3,16 @@
     "date": "2026-07-27",
     "items": [
       {
+        "message": "Hide now page link from homepage nav for now",
+        "count": 1
+      },
+      {
+        "message": "Publish: push pending local commits even when there are no new changes",
+        "count": 1
+      },
+      {
         "message": "内容更新",
-        "count": 3
+        "count": 4
       },
       {
         "message": "Friendly error message when admin server port is already in use",

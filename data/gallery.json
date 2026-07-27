@@ -1,5 +1,5 @@
 {
-  "imageBasePath": "assets/pic/gallery_photos",
+  "imageBasePath": "assets/pic/gallery_photos/R0009625.JPG",
   "groups": [
     {
       "id": "echoes-of-time",
@@ -39,6 +39,11 @@
           "src": "assets/pic/gallery_photos/tranquility.JPG",
           "title": "tranquility",
           "alt": "tranquility"
+        },
+        {
+          "src": "assets/pic/gallery_photos/R0009625.JPG",
+          "title": "test",
+          "alt": "test"
         }
       ]
     },
@@ -178,6 +183,11 @@
           "alt": "Island Bay, Wellington"
         }
       ]
+    },
+    {
+      "id": "new-group-4",
+      "title": "霓虹霓虹",
+      "items": []
     }
   ]
 }
