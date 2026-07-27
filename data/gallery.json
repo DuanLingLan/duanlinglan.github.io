@@ -1,5 +1,5 @@
 {
-  "imageBasePath": "assets/pic/gallery_photos/R0009625.JPG",
+  "imageBasePath": "assets/pic/gallery_photos",
   "groups": [
     {
       "id": "echoes-of-time",
@@ -39,11 +39,6 @@
           "src": "assets/pic/gallery_photos/tranquility.JPG",
           "title": "tranquility",
           "alt": "tranquility"
-        },
-        {
-          "src": "assets/pic/gallery_photos/R0009625.JPG",
-          "title": "test",
-          "alt": "test"
         }
       ]
     },
@@ -187,7 +182,18 @@
     {
       "id": "new-group-4",
       "title": "霓虹霓虹",
-      "items": []
+      "items": [
+        {
+          "src": "assets/pic/gallery_photos/R0010641.JPG",
+          "title": "test1",
+          "alt": "test1"
+        },
+        {
+          "src": "assets/pic/gallery_photos/R0010610.JPG",
+          "title": "test2",
+          "alt": "test2"
+        }
+      ]
     }
   ]
 }

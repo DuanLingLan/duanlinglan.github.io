@@ -140,7 +140,31 @@
         .item-actions {
             display: flex;
             justify-content: space-between;
+            gap: 8px;
             margin-top: 8px;
+        }
+
+        .move-controls {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .move-controls select {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .selection-status {
+            color: rgba(100, 0, 43, 0.72);
+            font-size: 0.92em;
+        }
+
+        .field-note {
+            margin: 4px 0 0;
+            color: rgba(100, 0, 43, 0.7);
+            font-size: 0.86em;
         }
 
         .empty-state {
@@ -159,7 +183,7 @@
                 <input type="file" id="importJsonInput" accept=".json" style="display: none;">
                 <input type="file" id="imageFileInput" accept="image/*" multiple style="display: none;">
                 <button onclick="document.getElementById('importJsonInput').click()">Import JSON</button>
-                <button onclick="document.getElementById('imageFileInput').click()">Add Images</button>
+                <button id="addImagesButton" onclick="document.getElementById('imageFileInput').click()">Add Images</button>
                 <button onclick="addGroup()">Add Group</button>
                 <button onclick="exportGalleryJson()">Export JSON</button>
                 <button data-local-admin style="display: none;" onclick="saveGallery()">💾 保存</button>
@@ -174,12 +198,17 @@
         <div class="admin-section">
             <div class="admin-row">
                 <div class="input-group">
-                    <label for="imageBasePath">Image base path</label>
+                    <label for="imageBasePath">Image path prefix (online/manual only)</label>
                     <input id="imageBasePath" value="assets/pic/gallery_photos">
+                    <p class="field-note">Local uploads always go to <code>assets/pic/gallery_photos</code>. Use a folder path here, not a photo filename.</p>
                 </div>
                 <div class="input-group">
                     <label for="targetGroup">Target group</label>
                     <select id="targetGroup"></select>
+                    <div>
+                        <button id="moveSelectedButton" type="button">Move selected here</button>
+                        <span id="selectionStatus" class="selection-status">0 selected</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,6 +221,10 @@
             imageBasePath: 'assets/pic/gallery_photos',
             groups: []
         };
+        const DEFAULT_GALLERY_PATH = 'assets/pic/gallery_photos';
+        const selectedItems = new Set();
+        let isDirty = false;
+        let isUploading = false;
 
         function slugify(value) {
             return String(value || 'gallery')
@@ -203,6 +236,31 @@
 
         function fileNameWithoutExt(name) {
             return name.replace(/\.[^.]+$/, '');
+        }
+
+        function normalizeImageBasePath(value) {
+            const cleaned = String(value || DEFAULT_GALLERY_PATH)
+                .trim()
+                .replace(/\\/g, '/')
+                .replace(/\/+$/, '');
+            if (!cleaned || cleaned.split('/').includes('..')) return DEFAULT_GALLERY_PATH;
+            // Earlier versions let a complete image path be stored in this directory field.
+            return /\.(avif|gif|jpe?g|png|webp)$/i.test(cleaned)
+                ? cleaned.replace(/\/[^/]+$/, '')
+                : cleaned;
+        }
+
+        function markDirty() {
+            isDirty = true;
+            if (window.adminApi && adminApi.enabled && !isUploading) {
+                adminApi.setStatus('有未保存的 Gallery 变更。');
+            }
+        }
+
+        function updateSelectionUI() {
+            const count = selectedItems.size;
+            document.getElementById('selectionStatus').textContent = `${count} selected`;
+            document.getElementById('moveSelectedButton').disabled = count === 0 || galleryData.groups.length === 0;
         }
 
         function normalizeGalleryData(data) {
@@ -221,9 +279,32 @@
                 };
             }
 
+            const source = data && typeof data === 'object' ? data : {};
+            const groups = Array.isArray(source.groups) ? source.groups : [];
+            const usedGroupIds = new Set();
             return {
-                imageBasePath: data.imageBasePath || 'assets/pic/gallery_photos',
-                groups: Array.isArray(data.groups) ? data.groups : []
+                imageBasePath: normalizeImageBasePath(source.imageBasePath),
+                groups: groups
+                    .filter(group => group && typeof group === 'object')
+                    .map((group, index) => {
+                        const title = String(group.title || `Group ${index + 1}`);
+                        const baseId = String(group.id || slugify(title));
+                        let id = baseId;
+                        let suffix = 2;
+                        while (usedGroupIds.has(id)) id = `${baseId}-${suffix++}`;
+                        usedGroupIds.add(id);
+                        return {
+                            id,
+                            title,
+                            items: (Array.isArray(group.items) ? group.items : [])
+                                .filter(item => item && typeof item === 'object' && item.src)
+                                .map(item => ({
+                                    src: String(item.src),
+                                    title: String(item.title || ''),
+                                    alt: String(item.alt || '')
+                                }))
+                        };
+                    })
             };
         }
 
@@ -240,21 +321,31 @@
         }
 
         function refreshUI() {
-            document.getElementById('imageBasePath').value = galleryData.imageBasePath || 'assets/pic/gallery_photos';
+            document.getElementById('imageBasePath').value = normalizeImageBasePath(galleryData.imageBasePath);
             refreshGroupSelect();
             renderGroups();
+            updateSelectionUI();
         }
 
         function refreshGroupSelect() {
             const select = document.getElementById('targetGroup');
+            const selectedValue = select.value;
             select.innerHTML = '';
 
             galleryData.groups.forEach((group, index) => {
                 const option = document.createElement('option');
-                option.value = index;
+                option.value = group.id;
                 option.textContent = group.title || group.id || `Group ${index + 1}`;
                 select.appendChild(option);
             });
+            if ([...select.options].some(option => option.value === selectedValue)) {
+                select.value = selectedValue;
+            }
+        }
+
+        function getTargetGroupIndex() {
+            const id = document.getElementById('targetGroup').value;
+            return galleryData.groups.findIndex(group => group.id === id);
         }
 
         function renderGroups() {
@@ -272,25 +363,29 @@
 
                 const header = document.createElement('div');
                 header.className = 'group-header';
-                header.innerHTML = `
-                    <input value="${group.title || ''}" aria-label="Group title">
-                    <div>
-                        <button type="button" data-action="up">Up</button>
-                        <button type="button" data-action="down">Down</button>
-                        <button type="button" data-action="delete">Delete</button>
-                    </div>
-                `;
-
-                const titleInput = header.querySelector('input');
+                const titleInput = document.createElement('input');
+                titleInput.value = group.title || '';
+                titleInput.setAttribute('aria-label', 'Group title');
+                const actions = document.createElement('div');
+                const upButton = document.createElement('button');
+                const downButton = document.createElement('button');
+                const deleteButton = document.createElement('button');
+                upButton.type = downButton.type = deleteButton.type = 'button';
+                upButton.textContent = 'Up';
+                downButton.textContent = 'Down';
+                deleteButton.textContent = 'Delete';
+                actions.append(upButton, downButton, deleteButton);
+                header.append(titleInput, actions);
                 titleInput.addEventListener('input', () => {
                     group.title = titleInput.value;
                     group.id = group.id || slugify(group.title);
                     refreshGroupSelect();
+                    markDirty();
                 });
 
-                header.querySelector('[data-action="up"]').addEventListener('click', () => moveGroup(groupIndex, -1));
-                header.querySelector('[data-action="down"]').addEventListener('click', () => moveGroup(groupIndex, 1));
-                header.querySelector('[data-action="delete"]').addEventListener('click', () => deleteGroup(groupIndex));
+                upButton.addEventListener('click', () => moveGroup(groupIndex, -1));
+                downButton.addEventListener('click', () => moveGroup(groupIndex, 1));
+                deleteButton.addEventListener('click', () => deleteGroup(groupIndex));
 
                 const grid = document.createElement('div');
                 grid.className = 'gallery-admin-grid';
@@ -308,40 +403,88 @@
         function renderItem(groupIndex, itemIndex, item) {
             const card = document.createElement('div');
             card.className = 'gallery-admin-item';
-            card.innerHTML = `
-                <img src="${item.src}" alt="${item.alt || item.title || ''}">
-                <div class="item-fields">
-                    <input value="${item.src || ''}" aria-label="Image path">
-                    <input value="${item.title || ''}" aria-label="Image title">
-                    <input value="${item.alt || ''}" aria-label="Image alt">
-                </div>
-                <div class="item-actions">
-                    <span>
-                        <button type="button" data-action="up">Up</button>
-                        <button type="button" data-action="down">Down</button>
-                    </span>
-                    <button type="button" data-action="delete">Delete</button>
-                </div>
-            `;
+            const image = document.createElement('img');
+            image.src = item.src || '';
+            image.alt = item.alt || item.title || '';
+            const selectItem = document.createElement('input');
+            selectItem.type = 'checkbox';
+            selectItem.checked = selectedItems.has(item);
+            selectItem.setAttribute('aria-label', 'Select image for moving');
+            const fields = document.createElement('div');
+            fields.className = 'item-fields';
+            const srcInput = document.createElement('input');
+            const titleInput = document.createElement('input');
+            const altInput = document.createElement('input');
+            srcInput.value = item.src || '';
+            titleInput.value = item.title || '';
+            altInput.value = item.alt || '';
+            srcInput.setAttribute('aria-label', 'Image path');
+            titleInput.setAttribute('aria-label', 'Image title');
+            altInput.setAttribute('aria-label', 'Image alt');
+            fields.append(srcInput, titleInput, altInput);
+            const moveControls = document.createElement('div');
+            moveControls.className = 'move-controls';
+            const moveSelect = createGroupSelect(groupIndex);
+            const moveButton = document.createElement('button');
+            moveButton.type = 'button';
+            moveButton.textContent = 'Move';
+            moveButton.disabled = galleryData.groups.length < 2 || Number(moveSelect.value) === groupIndex;
+            moveControls.append(moveSelect, moveButton);
+            const itemActions = document.createElement('div');
+            itemActions.className = 'item-actions';
+            const orderActions = document.createElement('span');
+            const upButton = document.createElement('button');
+            const downButton = document.createElement('button');
+            const deleteButton = document.createElement('button');
+            upButton.type = downButton.type = deleteButton.type = 'button';
+            upButton.textContent = 'Up';
+            downButton.textContent = 'Down';
+            deleteButton.textContent = 'Delete';
+            orderActions.append(upButton, downButton);
+            itemActions.append(orderActions, deleteButton);
+            card.append(image, selectItem, fields, moveControls, itemActions);
 
-            const [srcInput, titleInput, altInput] = card.querySelectorAll('input');
+            selectItem.addEventListener('change', () => {
+                if (selectItem.checked) selectedItems.add(item);
+                else selectedItems.delete(item);
+                updateSelectionUI();
+            });
             srcInput.addEventListener('input', () => {
                 item.src = srcInput.value;
-                card.querySelector('img').src = item.src;
+                image.src = item.src;
+                markDirty();
             });
             titleInput.addEventListener('input', () => {
                 item.title = titleInput.value;
+                markDirty();
             });
             altInput.addEventListener('input', () => {
                 item.alt = altInput.value;
-                card.querySelector('img').alt = item.alt;
+                image.alt = item.alt;
+                markDirty();
             });
-
-            card.querySelector('[data-action="up"]').addEventListener('click', () => moveItem(groupIndex, itemIndex, -1));
-            card.querySelector('[data-action="down"]').addEventListener('click', () => moveItem(groupIndex, itemIndex, 1));
-            card.querySelector('[data-action="delete"]').addEventListener('click', () => deleteItem(groupIndex, itemIndex));
+            moveSelect.addEventListener('change', () => {
+                moveButton.disabled = Number(moveSelect.value) === groupIndex;
+            });
+            moveButton.addEventListener('click', () => moveItemToGroup(groupIndex, itemIndex, Number(moveSelect.value)));
+            upButton.addEventListener('click', () => moveItem(groupIndex, itemIndex, -1));
+            downButton.addEventListener('click', () => moveItem(groupIndex, itemIndex, 1));
+            deleteButton.addEventListener('click', () => deleteItem(groupIndex, itemIndex));
 
             return card;
+        }
+
+        function createGroupSelect(selectedIndex) {
+            const select = document.createElement('select');
+            select.setAttribute('aria-label', 'Move image to group');
+            galleryData.groups.forEach((group, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = group.title || group.id || `Group ${index + 1}`;
+                select.appendChild(option);
+            });
+            select.value = String(selectedIndex);
+            return select;
         }
 
         function addGroup() {
@@ -351,12 +494,16 @@
                 title,
                 items: []
             });
+            markDirty();
             refreshUI();
         }
 
         function deleteGroup(index) {
-            if (confirm('Delete this group?')) {
+            const count = (galleryData.groups[index].items || []).length;
+            if (confirm(`Delete this group and remove its ${count} photo reference(s) from gallery.json? The image files will stay on disk.`)) {
+                (galleryData.groups[index].items || []).forEach(item => selectedItems.delete(item));
                 galleryData.groups.splice(index, 1);
+                markDirty();
                 refreshUI();
             }
         }
@@ -366,6 +513,7 @@
             if (target < 0 || target >= galleryData.groups.length) return;
             const [group] = galleryData.groups.splice(index, 1);
             galleryData.groups.splice(target, 0, group);
+            markDirty();
             refreshUI();
         }
 
@@ -375,43 +523,87 @@
             if (target < 0 || target >= items.length) return;
             const [item] = items.splice(itemIndex, 1);
             items.splice(target, 0, item);
-            renderGroups();
+            markDirty();
+            refreshUI();
         }
 
         function deleteItem(groupIndex, itemIndex) {
+            const item = galleryData.groups[groupIndex].items[itemIndex];
+            if (!confirm('Remove this photo from gallery.json? The image file will stay on disk.')) return;
+            selectedItems.delete(item);
             galleryData.groups[groupIndex].items.splice(itemIndex, 1);
-            renderGroups();
+            markDirty();
+            refreshUI();
+        }
+
+        function moveItemToGroup(fromGroupIndex, itemIndex, toGroupIndex) {
+            if (fromGroupIndex === toGroupIndex || !galleryData.groups[toGroupIndex]) return;
+            const [item] = galleryData.groups[fromGroupIndex].items.splice(itemIndex, 1);
+            galleryData.groups[toGroupIndex].items = galleryData.groups[toGroupIndex].items || [];
+            galleryData.groups[toGroupIndex].items.push(item);
+            markDirty();
+            refreshUI();
+        }
+
+        function moveSelectedItems() {
+            const targetIndex = getTargetGroupIndex();
+            if (targetIndex < 0) return;
+            const targetItems = galleryData.groups[targetIndex].items = galleryData.groups[targetIndex].items || [];
+            let moved = 0;
+            galleryData.groups.forEach((group, groupIndex) => {
+                if (groupIndex === targetIndex) return;
+                const moving = (group.items || []).filter(item => selectedItems.has(item));
+                if (!moving.length) return;
+                group.items = group.items.filter(item => !selectedItems.has(item));
+                targetItems.push(...moving);
+                moved += moving.length;
+            });
+            if (!moved) return;
+            markDirty();
+            refreshUI();
+            if (window.adminApi && adminApi.enabled) {
+                adminApi.setStatus(`Moved ${moved} selected photo(s). Remember to save.`);
+            }
         }
 
         async function addImages(files) {
+            const selectedFiles = [...files];
+            if (!selectedFiles.length || isUploading) return;
             if (galleryData.groups.length === 0) {
                 addGroup();
             }
 
-            const groupIndex = Number(document.getElementById('targetGroup').value || 0);
+            const groupIndex = Math.max(0, getTargetGroupIndex());
             const group = galleryData.groups[groupIndex];
-            const basePath = document.getElementById('imageBasePath').value.replace(/\/+$/, '');
+            const basePath = normalizeImageBasePath(document.getElementById('imageBasePath').value);
             galleryData.imageBasePath = basePath;
             group.items = group.items || [];
 
             if (window.adminApi && adminApi.enabled) {
+                isUploading = true;
+                document.getElementById('addImagesButton').disabled = true;
+                let successCount = 0;
+                const failures = [];
                 // 本地管理服务器：真上传，文件直接写进 assets/pic/gallery_photos/
-                for (const file of [...files]) {
+                for (const file of selectedFiles) {
                     try {
                         adminApi.setStatus(`上传中：${file.name} ……`);
                         const uploaded = await adminApi.upload('gallery', file);
                         const title = fileNameWithoutExt(uploaded.name);
                         group.items.push({ src: uploaded.path, title, alt: title });
+                        successCount += 1;
                     } catch (error) {
-                        adminApi.setStatus(`上传失败：${file.name}（${error.message}）`, true);
-                        refreshUI();
-                        return;
+                        failures.push(`${file.name}: ${error.message}`);
                     }
                 }
-                adminApi.setStatus(`已上传 ${files.length} 张图片，记得点「保存」写入 gallery.json`);
+                isUploading = false;
+                document.getElementById('addImagesButton').disabled = false;
+                if (successCount) markDirty();
+                const message = `Uploaded ${successCount} of ${selectedFiles.length} image(s). ${successCount ? 'Remember to save.' : ''}`;
+                adminApi.setStatus(failures.length ? `${message} Failed: ${failures.join('; ')}` : message, failures.length > 0);
             } else {
                 // 线上/无服务器兜底：只登记路径，需自己把文件放进对应目录
-                [...files].forEach(file => {
+                selectedFiles.forEach(file => {
                     const title = fileNameWithoutExt(file.name);
                     group.items.push({
                         src: `${basePath}/${file.name}`,
@@ -419,13 +611,14 @@
                         alt: title
                     });
                 });
+                markDirty();
             }
 
             refreshUI();
         }
 
         async function saveGallery() {
-            galleryData.imageBasePath = document.getElementById('imageBasePath').value.replace(/\/+$/, '');
+            galleryData.imageBasePath = normalizeImageBasePath(document.getElementById('imageBasePath').value);
             galleryData.groups.forEach(group => {
                 group.id = group.id || slugify(group.title);
                 group.items = group.items || [];
@@ -433,6 +626,7 @@
 
             try {
                 await adminApi.save('data/gallery.json', galleryData);
+                isDirty = false;
                 adminApi.setStatus('已保存到 data/gallery.json ✓（点「发布」推送上线）');
             } catch (error) {
                 adminApi.setStatus(`保存失败：${error.message}`, true);
@@ -440,7 +634,7 @@
         }
 
         function exportGalleryJson() {
-            galleryData.imageBasePath = document.getElementById('imageBasePath').value.replace(/\/+$/, '');
+            galleryData.imageBasePath = normalizeImageBasePath(document.getElementById('imageBasePath').value);
             galleryData.groups.forEach(group => {
                 group.id = group.id || slugify(group.title);
                 group.items = group.items || [];
@@ -455,15 +649,24 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
+            isDirty = false;
         }
 
         document.getElementById('imageBasePath').addEventListener('input', event => {
-            galleryData.imageBasePath = event.target.value.replace(/\/+$/, '');
+            galleryData.imageBasePath = normalizeImageBasePath(event.target.value);
+            markDirty();
         });
 
+        document.getElementById('imageBasePath').addEventListener('blur', event => {
+            event.target.value = normalizeImageBasePath(event.target.value);
+        });
+
+        document.getElementById('moveSelectedButton').addEventListener('click', moveSelectedItems);
+
         document.getElementById('imageFileInput').addEventListener('change', event => {
-            addImages(event.target.files);
+            const selectedFiles = [...event.target.files];
             event.target.value = '';
+            addImages(selectedFiles);
         });
 
         document.getElementById('importJsonInput').addEventListener('change', event => {
@@ -474,6 +677,8 @@
             reader.onload = () => {
                 try {
                     galleryData = normalizeGalleryData(JSON.parse(reader.result));
+                    selectedItems.clear();
+                    markDirty();
                     refreshUI();
                 } catch (error) {
                     alert('Invalid gallery JSON.');
@@ -482,6 +687,12 @@
             };
             reader.readAsText(file);
             event.target.value = '';
+        });
+
+        window.addEventListener('beforeunload', event => {
+            if (!isDirty) return;
+            event.preventDefault();
+            event.returnValue = '';
         });
 
         document.addEventListener('DOMContentLoaded', loadGalleryData);

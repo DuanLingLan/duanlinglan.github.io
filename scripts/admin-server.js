@@ -23,6 +23,8 @@ const UPLOAD_DIRS = {
     collections: 'collections'
 };
 
+const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.avif']);
+
 const GENERATE_SCRIPTS = [
     'generate-posts.js',
     'generate-notes.js',
@@ -43,6 +45,7 @@ const MIME_TYPES = {
     '.jpeg': 'image/jpeg',
     '.gif': 'image/gif',
     '.webp': 'image/webp',
+    '.avif': 'image/avif',
     '.ico': 'image/x-icon',
     '.svg': 'image/svg+xml',
     '.mp3': 'audio/mpeg',
@@ -126,6 +129,16 @@ function uniqueFilePath(dir, fileName) {
     return candidate;
 }
 
+function hasExpectedImageSignature(body, extension) {
+    const startsWith = bytes => body.length >= bytes.length && bytes.every((byte, index) => body[index] === byte);
+    if (extension === '.jpg' || extension === '.jpeg') return startsWith([0xff, 0xd8, 0xff]);
+    if (extension === '.png') return startsWith([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    if (extension === '.gif') return body.subarray(0, 6).toString('ascii') === 'GIF87a' || body.subarray(0, 6).toString('ascii') === 'GIF89a';
+    if (extension === '.webp') return body.subarray(0, 4).toString('ascii') === 'RIFF' && body.subarray(8, 12).toString('ascii') === 'WEBP';
+    if (extension === '.avif') return body.subarray(4, 8).toString('ascii') === 'ftyp' && /avi[fs]/.test(body.subarray(8, 24).toString('ascii'));
+    return false;
+}
+
 async function compressIfLarge(filePath) {
     if (!sharp) {
         return null;
@@ -196,9 +209,16 @@ async function handleUpload(req, res, query) {
     }
 
     const fileName = sanitizeFileName(query.get('name'));
+    const extension = path.extname(fileName).toLowerCase();
+    if (!IMAGE_EXTENSIONS.has(extension)) {
+        return sendJson(res, 400, { ok: false, error: 'Only JPG, PNG, GIF, WebP, and AVIF images can be uploaded' });
+    }
     const body = await readBody(req);
     if (!body.length) {
         return sendJson(res, 400, { ok: false, error: 'Empty file' });
+    }
+    if (!hasExpectedImageSignature(body, extension)) {
+        return sendJson(res, 400, { ok: false, error: 'File content does not match its image extension' });
     }
 
     const targetDir = path.join(ROOT, relativeDir);
