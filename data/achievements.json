@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "src": "assets/pic/gallery_photos/duo.jpg",
+      "title": "🎉Duolingo卷上Diamond League🎉",
+      "date": "🌸2024.04.21🌸",
+      "alt": "Duolingo Diamond League"
+    },
+    {
+      "src": "assets/pic/gallery_photos/free.jpg",
+      "title": "🎉一个月没刷朋友圈🎉",
+      "date": "🌸2024.03.16 - 2024.04.16🌸",
+      "alt": "One month without checking social media"
+    },
+    {
+      "src": "assets/pic/gallery_photos/work.jpg",
+      "title": "🎉坚持同一份工作三个月🎉",
+      "date": "🌸2023.12.28 - 2024.3.28🌸",
+      "alt": "Three months at the same job"
+    },
+    {
+      "src": "assets/pic/gallery_photos/swim.png",
+      "title": "🎉一个月学会蛙泳🎉",
+      "date": "🌸2023.12 - 2024.01🌸",
+      "alt": "Learning breaststroke"
+    }
+  ]
+}

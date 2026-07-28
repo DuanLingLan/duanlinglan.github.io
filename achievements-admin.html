@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements Admin</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <script src="assets/js/admin-tools.js"></script>
+    <style>
+        body { background: url("assets/pic/bg.png") no-repeat center center fixed; background-size: cover; color: #64002B; }
+        .admin-panel { width: 86%; max-width: 1280px; margin: 40px auto; padding: 20px; background: #fff7f7; border: 2px solid #ffcccc; border-radius: 8px; box-shadow: 2px 2px 8px rgba(0, 0, 0, .12); }
+        .admin-toolbar, .admin-section { margin: 16px 0; padding: 14px; background: rgba(255,255,255,.72); border: 1px solid #ffcccc; border-radius: 8px; }
+        .admin-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        button, input { font-family: inherit; }
+        button { background: #ffcccc; border: 0; padding: 8px 14px; border-radius: 5px; color: maroon; cursor: pointer; margin: 3px; }
+        button:hover { background: #ffb3b3; }
+        button:disabled { cursor: not-allowed; opacity: .6; }
+        input { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ffcccc; border-radius: 5px; color: #64002B; background: #fff; }
+        .field-note, .empty-state { color: rgba(100,0,43,.7); }
+        .field-note { margin: 5px 0 0; font-size: .88em; }
+        .achievement-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+        .achievement-card { background: #fff7f7; border: 1px solid #ffcccc; border-radius: 8px; padding: 10px; }
+        .achievement-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; background: #ffe6e6; }
+        .item-fields { display: grid; gap: 6px; margin-top: 8px; }
+        .item-actions { display: flex; justify-content: space-between; margin-top: 8px; }
+        .empty-state { padding: 18px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1 class="colorHead">Achievements Admin</h1>
+        <div class="admin-toolbar">
+            <div class="admin-row">
+                <input type="file" id="importJsonInput" accept=".json" hidden>
+                <input type="file" id="imageFileInput" accept="image/*" multiple hidden>
+                <button type="button" onclick="document.getElementById('importJsonInput').click()">Import JSON</button>
+                <button id="addImagesButton" type="button" onclick="document.getElementById('imageFileInput').click()">Add Images</button>
+                <button type="button" onclick="addAchievement()">Add Achievement</button>
+                <button type="button" onclick="exportAchievementsJson()">Export JSON</button>
+                <button data-local-admin style="display:none" type="button" onclick="saveAchievements()">💾 保存</button>
+                <button data-local-admin style="display:none" type="button" onclick="adminApi.publishWithFeedback()">🚀 发布</button>
+                <button type="button" onclick="window.location.href='admin.html'">Admin Home</button>
+            </div>
+            <div class="admin-row" data-local-admin style="display:none"><span id="adminStatus"></span></div>
+        </div>
+        <div class="admin-section">
+            <label for="imageBasePath">Image path prefix (online/manual only)</label>
+            <input id="imageBasePath" value="assets/pic/gallery_photos">
+            <p class="field-note">Local uploads always go to <code>assets/pic/gallery_photos</code>. Use a folder path, not a photo filename.</p>
+        </div>
+        <div id="achievements"></div>
+    </div>
+    <script>
+        const DEFAULT_IMAGE_PATH = 'assets/pic/gallery_photos';
+        let achievementsData = { items: [] };
+        let isDirty = false;
+        let isUploading = false;
+
+        function fileNameWithoutExt(name) { return String(name || '').replace(/\.[^.]+$/, ''); }
+        function normalizeBasePath(value) {
+            const cleaned = String(value || DEFAULT_IMAGE_PATH).trim().replace(/\\/g, '/').replace(/\/+$/, '');
+            if (!cleaned || cleaned.split('/').includes('..')) return DEFAULT_IMAGE_PATH;
+            return /\.(avif|gif|jpe?g|png|webp)$/i.test(cleaned) ? cleaned.replace(/\/[^/]+$/, '') : cleaned;
+        }
+        function normalizeData(data) {
+            const items = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : []);
+            return {
+                items: items.filter(item => item && typeof item === 'object' && item.src).map(item => ({
+                    src: String(item.src), title: String(item.title || ''), date: String(item.date || ''), alt: String(item.alt || '')
+                }))
+            };
+        }
+        function markDirty() {
+            isDirty = true;
+            if (window.adminApi && adminApi.enabled && !isUploading) adminApi.setStatus('有未保存的 Achievement 变更。');
+        }
+        function refreshUI() {
+            renderAchievements();
+        }
+        function makeInput(value, label) {
+            const input = document.createElement('input');
+            input.value = value || '';
+            input.setAttribute('aria-label', label);
+            return input;
+        }
+        function renderAchievements() {
+            const container = document.getElementById('achievements');
+            container.innerHTML = '';
+            if (!achievementsData.items.length) {
+                container.innerHTML = '<div class="empty-state">No achievements yet.</div>';
+                return;
+            }
+            const grid = document.createElement('div');
+            grid.className = 'achievement-grid';
+            achievementsData.items.forEach((item, index) => grid.appendChild(renderAchievement(item, index)));
+            container.appendChild(grid);
+        }
+        function renderAchievement(item, index) {
+            const card = document.createElement('article');
+            card.className = 'achievement-card';
+            const image = document.createElement('img');
+            image.src = item.src;
+            image.alt = item.alt || item.title;
+            const fields = document.createElement('div');
+            fields.className = 'item-fields';
+            const srcInput = makeInput(item.src, 'Image path');
+            const titleInput = makeInput(item.title, 'Achievement title');
+            const dateInput = makeInput(item.date, 'Achievement date');
+            const altInput = makeInput(item.alt, 'Image alt text');
+            fields.append(srcInput, titleInput, dateInput, altInput);
+            const actions = document.createElement('div');
+            actions.className = 'item-actions';
+            const left = document.createElement('span');
+            const up = document.createElement('button');
+            const down = document.createElement('button');
+            const remove = document.createElement('button');
+            up.type = down.type = remove.type = 'button';
+            up.textContent = 'Up'; down.textContent = 'Down'; remove.textContent = 'Delete';
+            left.append(up, down); actions.append(left, remove); card.append(image, fields, actions);
+            srcInput.addEventListener('input', () => { item.src = srcInput.value; image.src = item.src; markDirty(); });
+            titleInput.addEventListener('input', () => { item.title = titleInput.value; if (!item.alt) image.alt = item.title; markDirty(); });
+            dateInput.addEventListener('input', () => { item.date = dateInput.value; markDirty(); });
+            altInput.addEventListener('input', () => { item.alt = altInput.value; image.alt = item.alt || item.title; markDirty(); });
+            up.addEventListener('click', () => moveAchievement(index, -1));
+            down.addEventListener('click', () => moveAchievement(index, 1));
+            remove.addEventListener('click', () => deleteAchievement(index));
+            return card;
+        }
+        function addAchievement() {
+            achievementsData.items.push({ src: '', title: 'New Achievement', date: '', alt: '' });
+            markDirty(); refreshUI();
+        }
+        function moveAchievement(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= achievementsData.items.length) return;
+            const [item] = achievementsData.items.splice(index, 1);
+            achievementsData.items.splice(target, 0, item);
+            markDirty(); refreshUI();
+        }
+        function deleteAchievement(index) {
+            if (!confirm('Remove this achievement from achievements.json? The image file will stay on disk.')) return;
+            achievementsData.items.splice(index, 1);
+            markDirty(); refreshUI();
+        }
+        async function addImages(files) {
+            const selectedFiles = [...files];
+            if (!selectedFiles.length || isUploading) return;
+            const basePath = normalizeBasePath(document.getElementById('imageBasePath').value);
+            if (!(window.adminApi && adminApi.enabled)) {
+                selectedFiles.forEach(file => achievementsData.items.push({ src: `${basePath}/${file.name}`, title: fileNameWithoutExt(file.name), date: '', alt: fileNameWithoutExt(file.name) }));
+                markDirty(); refreshUI(); return;
+            }
+            isUploading = true;
+            document.getElementById('addImagesButton').disabled = true;
+            let successCount = 0;
+            const failures = [];
+            for (const file of selectedFiles) {
+                try {
+                    adminApi.setStatus(`上传中：${file.name} ……`);
+                    const uploaded = await adminApi.upload('gallery', file);
+                    const title = fileNameWithoutExt(uploaded.name);
+                    achievementsData.items.push({ src: uploaded.path, title, date: '', alt: title });
+                    successCount += 1;
+                } catch (error) { failures.push(`${file.name}: ${error.message}`); }
+            }
+            isUploading = false;
+            document.getElementById('addImagesButton').disabled = false;
+            if (successCount) markDirty();
+            adminApi.setStatus(`Uploaded ${successCount} of ${selectedFiles.length} image(s). ${successCount ? 'Remember to save.' : ''}${failures.length ? ` Failed: ${failures.join('; ')}` : ''}`, failures.length > 0);
+            refreshUI();
+        }
+        async function loadAchievements() {
+            try {
+                const response = await fetch('data/achievements.json');
+                if (!response.ok) throw new Error('Failed to load data/achievements.json');
+                achievementsData = normalizeData(await response.json());
+            } catch (error) { console.error(error); }
+            refreshUI();
+        }
+        async function saveAchievements() {
+            try {
+                await adminApi.save('data/achievements.json', achievementsData);
+                isDirty = false;
+                adminApi.setStatus('已保存到 data/achievements.json ✓（点「发布」推送上线）');
+            } catch (error) { adminApi.setStatus(`保存失败：${error.message}`, true); }
+        }
+        function exportAchievementsJson() {
+            const blob = new Blob([JSON.stringify(achievementsData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url; link.download = 'achievements.json';
+            document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
+            isDirty = false;
+        }
+        document.getElementById('imageBasePath').addEventListener('blur', event => { event.target.value = normalizeBasePath(event.target.value); });
+        document.getElementById('imageFileInput').addEventListener('change', event => { const files = [...event.target.files]; event.target.value = ''; addImages(files); });
+        document.getElementById('importJsonInput').addEventListener('change', event => {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => { try { achievementsData = normalizeData(JSON.parse(reader.result)); markDirty(); refreshUI(); } catch (error) { alert('Invalid achievements JSON.'); console.error(error); } };
+            reader.readAsText(file); event.target.value = '';
+        });
+        window.addEventListener('beforeunload', event => { if (isDirty) { event.preventDefault(); event.returnValue = ''; } });
+        document.addEventListener('DOMContentLoaded', loadAchievements);
+    </script>
+</body>
+</html>

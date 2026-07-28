@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Admin</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <script src="assets/js/admin-tools.js"></script>
+    <style>
+        body { background: url("assets/pic/bg.png") no-repeat center center fixed; background-size: cover; color: #64002B; }
+        .admin-panel { width: 86%; max-width: 900px; margin: 40px auto; padding: 20px; background: #fff7f7; border: 2px solid #ffcccc; border-radius: 8px; box-shadow: 2px 2px 8px rgba(0, 0, 0, .12); }
+        .admin-toolbar, .admin-section { margin: 16px 0; padding: 14px; background: rgba(255,255,255,.72); border: 1px solid #ffcccc; border-radius: 8px; }
+        .admin-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        button, input, textarea { font-family: inherit; }
+        button { background: #ffcccc; border: 0; padding: 8px 14px; border-radius: 5px; color: maroon; cursor: pointer; margin: 3px; }
+        button:hover { background: #ffb3b3; }
+        button:disabled { cursor: not-allowed; opacity: .6; }
+        input, textarea { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ffcccc; border-radius: 5px; color: #64002B; background: #fff; }
+        textarea { resize: vertical; min-height: 60px; }
+        .field-note, .empty-state { color: rgba(100,0,43,.7); }
+        .empty-state { padding: 18px; text-align: center; }
+        .category-card { background: #fff7f7; border: 1px solid #ffcccc; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+        .category-header { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+        .category-header input { flex: 1; min-width: 200px; font-weight: bold; font-size: 1.05em; }
+        .item-row { display: flex; gap: 6px; align-items: center; margin-bottom: 5px; }
+        .item-row input { flex: 1; }
+        .item-row button { padding: 4px 8px; font-size: .82em; }
+        .item-actions { margin-top: 6px; }
+        .category-id { color: rgba(100,0,43,.5); font-size: .82em; white-space: nowrap; }
+        .last-updated-row { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
+        .last-updated-row label { white-space: nowrap; }
+        .last-updated-row input { max-width: 200px; }
+        .btn-sm { padding: 4px 9px; font-size: .82em; }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1 class="colorHead">Library Admin</h1>
+        <div class="admin-toolbar">
+            <div class="admin-row">
+                <input type="file" id="importJsonInput" accept=".json" hidden>
+                <button type="button" onclick="document.getElementById('importJsonInput').click()">Import JSON</button>
+                <button type="button" onclick="addCategory()">Add Category</button>
+                <button type="button" onclick="exportLibraryJson()">Export JSON</button>
+                <button data-local-admin style="display:none" type="button" onclick="saveLibrary()">💾 Save</button>
+                <button data-local-admin style="display:none" type="button" onclick="adminApi.publishWithFeedback()">🚀 Publish</button>
+                <button type="button" onclick="window.location.href='admin.html'">Admin Home</button>
+            </div>
+            <div class="admin-row" data-local-admin style="display:none"><span id="adminStatus"></span></div>
+        </div>
+        <div class="admin-section">
+            <div class="last-updated-row">
+                <label for="lastUpdatedInput">last updated on</label>
+                <input id="lastUpdatedInput" placeholder="MM.DD.YYYY">
+            </div>
+        </div>
+        <div id="categories"></div>
+    </div>
+    <script>
+        let libraryData = { categories: [], lastUpdated: '' };
+        let isDirty = false;
+
+        function normalizeData(data) {
+            const categories = (data && Array.isArray(data.categories)) ? data.categories : [];
+            return {
+                categories: categories.filter(cat => cat && typeof cat === 'object').map(cat => ({
+                    id: String(cat.id || ''),
+                    title: String(cat.title || ''),
+                    items: Array.isArray(cat.items) ? cat.items.map(item => String(item || '')) : ['']
+                })),
+                lastUpdated: String(data && data.lastUpdated ? data.lastUpdated : '')
+            };
+        }
+
+        function markDirty() {
+            isDirty = true;
+            if (window.adminApi && adminApi.enabled) adminApi.setStatus('Library 有未保存的变更。');
+        }
+
+        function refreshUI() {
+            document.getElementById('lastUpdatedInput').value = libraryData.lastUpdated;
+            renderCategories();
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            container.innerHTML = '';
+            if (!libraryData.categories.length) {
+                container.innerHTML = '<div class="empty-state">No categories yet. Click "Add Category" to begin.</div>';
+                return;
+            }
+            libraryData.categories.forEach((cat, index) => container.appendChild(renderCategory(cat, index)));
+        }
+
+        function renderCategory(cat, index) {
+            const card = document.createElement('div');
+            card.className = 'category-card';
+
+            const header = document.createElement('div');
+            header.className = 'category-header';
+
+            const idSpan = document.createElement('span');
+            idSpan.className = 'category-id';
+            idSpan.textContent = `id: ${cat.id || '(empty)'}`;
+
+            const idInput = document.createElement('input');
+            idInput.value = cat.id;
+            idInput.setAttribute('aria-label', 'Category ID');
+            idInput.style.maxWidth = '130px';
+            idInput.style.fontSize = '.82em';
+            idInput.addEventListener('input', () => {
+                cat.id = idInput.value;
+                idSpan.textContent = `id: ${cat.id || '(empty)'}`;
+                markDirty();
+            });
+
+            const titleInput = document.createElement('input');
+            titleInput.value = cat.title;
+            titleInput.setAttribute('aria-label', 'Category title');
+            titleInput.addEventListener('input', () => { cat.title = titleInput.value; markDirty(); });
+
+            const upBtn = document.createElement('button');
+            upBtn.type = 'button';
+            upBtn.textContent = '▲';
+            upBtn.className = 'btn-sm';
+            upBtn.addEventListener('click', () => moveCategory(index, -1));
+
+            const downBtn = document.createElement('button');
+            downBtn.type = 'button';
+            downBtn.textContent = '▼';
+            downBtn.className = 'btn-sm';
+            downBtn.addEventListener('click', () => moveCategory(index, 1));
+
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button';
+            delBtn.textContent = 'Delete Category';
+            delBtn.className = 'btn-sm';
+            delBtn.style.color = '#b00020';
+            delBtn.addEventListener('click', () => deleteCategory(index));
+
+            header.append(idSpan, idInput, titleInput, upBtn, downBtn, delBtn);
+
+            const itemsList = document.createElement('div');
+            itemsList.className = 'category-items';
+            (cat.items || []).forEach((item, itemIndex) => {
+                itemsList.appendChild(renderItemRow(cat, item, itemIndex));
+            });
+
+            const addItemBtn = document.createElement('button');
+            addItemBtn.type = 'button';
+            addItemBtn.textContent = '+ Add Item';
+            addItemBtn.className = 'btn-sm';
+            addItemBtn.addEventListener('click', () => {
+                cat.items.push('');
+                markDirty();
+                refreshUI();
+            });
+
+            card.append(header, itemsList, addItemBtn);
+            return card;
+        }
+
+        function renderItemRow(cat, item, itemIndex) {
+            const row = document.createElement('div');
+            row.className = 'item-row';
+
+            const input = document.createElement('input');
+            input.value = item;
+            input.setAttribute('aria-label', `Item ${itemIndex + 1}`);
+            input.addEventListener('input', () => { cat.items[itemIndex] = input.value; markDirty(); });
+
+            const upBtn = document.createElement('button');
+            upBtn.type = 'button';
+            upBtn.textContent = '▲';
+            upBtn.addEventListener('click', () => moveItem(cat, itemIndex, -1));
+
+            const downBtn = document.createElement('button');
+            downBtn.type = 'button';
+            downBtn.textContent = '▼';
+            downBtn.addEventListener('click', () => moveItem(cat, itemIndex, 1));
+
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button';
+            delBtn.textContent = '✕';
+            delBtn.style.color = '#b00020';
+            delBtn.addEventListener('click', () => {
+                cat.items.splice(itemIndex, 1);
+                markDirty();
+                refreshUI();
+            });
+
+            row.append(input, upBtn, downBtn, delBtn);
+            return row;
+        }
+
+        function addCategory() {
+            libraryData.categories.push({ id: '', title: 'new:', items: [''] });
+            markDirty();
+            refreshUI();
+        }
+
+        function moveCategory(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= libraryData.categories.length) return;
+            const [item] = libraryData.categories.splice(index, 1);
+            libraryData.categories.splice(target, 0, item);
+            markDirty();
+            refreshUI();
+        }
+
+        function deleteCategory(index) {
+            if (!confirm('Delete this category and all its items?')) return;
+            libraryData.categories.splice(index, 1);
+            markDirty();
+            refreshUI();
+        }
+
+        function moveItem(cat, index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= cat.items.length) return;
+            const [item] = cat.items.splice(index, 1);
+            cat.items.splice(target, 0, item);
+            markDirty();
+            refreshUI();
+        }
+
+        async function loadLibrary() {
+            try {
+                const response = await fetch('data/library.json');
+                if (!response.ok) throw new Error('Failed to load data/library.json');
+                libraryData = normalizeData(await response.json());
+            } catch (error) { console.error(error); }
+            refreshUI();
+        }
+
+        async function saveLibrary() {
+            try {
+                libraryData.lastUpdated = document.getElementById('lastUpdatedInput').value;
+                await adminApi.save('data/library.json', libraryData);
+                isDirty = false;
+                adminApi.setStatus('Saved to data/library.json ✓ (click Publish to go live)');
+            } catch (error) { adminApi.setStatus(`Save failed: ${error.message}`, true); }
+        }
+
+        function exportLibraryJson() {
+            libraryData.lastUpdated = document.getElementById('lastUpdatedInput').value;
+            const blob = new Blob([JSON.stringify(libraryData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url; link.download = 'library.json';
+            document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
+            isDirty = false;
+        }
+
+        document.getElementById('lastUpdatedInput').addEventListener('input', markDirty);
+        document.getElementById('importJsonInput').addEventListener('change', event => {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    libraryData = normalizeData(JSON.parse(reader.result));
+                    markDirty();
+                    refreshUI();
+                } catch (error) { alert('Invalid library JSON.'); console.error(error); }
+            };
+            reader.readAsText(file); event.target.value = '';
+        });
+        window.addEventListener('beforeunload', event => { if (isDirty) { event.preventDefault(); event.returnValue = ''; } });
+        document.addEventListener('DOMContentLoaded', loadLibrary);
+    </script>
+</body>
+</html>

@@ -13,8 +13,10 @@ const MAX_BODY_SIZE = 100 * 1024 * 1024;
 // 只允许写这几个数据文件，防止任意路径写入
 const SAVABLE_FILES = new Set([
     'data/gallery.json',
+    'data/achievements.json',
     'data/notebook-content.json',
-    'data/notes.json'
+    'data/notes.json',
+    'data/library.json'
 ]);
 
 // 上传目录白名单
@@ -30,6 +32,8 @@ const GENERATE_SCRIPTS = [
     'generate-notes.js',
     'generate-rss.js',
     'generate-gallery.js',
+    'generate-achievements.js',
+    'generate-library.js',
     'generate-changelog.js'
 ];
 

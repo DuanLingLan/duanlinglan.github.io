@@ -5,7 +5,7 @@
   "description": "Ashe's web 1.0 homepage - local tooling (the site itself is pure static)",
   "scripts": {
     "admin": "node scripts/admin-server.js --open",
-    "generate": "node scripts/generate-posts.js && node scripts/generate-notes.js && node scripts/generate-rss.js && node scripts/generate-gallery.js && node scripts/generate-changelog.js",
+    "generate": "node scripts/generate-posts.js && node scripts/generate-notes.js && node scripts/generate-rss.js && node scripts/generate-gallery.js && node scripts/generate-achievements.js && node scripts/generate-changelog.js",
     "optimize-images": "node scripts/optimize-images.js"
   },
   "devDependencies": {

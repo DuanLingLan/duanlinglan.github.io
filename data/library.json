@@ -1,0 +1,47 @@
+{
+  "categories": [
+    {
+      "id": "status",
+      "title": "status:",
+      "items": [
+        "好多想做的！"
+      ]
+    },
+    {
+      "id": "playing",
+      "title": "playing:",
+      "items": [
+        "最近在玩联机游戏"
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "reading:",
+      "items": [
+        "有点想去读推理小说，试试阿加莎！"
+      ]
+    },
+    {
+      "id": "watching",
+      "title": "watching:",
+      "items": [
+        "咪"
+      ]
+    },
+    {
+      "id": "listening",
+      "title": "listening to:",
+      "items": [
+        "王菲的流年"
+      ]
+    },
+    {
+      "id": "working",
+      "title": "working on:",
+      "items": [
+        "Claude大人一晚上给我做了十几个项目。慢慢整理使用中"
+      ]
+    }
+  ],
+  "lastUpdated": "28/Jul/2026"
+}
