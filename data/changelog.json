@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-07-30",
+    "items": [
+      {
+        "message": "Merge branch 'main' of https://github.com/DuanLingLan/duanlinglan.github.io",
+        "count": 1
+      },
+      {
+        "message": "内容更新",
+        "count": 1
+      },
+      {
+        "message": "Delete blog/hidden, draft directory",
+        "count": 1
+      }
+    ]
+  },
+  {
     "date": "2026-07-28",
     "items": [
       {
