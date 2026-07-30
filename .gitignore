@@ -1,5 +1,6 @@
 # Obsidian 库配置（含插件源码、workspace.json 等私人信息）——只留在本地，不发布
 blog/.obsidian/
+blog/hidden, draft/
 collections/.obsidian/
 
 # 未被站点引用的旧缓存
